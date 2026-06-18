@@ -1,0 +1,2 @@
+import {Layout,PageHero} from '@/components/Public';import RequestForm from './RequestForm';import type {Lang} from '@/content/site';
+export default function Request({params}:{params:{lang:Lang}}){return <Layout lang={params.lang}><PageHero title={params.lang==='ja'?'支援を依頼する':'Request Support'} summary={params.lang==='ja'?'機微書類を送らず、初期相談に必要な情報だけを入力してください。':'Please provide initial request information only. Do not send sensitive documents.'}/><main className="section bg-mist"><div className="container"><RequestForm lang={params.lang}/></div></main></Layout>}
