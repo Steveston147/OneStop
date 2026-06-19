@@ -1,6 +1,9 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { CreotechLogo, RitsumeikanLogo } from '@/components/BrandLogos';
 import { labels, nav, navNames, type Lang } from '@/content/site';
+
+const creotechLogo = '/brand/creotech-logo.png';
+const ritsumeikanLogo = '/brand/ritsumeikan-logo.jpg';
 
 export function Header({ lang }: { lang: Lang }) {
   const other = lang === 'ja' ? 'en' : 'ja';
@@ -13,7 +16,16 @@ export function Header({ lang }: { lang: Lang }) {
           className="flex min-w-0 items-center gap-3 text-navy"
           aria-label="Creotech International Support home"
         >
-          <CreotechLogo className="h-10 w-28 shrink-0 sm:h-14 sm:w-40" />
+          <span className="relative block h-10 w-28 shrink-0 sm:h-14 sm:w-40">
+            <Image
+              src={creotechLogo}
+              alt="Creotech International Support"
+              fill
+              priority
+              sizes="160px"
+              className="object-contain object-left"
+            />
+          </span>
           <span className="hidden border-l-2 border-creotechBlue/20 pl-4 text-sm font-extrabold leading-tight text-navy sm:block lg:text-base">
             International
             <br />
@@ -48,7 +60,15 @@ export function Footer({ lang }: { lang: Lang }) {
       <div className="container grid gap-10 py-12 lg:grid-cols-[1.2fr_.8fr_.9fr]">
         <div>
           <div className="inline-flex rounded-2xl bg-white px-4 py-3 shadow-soft">
-            <CreotechLogo className="h-12 w-40" />
+            <span className="relative block h-12 w-40">
+              <Image
+                src={creotechLogo}
+                alt="Creotech International Support"
+                fill
+                sizes="160px"
+                className="object-contain object-left"
+              />
+            </span>
           </div>
           <p className="mt-5 max-w-md text-white/80">
             {lang === 'ja'
@@ -70,7 +90,15 @@ export function Footer({ lang }: { lang: Lang }) {
             {lang === 'ja' ? '関連機関' : 'Supporting institution'}
           </p>
           <div className="mt-4 inline-flex rounded-2xl bg-white px-4 py-3 shadow-soft">
-            <RitsumeikanLogo className="h-12 w-44" />
+            <span className="relative block h-12 w-44">
+              <Image
+                src={ritsumeikanLogo}
+                alt="Ritsumeikan University"
+                fill
+                sizes="176px"
+                className="object-contain object-left"
+              />
+            </span>
           </div>
           <p className="mt-4 text-sm leading-6 text-white/70">
             {lang === 'ja'
