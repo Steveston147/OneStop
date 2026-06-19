@@ -1,17 +1,18 @@
 # Brand assets
 
-The site uses the exact brand files expected in this folder:
+This project expects the approved brand files at these exact public paths:
 
 ```text
 public/brand/creotech-logo.png
 public/brand/ritsumeikan-logo.jpg
 ```
 
-Rules for future edits:
+Usage rules:
 
+- Creotech is the primary operating brand for this support intake service.
+- Ritsumeikan is shown only as a modest related/supporting institutional mark.
+- The site should not appear to be the official Ritsumeikan University website.
 - Do not replace these files without project-owner approval.
 - Do not recreate placeholder logos.
 - Do not stretch or distort logos.
-- Use `object-contain` when rendering logos.
-- Creotech is the primary operating brand.
-- Ritsumeikan is displayed modestly as a related/supporting institutional mark; the site should not appear to be the official Ritsumeikan University website.
+- Render both logo images with `object-contain` and descriptive alt text.
