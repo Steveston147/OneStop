@@ -67,7 +67,7 @@ export function Footer({ lang }: { lang: Lang }) {
 
         <div>
           <p className="text-sm font-extrabold uppercase tracking-[0.14em] text-white/60">
-            {lang === 'ja' ? 'Supporting institution' : 'Supporting institution'}
+            {lang === 'ja' ? '関連機関' : 'Supporting institution'}
           </p>
           <div className="mt-4 inline-flex rounded-2xl bg-white px-4 py-3 shadow-soft">
             <RitsumeikanLogo className="h-12 w-44" />
