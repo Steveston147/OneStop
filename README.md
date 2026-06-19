@@ -36,9 +36,11 @@ No Prisma, complex authentication, paid APIs, official logos, stock photos, paym
 
 
 ## Brand assets and colors
-- The Creotech mark in the header is implemented as an inline SVG based on the logo image supplied in the project request.
-- The UI uses an enji/crimson accent for Ritsumeikan-related pages. Ritsumeikan official historical material describes enji as the school color, but confirm exact brand color values with the current institutional guideline before final production use.
-- Do not recreate, scrape, or download the Ritsumeikan logo. Place an approved official file at `public/brand/ritsumeikan-logo.svg`; the header/footer will show a text fallback until that file exists.
+- The site uses the uploaded `public/brand/creotech-logo.png` as the primary operating brand mark.
+- The uploaded `public/brand/ritsumeikan-logo.jpg` is shown modestly in the footer as a related/supporting institutional mark.
+- Logos are rendered with `object-contain` and should not be stretched, distorted, recreated, or replaced without approval.
+- The main UI colour remains dark navy for readability, with Creotech blue as a supporting brand colour and Ritsumeikan red used carefully for small accents.
+- The footer clarifies that this is a Creotech support intake service, not the official Ritsumeikan University website.
 
 ## Environment variables
 Create `.env.local`:

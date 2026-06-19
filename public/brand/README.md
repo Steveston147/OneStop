@@ -1,17 +1,17 @@
 # Brand assets
 
-## Creotech logo
-The site header uses a lightweight SVG recreation of the Creotech logo based on the logo image provided in the request thread.
-
-## Ritsumeikan logo
-Do not commit a recreated or downloaded Ritsumeikan logo unless the project owner has confirmed usage permission and supplied the official file.
-
-To enable the Ritsumeikan logo slot in the header/footer, place the approved file here:
+The site uses the exact brand files expected in this folder:
 
 ```text
-public/brand/ritsumeikan-logo.svg
+public/brand/creotech-logo.png
+public/brand/ritsumeikan-logo.jpg
 ```
 
-If the file is absent, the UI falls back to a text badge: “Ritsumeikan-related institutions” / “立命館関連機関”.
+Rules for future edits:
 
-The UI uses an enji/crimson accent because Ritsumeikan’s official historical material describes enji as the school color.
+- Do not replace these files without project-owner approval.
+- Do not recreate placeholder logos.
+- Do not stretch or distort logos.
+- Use `object-contain` when rendering logos.
+- Creotech is the primary operating brand.
+- Ritsumeikan is displayed modestly as a related/supporting institutional mark; the site should not appear to be the official Ritsumeikan University website.

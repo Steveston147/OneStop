@@ -1,17 +1,20 @@
 import Link from 'next/link';
-import { CreotechLogo, OptionalRitsumeikanLogo } from '@/components/BrandLogos';
+import { CreotechLogo, RitsumeikanLogo } from '@/components/BrandLogos';
 import { labels, nav, navNames, type Lang } from '@/content/site';
 
 export function Header({ lang }: { lang: Lang }) {
   const other = lang === 'ja' ? 'en' : 'ja';
-  const ritsLabel = lang === 'ja' ? '立命館関連機関' : 'Ritsumeikan-related institutions';
 
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-white/95 backdrop-blur">
-      <div className="container flex min-h-24 items-center justify-between gap-5 py-3">
-        <Link href={`/${lang}`} className="flex items-center gap-4 text-navy" aria-label="Creotech International Support home">
-          <CreotechLogo className="h-14 w-32 shrink-0" />
-          <span className="hidden border-l border-line pl-4 text-base font-extrabold leading-tight sm:block">
+      <div className="container flex min-h-20 items-center justify-between gap-4 py-3">
+        <Link
+          href={`/${lang}`}
+          className="flex min-w-0 items-center gap-3 text-navy"
+          aria-label="Creotech International Support home"
+        >
+          <CreotechLogo className="h-10 w-28 shrink-0 sm:h-14 sm:w-40" />
+          <span className="hidden border-l-2 border-creotechBlue/20 pl-4 text-sm font-extrabold leading-tight text-navy sm:block lg:text-base">
             International
             <br />
             Support
@@ -20,21 +23,17 @@ export function Header({ lang }: { lang: Lang }) {
 
         <nav className="hidden items-center gap-5 text-sm font-bold text-navy xl:flex" aria-label="Primary navigation">
           {nav.slice(0, 7).map((item) => (
-            <Link className="hover:text-rits" key={item} href={`/${lang}/${item}`}>
+            <Link className="transition hover:text-creotechBlue" key={item} href={`/${lang}/${item}`}>
               {navNames[lang][item]}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden lg:block">
-          <OptionalRitsumeikanLogo label={ritsLabel} />
-        </div>
-
-        <div className="flex shrink-0 gap-3">
-          <Link className="btn btn-secondary" href={`/${other}`}>
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <Link className="btn btn-secondary px-3 py-3 text-sm sm:px-5" href={`/${other}`}>
             {labels[lang].lang}
           </Link>
-          <Link className="btn btn-primary" href={`/${lang}/request`}>
+          <Link className="btn btn-primary px-3 py-3 text-sm sm:px-5" href={`/${lang}/request`}>
             {labels[lang].request}
           </Link>
         </div>
@@ -46,28 +45,42 @@ export function Header({ lang }: { lang: Lang }) {
 export function Footer({ lang }: { lang: Lang }) {
   return (
     <footer className="bg-navy text-white">
-      <div className="container grid gap-8 py-12 md:grid-cols-3">
+      <div className="container grid gap-10 py-12 lg:grid-cols-[1.2fr_.8fr_.9fr]">
         <div>
-          <CreotechLogo className="h-14 w-32 rounded-xl bg-white p-2" />
-          <p className="mt-4 text-white/80">
+          <div className="inline-flex rounded-2xl bg-white px-4 py-3 shadow-soft">
+            <CreotechLogo className="h-12 w-40" />
+          </div>
+          <p className="mt-5 max-w-md text-white/80">
             {lang === 'ja'
-              ? '立命館スクールカラーのえんじをアクセントにしたMVPです。立命館ロゴは承認済みファイルがある場合のみ表示します。'
-              : 'This MVP uses Ritsumeikan crimson as an accent. The Ritsumeikan logo is shown only when an approved logo file is provided.'}
+              ? 'Creotech International Support は、立命館関連の海外ゲストに対する初期受付・調整支援を行います。'
+              : 'Creotech International Support provides intake and coordination support for Ritsumeikan-related international guests.'}
           </p>
         </div>
-        <div className="grid gap-2">
+
+        <div className="grid gap-2 text-white/80">
           {nav.map((item) => (
-            <Link key={item} href={`/${lang}/${item}`}>
+            <Link className="transition hover:text-white" key={item} href={`/${lang}/${item}`}>
               {navNames[lang][item]}
             </Link>
           ))}
         </div>
+
         <div>
-          <OptionalRitsumeikanLogo label={lang === 'ja' ? '立命館関連機関' : 'Ritsumeikan-related institutions'} />
+          <p className="text-sm font-extrabold uppercase tracking-[0.14em] text-white/60">
+            {lang === 'ja' ? 'Supporting institution' : 'Supporting institution'}
+          </p>
+          <div className="mt-4 inline-flex rounded-2xl bg-white px-4 py-3 shadow-soft">
+            <RitsumeikanLogo className="h-12 w-44" />
+          </div>
+          <p className="mt-4 text-sm leading-6 text-white/70">
+            {lang === 'ja'
+              ? '本サイトはクレオテックが運営する支援受付サイトです。立命館大学公式サイトではありません。'
+              : 'This site is operated by Creotech as a support intake service. It is not the official Ritsumeikan University website.'}
+          </p>
           <Link href="/admin" className="mt-5 block underline">
             Admin
           </Link>
-          <p className="mt-4 text-white/75">© Creotech support MVP</p>
+          <p className="mt-4 text-white/60">© Creotech support MVP</p>
         </div>
       </div>
     </footer>

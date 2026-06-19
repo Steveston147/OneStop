@@ -107,3 +107,11 @@ textarea {
   background: white;
   width: 100%;
 }
+
+
+@media (max-width: 640px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
