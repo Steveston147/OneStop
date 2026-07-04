@@ -104,7 +104,7 @@ export default function RequestForm({ lang }: { lang: Lang }) {
         <TextField label="Number of accompanying family members" name="family_members" type="number" min="0" />
       </FormSection>
 
-      <section className="card p-8">
+      <section className="card p-6 md:p-8">
         <h2 className="text-2xl font-extrabold text-navy">{t.services}</h2>
         <p className="mt-2 text-ink">Select all services that may be relevant. Creotech staff will help narrow the scope.</p>
         <div className="mt-5 grid gap-3 md:grid-cols-2">
@@ -121,7 +121,7 @@ export default function RequestForm({ lang }: { lang: Lang }) {
         <p className="mt-5 rounded-xl bg-mist p-4 font-semibold text-navy">{t.schoolNote}</p>
       </section>
 
-      <section className="card p-8">
+      <section className="card p-6 md:p-8">
         <label className="label" htmlFor="message">
           Message
         </label>
@@ -138,7 +138,7 @@ export default function RequestForm({ lang }: { lang: Lang }) {
 
 function FormSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="card p-8">
+    <section className="card p-6 md:p-8">
       <h2 className="text-2xl font-extrabold text-navy">{title}</h2>
       <div className="mt-6 grid gap-5 md:grid-cols-2">{children}</div>
     </section>
