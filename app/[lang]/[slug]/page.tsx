@@ -52,7 +52,7 @@ function ServiceContent({ lang, slug }: { lang: Lang; slug: keyof typeof service
           <InfoCard title={isJa ? '対象となる方' : 'Who this service is for'} items={detail.audience} />
           <InfoCard title={isJa ? '支援できること' : 'What we can support'} items={detail.support} columns />
           <ProcessCard title={isJa ? '進め方' : 'Process steps'} steps={detail.process} />
-          <section className="card p-8">
+          <section className="card p-6 md:p-8">
             <h2 className="text-2xl font-extrabold text-navy">{isJa ? '料金・見積' : 'Pricing or quotation'}</h2>
             <p className="mt-4 text-lg">{detail.pricing}</p>
           </section>
@@ -90,7 +90,7 @@ function InfoCard({
   warning?: boolean;
 }) {
   return (
-    <section className={`card p-8 ${warning ? 'border-l-4 border-l-accent' : ''}`}>
+    <section className={`card p-6 md:p-8 ${warning ? 'border-l-4 border-l-accent' : ''}`}>
       <h2 className="text-2xl font-extrabold text-navy">{title}</h2>
       <ul className={`mt-5 grid gap-3 ${columns ? 'md:grid-cols-2' : ''}`}>
         {items.map((item) => (
@@ -105,11 +105,11 @@ function InfoCard({
 
 function ProcessCard({ title, steps }: { title: string; steps: readonly string[] }) {
   return (
-    <section className="card p-8">
+    <section className="card p-6 md:p-8">
       <h2 className="text-2xl font-extrabold text-navy">{title}</h2>
       <ol className="mt-5 grid gap-4">
         {steps.map((step, index) => (
-          <li className="flex gap-4 text-lg" key={step}>
+          <li className="flex gap-3 text-base md:gap-4 md:text-lg" key={step}>
             <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-navy font-bold text-white">
               {index + 1}
             </span>
@@ -145,7 +145,7 @@ function Pricing({ lang }: { lang: Lang }) {
     <section className="section">
       <div className="container grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {cards.map(([title, body]) => (
-          <div className="card p-7" key={title}>
+          <div className="card p-6 md:p-7" key={title}>
             <h2 className="text-xl font-extrabold text-navy">{title}</h2>
             <p className="mt-3 text-lg">{body}</p>
           </div>
@@ -164,7 +164,7 @@ function Faq({ lang }: { lang: Lang }) {
           const question = questionEnd > 0 ? item.slice(0, questionEnd) : item;
           const answer = questionEnd > 0 ? item.slice(questionEnd).trim() : item;
           return (
-            <details className="card p-6" key={item}>
+            <details className="card p-5 md:p-6" key={item}>
               <summary className="cursor-pointer text-lg font-extrabold text-navy">{question}</summary>
               <p className="mt-3 text-lg">{answer}</p>
             </details>
