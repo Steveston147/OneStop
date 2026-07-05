@@ -9,6 +9,7 @@ import {
   ServicesPage,
   TimelinePage,
   VisitorsPage,
+  pageHeroDetails,
   pageMeta,
   type OneStopSlug,
 } from '../oneStopContent';
@@ -26,14 +27,26 @@ export default function ContentPage({ params }: { params: { lang: Lang; slug: st
 
   const slug = params.slug as OneStopSlug;
   const [title, summary] = pageMeta[slug];
+  const hero = pageHeroDetails[slug];
 
   return (
     <Layout lang={params.lang}>
-      <section className="bg-mist">
-        <div className="container py-14 md:py-20">
-          <p className="eyebrow">International Support</p>
-          <h1 className="mt-3 max-w-4xl text-4xl font-extrabold leading-tight text-navy md:text-5xl">{title}</h1>
-          <p className="mt-5 max-w-3xl text-lg text-ink md:text-xl">{summary}</p>
+      <section className={`page-hero page-hero-${slug}`}>
+        <div className="container py-9 md:py-12">
+          <div className="page-hero-panel">
+            <div className="page-hero-copy">
+              <p className="eyebrow">{hero.label}</p>
+              <h1>{title}</h1>
+              <p>{summary}</p>
+              <div className="page-hero-chips" aria-label="ページ概要">
+                {hero.chips.map((chip) => <span key={chip}>{chip}</span>)}
+              </div>
+            </div>
+            <div className="page-hero-aside" aria-hidden="true">
+              <span className="mini-label">International Support</span>
+              <strong>{hero.cta}</strong>
+            </div>
+          </div>
         </div>
       </section>
       {slug === 'services' ? <ServicesPage /> : null}
