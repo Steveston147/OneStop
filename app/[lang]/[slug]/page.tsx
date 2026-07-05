@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Layout } from '@/components/Public';
 import type { Lang } from '@/content/site';
@@ -41,6 +42,12 @@ export default function ContentPage({ params }: { params: { lang: Lang; slug: st
               <div className="page-hero-chips" aria-label="ページ概要">
                 {hero.chips.map((chip) => <span key={chip}>{chip}</span>)}
               </div>
+              {slug !== 'contact' ? (
+                <div className="page-hero-actions">
+                  <Link className="page-hero-action" href={`/${params.lang}/contact`}>相談する</Link>
+                  <Link className="page-hero-action" href={`/${params.lang}`}>トップへ戻る</Link>
+                </div>
+              ) : null}
             </div>
             <div className="page-hero-aside" aria-hidden="true">
               <span className="mini-label">International Support</span>
