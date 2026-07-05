@@ -2,13 +2,13 @@ import Link from 'next/link';
 import { labels, type Lang } from '@/content/site';
 
 const homeNav = [
-  ['サービス概要 / Services', '#services'],
-  ['支援内容 / Support', '#support'],
-  ['着任時期から確認 / Timeline', '#timeline'],
-  ['宿泊候補 / Accommodation', '#accommodation'],
-  ['費用 / Fees', '#fees'],
-  ['FAQ', '#faq'],
-  ['お問い合わせ / Contact', '#contact'],
+  ['サービス概要 / Services', '/services'],
+  ['着任時期から確認 / Timeline', '/timeline'],
+  ['宿泊候補 / Accommodation', '/accommodation'],
+  ['費用 / Fees', '/fees'],
+  ['FAQ', '/faq'],
+  ['Visitors', '/visitors'],
+  ['お問い合わせ / Contact', '/contact'],
 ] as const;
 
 export function Header({ lang }: { lang: Lang }) {
@@ -39,7 +39,7 @@ export function Header({ lang }: { lang: Lang }) {
           <Link className="btn btn-secondary btn-sm" href={`/${other}`}>
             {labels[lang].lang}
           </Link>
-          <a className="btn btn-primary btn-sm" href={`/${lang}#contact`}>
+          <a className="btn btn-primary btn-sm" href={`/${lang}/contact`}>
             {lang === 'ja' ? '相談する' : 'Contact'}
           </a>
         </div>
@@ -58,7 +58,7 @@ export function Header({ lang }: { lang: Lang }) {
               <Link className="btn btn-secondary btn-sm" href={`/${other}`}>
                 {labels[lang].lang}
               </Link>
-              <a className="btn btn-primary btn-sm" href={`/${lang}#contact`}>
+              <a className="btn btn-primary btn-sm" href={`/${lang}/contact`}>
                 {lang === 'ja' ? '相談する' : 'Contact'}
               </a>
             </div>
@@ -112,7 +112,7 @@ export function CTA({ lang }: { lang: Lang }) {
         <h2 className="mx-auto mt-2 max-w-3xl text-3xl font-extrabold leading-tight md:text-4xl">
           {lang === 'ja' ? 'まずは支援内容をご相談ください' : 'Start with a clear support request'}
         </h2>
-        <Link className="btn mt-8 bg-white text-navy" href={`/${lang}#contact`}>
+        <Link className="btn mt-8 bg-white text-navy" href={`/${lang}/contact`}>
           {labels[lang].request}
         </Link>
       </div>

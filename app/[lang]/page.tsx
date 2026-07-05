@@ -1,81 +1,105 @@
 import Link from 'next/link';
 import { Layout } from '@/components/Public';
 import type { Lang } from '@/content/site';
-
-const navItems = [
-  ['サービス概要 / Services', '#services'],
-  ['支援内容 / Support', '#support'],
-  ['着任時期から確認 / Timeline', '#timeline'],
-  ['宿泊候補 / Accommodation', '#accommodation'],
-  ['費用 / Fees', '#fees'],
-  ['FAQ', '#faq'],
-  ['お問い合わせ / Contact', '#contact'],
-] as const;
-
-const audiences = [
-  ['学内職員・教員の方', 'For Ritsumeikan staff and faculty', '海外から教員・研究者・ゲスト等を受け入れる際の準備、費用、手続き、外部連携について相談できます。'],
-  ['海外から来日予定の方', 'For international visitors', '来日前の準備、宿泊、空港到着、生活立ち上げに関する基本情報を確認できます。'],
-  ['COE・ビザでお困りの方', 'COE and visa support', 'COE・ビザ関連手続きについて、外部専門サービスとの連携を含めて支援します。'],
-];
-
-const services = [
-  { ja: 'COE・ビザ関連支援', en: 'COE and visa support', desc: 'COE申請に必要な情報整理、必要書類の案内、外部専門サービスとの連携、本人・学内担当者への案内、申請準備の支援。', timing: '着任4〜5か月前', partner: '外部専門サービス＋クレオテック', cost: '本人負担または学内部署負担を選択可能。内容に応じて個別見積。COE承認や査証発給を保証するものではありません。' },
-  { ja: '宿泊・初期滞在先支援', en: 'Accommodation support', desc: '滞在期間、キャンパス、予算、家族帯同の有無に応じて、宿泊候補を紹介します。予約はホテル公式サイト等から利用者ご自身で行ってください。', timing: '着任2〜3か月前', partner: '紹介ホテル・宿泊施設', cost: '宿泊費、キャンセル料等は利用者または学内部署負担。' },
-  { ja: '航空券・関空到着支援', en: 'Flight and airport arrival support', desc: '航空券手配、関空出迎え、空港からホテル・キャンパス等への移動支援について、MYKと連携して案内します。MYKは航空券・空港到着支援等の旅行関連手配を行う連携先です。', timing: '到着1〜2か月前', partner: 'MYK', cost: '本人負担の場合は本人が事前決済。学内部署負担の場合はMYKと学内部署が請求書で精算。' },
-  { ja: '住居・生活立ち上げ支援', en: 'Housing and settling-in support', desc: '住居相談、市役所手続き、在留カード住所登録、国民健康保険、銀行口座開設、携帯電話、キャンパス案内などの初期生活支援。', timing: '着任1〜2か月前', partner: 'クレオテック＋必要に応じた外部先', cost: '交通費、手続き関連費、契約費用等は別途。' },
-  { ja: '短期ゲスト向けライト支援', en: 'Light support for short-term guests', desc: '1週間から数か月程度の短期招聘教員・ゲスト向けに、ホテル紹介、航空券、関空出迎え、学内案内等を中心に支援します。COE・ビザは必要な場合のみ確認します。', timing: '来日1〜2か月前', partner: 'クレオテック＋MYK＋宿泊施設', cost: '内容に応じて個別見積。' },
-];
-
-const timelines = [
-  ['4月着任', ['推奨相談開始: 前年11月〜12月', 'COE・ビザ準備: 12月〜1月', '住居・航空券・ホテル: 2月〜3月', 'リスクが高くなる時期: 2月以降']],
-  ['9月着任', ['推奨相談開始: 4月〜5月', 'COE・ビザ準備: 5月〜6月', '住居・航空券・ホテル: 7月〜8月', 'リスクが高くなる時期: 7月以降']],
-] as const;
-
-const hotels = [
-  { name: 'タッセルイン京都二条', en: 'Tassel Inn Kyoto Nijo', area: '二条エリア', station: '二条駅周辺（要確認）', campus: '朱雀・衣笠方面へのアクセスを想定', price: '時期により変動（要確認）', family: '要確認', long: '中短期向け候補', features: '短期滞在やプログラム利用に便利。朱雀・衣笠方面へのアクセスを想定。' },
-  { name: 'プリンスホテル', en: 'Prince Hotel', area: '京都市内または近隣エリア', station: '施設により異なる（要確認）', campus: '来賓・教員・家族帯同の滞在候補', price: '時期により変動（要確認）', family: '候補', long: '要確認', features: '安定したホテル品質。来賓・教員・家族帯同の滞在候補。' },
-  { name: 'アーバンホテル二条', en: 'Urban Hotel Nijo', area: '二条エリア', station: '二条駅周辺（要確認）', campus: '京都市内移動に便利', price: '時期により変動（要確認）', family: '要確認', long: '中短期向け候補', features: '中短期滞在や大学関係者の利用候補。京都市内移動に便利。' },
-];
-
-const fees = [
-  ['基本支援', 'Initial consultation, schedule planning, information organisation, coordination, and guidance. 当面は支援内容に応じて個別見積。'],
-  ['外部委託費', 'COE・ビザ支援、専門家費用、外部サービス利用料等。'],
-  ['実費', '航空券、ホテル、空港送迎、交通費、郵送費、翻訳費、手続き関連費等。'],
-  ['本人負担または学内部署負担を選択できる費用', 'COE・ビザ支援費、航空券、ホテル、関空出迎え等は、案件により本人負担または学内部署負担を選択できます。'],
-];
-
-const faqs = [
-  ['いつ相談すればよいですか？', '4月着任の場合は前年11月〜12月頃、9月着任の場合は4月〜5月頃の相談開始を推奨します。'],
-  ['ホテル予約はクレオテックが行いますか？', '原則として、クレオテックは宿泊候補を紹介します。予約、支払い、変更、キャンセルは、各ホテルの公式サイトまたは案内に従って利用者ご自身で行ってください。'],
-  ['航空券は誰が手配しますか？', '航空券や空港到着支援は、MYKと連携して案内します。本人負担の場合は本人が事前決済し、学内部署負担の場合はMYKと学内部署が請求書で精算します。'],
-  ['COE・ビザの取得は保証されますか？', '保証はできません。COE・ビザ関連手続きは、受入形態、在留資格、国籍、必要書類等により異なります。外部専門サービスとの連携を含め、必要情報の整理と申請準備を支援します。'],
-  ['短期ゲストも対象ですか？', 'はい。短期招聘教員やゲストについては、ホテル紹介、航空券、関空出迎え、学内案内などを中心としたライト支援を行います。COE・ビザは必要な場合のみ確認します。'],
-  ['留学生も対象ですか？', 'このサイトは、海外教員・研究者・短期ゲスト・その家族を対象としています。留学生向けCOE支援は、将来的に別サービスとして検討します。'],
-];
-
-const contactFields = ['学内部署名 / Department or office', '担当者名 / Contact person', 'メールアドレス / Email', '受入予定者氏名 / Visitor name', '国籍 / Nationality', '現在の居住国 / Current country of residence', '着任予定日 / Expected appointment or arrival date', '滞在予定期間 / Expected period of stay', '家族帯同の有無 / Accompanying family', '希望する支援内容 / Requested support', '費用負担者 / Cost bearer', 'COE・ビザ支援の要否 / COE and visa support needed', 'ホテル紹介の要否 / Accommodation support needed', '航空券・関空出迎えの要否 / Flight or airport arrival support needed'];
+import { AudienceCards, VisualArea, navItems } from './oneStopContent';
 
 export default function Home({ params }: { params: { lang: Lang } }) {
   const lang = params.lang;
-  return <Layout lang={lang}><main>
-    <section id="home" className="bg-gradient-to-br from-white via-mist to-sky"><div className="container py-16 lg:py-24"><div className="grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center"><div><p className="eyebrow">海外教員・研究者受入ワンストップサポート</p><h1 className="mt-4 text-4xl font-extrabold leading-tight text-navy md:text-6xl">海外教員・研究者等の受入を、来日前から着任後まで支援します</h1><p className="mt-4 max-w-3xl text-base font-semibold leading-relaxed text-slate-600 md:text-lg">One-stop support for hosting international faculty, researchers, and guests at Ritsumeikan.</p><p className="mt-6 max-w-3xl text-lg leading-relaxed text-ink md:text-xl">COE・ビザ、宿泊、航空券、関空到着時の支援、住居、銀行口座開設、生活立ち上げなど、海外からの教員・研究者・短期ゲスト等を受け入れる際に必要となる周辺業務を、クレオテックが学内窓口となり、外部パートナーと連携しながら支援します。</p><p className="mt-4 max-w-3xl text-base leading-relaxed text-slate-600">Creotech supports Ritsumeikan staff and faculty by coordinating COE and visa support, accommodation, flight and airport arrival support, housing, banking, and settling-in assistance through internal coordination and external partners.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"><a className="btn btn-primary" href="#contact">相談する <span className="ml-2 text-sm opacity-80">Contact us</span></a><a className="btn btn-secondary" href="#timeline">着任時期から確認する <span className="ml-2 text-sm opacity-70">Check the timeline</span></a></div></div><div className="card p-6 md:p-7"><div className="rounded-3xl bg-navy p-6 text-white md:p-7"><p className="text-sm font-bold uppercase tracking-widest text-white/65">Creotech role</p><h2 className="mt-3 text-3xl font-extrabold">学内調整窓口として連携します</h2><p className="mt-4 text-white/80">Creotech introduces, connects, organises, and coordinates with external partners. It does not guarantee approvals, reservations, cancellations, or payments.</p></div></div></div></div></section>
-    <section className="border-y border-line bg-white"><div className="container flex flex-wrap gap-3 py-4">{navItems.map(([label, href]) => <a key={href} className="rounded-full border border-line px-4 py-2 text-sm font-bold text-navy hover:border-accent" href={href}>{label}</a>)}</div></section>
-    <Section id="services" eyebrow="Who we support" title="立命館大学の学内関係者向けサービスです。" en="For Ritsumeikan host offices, faculty, international visitors, and accompanying family members."><div className="grid gap-5 md:grid-cols-3">{audiences.map(([ja, en, desc]) => <article className="card p-6 md:p-7" key={ja}><h3 className="text-2xl font-extrabold text-navy">{ja}</h3><p className="mt-1 text-sm font-semibold text-slate-500">{en}</p><p className="mt-4">{desc}</p></article>)}</div></Section>
-    <Section id="support" eyebrow="Support menu" title="支援内容" en="Support coordinated by Creotech and external partners"><div className="grid gap-5 lg:grid-cols-2">{services.map((s) => <article className="card p-6 md:p-7" key={s.ja}><h3 className="text-2xl font-extrabold text-navy">{s.ja}</h3><p className="text-sm font-semibold text-slate-500">{s.en}</p><p className="mt-4">{s.desc}</p><dl className="mt-5 grid gap-3 text-sm"><Meta k="推奨開始時期" v={s.timing}/><Meta k="主な連携先・担当" v={s.partner}/><Meta k="費用メモ" v={s.cost}/></dl></article>)}</div></Section>
-    <Section id="timeline" eyebrow="Timeline" title="着任時期から逆算する" en="Plan backwards from the appointment date"><div className="grid gap-5 md:grid-cols-2">{timelines.map(([title, items]) => <article className="card p-6 md:p-7" key={title}><h3 className="text-3xl font-extrabold text-navy">{title}</h3><ul className="mt-5 grid gap-3">{items.map(item => <li className="rounded-xl bg-mist p-4 font-semibold" key={item}>✓ {item}</li>)}</ul></article>)}</div><p className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 font-semibold text-navy">直前のご相談にも可能な範囲で対応しますが、COE・ビザ、宿泊、航空券、関空到着支援等の一部サービスを提供できない場合があります。できるだけ早めにご相談ください。</p></Section>
-    <Section id="accommodation" eyebrow="Accommodation" title="宿泊候補" en="Accommodation options introduced for later replacement with official links"><div className="grid gap-6">{hotels.map((h) => <article className="card overflow-hidden md:grid md:grid-cols-[240px_1fr] lg:grid-cols-[280px_1fr]" key={h.name}><div className="grid aspect-[16/9] min-h-44 place-items-center md:aspect-auto bg-gradient-to-br from-slate-100 to-slate-200 p-8 text-center text-sm font-bold text-slate-500">Banner image placeholder<br/>後日差し替え</div><div className="p-6 md:p-7"><h3 className="text-2xl font-extrabold text-navy">{h.name}</h3><p className="text-sm font-semibold text-slate-500">{h.en}</p><p className="mt-3">{h.features}</p><dl className="mt-5 grid gap-2 text-sm md:grid-cols-2"><Meta k="Area" v={h.area}/><Meta k="Nearest station" v={h.station}/><Meta k="Access" v={h.campus}/><Meta k="Price range" v={h.price}/><Meta k="Family stay" v={h.family}/><Meta k="Long stay" v={h.long}/></dl><a className="btn btn-secondary mt-5 w-full sm:w-auto" href="#contact">公式予約リンク（後日更新）</a></div></article>)}</div><p className="mt-6 rounded-2xl border border-line bg-white p-5 font-semibold">掲載ホテルは宿泊候補の紹介です。予約、支払い、変更、キャンセルは、各ホテルの公式サイトまたは案内に従って利用者ご自身で行ってください。料金、空室状況、条件は時期により変動します。</p></Section>
-    <Section id="fees" eyebrow="Fees" title="費用の考え方" en="How costs are handled"><div className="grid gap-5 md:grid-cols-2">{fees.map(([title, desc]) => <article className="card p-6 md:p-7" key={title}><h3 className="text-2xl font-extrabold text-navy">{title}</h3><p className="mt-3">{desc}</p></article>)}</div><div className="mt-6 grid gap-4 rounded-3xl bg-navy p-7 text-white"><p>航空券について、本人負担の場合は本人が事前に決済します。学内部署負担の場合は、MYKと学内部署が請求書により精算します。COE・ビザ支援費用については、本人負担または学内部署負担を選択できます。</p><p className="text-white/80">予約、支払い、変更、キャンセル条件は、各ホテル、旅行会社、外部サービス提供者等の規定に従います。クレオテックは、学内窓口として候補紹介、情報整理、外部パートナーとの連携支援を行います。</p></div></Section>
-    <Section id="faq" eyebrow="FAQ" title="よくある質問" en="Frequently asked questions"><div className="grid gap-4 md:grid-cols-2">{faqs.map(([q, a]) => <article className="card p-5 md:p-6" key={q}><h3 className="text-xl font-extrabold text-navy">{q}</h3><p className="mt-3">{a}</p></article>)}</div></Section>
-    <Section id="visitors" eyebrow="For International Visitors" title="For International Visitors" en="Basic information for incoming guests"><div className="card p-6 md:p-8"><p className="text-lg">This page provides basic information for international faculty, researchers, short-term guests, and accompanying family members who will come to Ritsumeikan. Creotech works with your host office and external partners to support preparation before arrival and settling in after arrival.</p><div className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">{['Before coming to Japan','COE and visa support','Accommodation','Flight and airport arrival support','First days in Japan','Payment and costs','Contact your host office'].map(x => <div className="rounded-xl bg-mist p-4 font-bold text-navy" key={x}>{x}</div>)}</div><p className="mt-6 rounded-2xl border border-blue-100 bg-sky p-5 font-bold text-navy">Please contact your host office at Ritsumeikan first. Some services must be requested through the host department or office.</p></div></Section>
-    <Section id="contact" eyebrow="Contact" title="お問い合わせ" en="Visual-ready inquiry form; submission integration can be added later"><form className="card grid gap-5 p-6 md:p-8"><p className="rounded-2xl border border-amber-200 bg-amber-50 p-4 font-semibold text-navy">このフォームはPhase 1 MVPの画面見本です。実際の送信連携は後続フェーズで追加します。お急ぎの場合は学内担当窓口へご連絡ください。</p><div className="grid gap-5 md:grid-cols-2">{contactFields.map((label) => <label className="grid gap-2 font-bold text-navy" key={label}>{label}<input className="input" /></label>)}</div><label className="grid gap-2 font-bold text-navy">その他相談内容 / Additional comments<textarea className="input min-h-36" /></label><button className="btn btn-primary w-full sm:w-fit" type="button">送信連携は後日追加 / Submission coming later</button></form></Section>
-    <Section id="future" eyebrow="Future development" title="将来拡張予定" en="Future development placeholders only"><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">{[['Notionナレッジベース','Verified Q&A, case records, cost examples, and internal notes will be accumulated.'],['AIによる参考回答','AI responses may be added later based only on verified internal knowledge.'],['留学生COE専用サイト','Student COE support may be developed as a separate service in the future.'],['学内サポートサービスサイト','A separate internal support site may be developed for faculty/staff flight arrangements, overseas business travel, and short-term international student programme logistics.']].map(([t,d]) => <article className="card p-5 md:p-6" key={t}><h3 className="text-xl font-extrabold text-navy">{t}</h3><p className="mt-3 text-sm text-slate-600">{d}</p></article>)}</div></Section>
-  </main></Layout>;
-}
 
-function Section({ id, eyebrow, title, en, children }: { id: string; eyebrow: string; title: string; en: string; children: React.ReactNode }) {
-  return <section id={id} className="section scroll-mt-24 even:bg-mist"><div className="container"><p className="eyebrow">{eyebrow}</p><h2 className="mt-2 max-w-4xl text-3xl font-extrabold leading-tight text-navy md:text-5xl">{title}</h2><p className="mb-8 mt-2 max-w-3xl text-base font-semibold leading-relaxed text-slate-500">{en}</p>{children}</div></section>;
-}
+  return (
+    <Layout lang={lang}>
+      <main>
+        <section className="relative overflow-hidden bg-gradient-to-br from-white via-mist to-sky">
+          <div className="absolute inset-0 opacity-70">
+            <VisualArea slot="hero" className="h-full rounded-none border-0" />
+          </div>
+          <div className="container relative py-16 lg:py-24">
+            <div className="grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
+              <div className="rounded-3xl bg-white/85 p-6 shadow-soft backdrop-blur-sm md:p-8">
+                <p className="eyebrow">海外教員・研究者受入ワンストップサポート</p>
+                <h1 className="mt-4 text-4xl font-extrabold leading-tight text-navy md:text-6xl">
+                  海外教員・研究者等の受入を、来日前から着任後まで支援します
+                </h1>
+                <p className="mt-4 max-w-3xl text-base font-semibold leading-relaxed text-slate-600 md:text-lg">
+                  One-stop support for hosting international faculty, researchers, and guests at Ritsumeikan.
+                </p>
+                <p className="mt-6 max-w-3xl text-lg leading-relaxed text-ink md:text-xl">
+                  COE・ビザ、宿泊、航空券、関空到着時の支援、住居、銀行口座開設、生活立ち上げなど、海外からの教員・研究者・短期ゲスト等を受け入れる際に必要となる周辺業務を、クレオテックが学内窓口となり、外部パートナーと連携しながら支援します。
+                </p>
+                <p className="mt-4 max-w-3xl text-base leading-relaxed text-slate-600">
+                  Creotech supports Ritsumeikan staff and faculty by coordinating COE and visa support, accommodation, flight and airport arrival support, housing, banking, and settling-in assistance through internal coordination and external partners.
+                </p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+                  <Link className="btn btn-primary" href={`/${lang}/contact`}>
+                    相談する <span className="ml-2 text-sm opacity-80">Contact us</span>
+                  </Link>
+                  <Link className="btn btn-secondary" href={`/${lang}/timeline`}>
+                    着任時期から確認する <span className="ml-2 text-sm opacity-70">Check the timeline</span>
+                  </Link>
+                </div>
+              </div>
+              <div className="card p-6 md:p-7">
+                <div className="rounded-3xl bg-navy p-6 text-white md:p-7">
+                  <p className="text-sm font-bold uppercase tracking-widest text-white/65">Creotech role</p>
+                  <h2 className="mt-3 text-3xl font-extrabold">学内調整窓口として連携します</h2>
+                  <p className="mt-4 text-white/80">
+                    Creotech introduces, connects, organises, and coordinates with external partners. It does not guarantee approvals, reservations, cancellations, or payments.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-function Meta({ k, v }: { k: string; v: string }) {
-  return <div><dt className="font-extrabold text-navy">{k}</dt><dd className="text-slate-700">{v}</dd></div>;
+        <section className="border-y border-line bg-white">
+          <div className="container flex flex-wrap gap-3 py-4">
+            {navItems.map(([label, href]) => (
+              <Link key={href} className="rounded-full border border-line px-4 py-2 text-sm font-bold text-navy hover:border-accent" href={`/${lang}${href}`}>
+                {label}
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="section bg-white">
+          <div className="container">
+            <p className="eyebrow">Who we support</p>
+            <h2 className="mt-2 max-w-4xl text-3xl font-extrabold leading-tight text-navy md:text-5xl">
+              立命館大学の学内関係者向けサービスです。
+            </h2>
+            <p className="mb-8 mt-2 max-w-3xl text-base font-semibold leading-relaxed text-slate-500">
+              For Ritsumeikan host offices, faculty, international visitors, and accompanying family members.
+            </p>
+            <AudienceCards />
+          </div>
+        </section>
+
+        <section className="section bg-mist">
+          <div className="container">
+            <p className="eyebrow">Support menu</p>
+            <h2 className="mt-2 max-w-4xl text-3xl font-extrabold leading-tight text-navy md:text-5xl">主な支援内容</h2>
+            <p className="mb-8 mt-2 max-w-3xl text-base font-semibold leading-relaxed text-slate-500">
+              各内容の詳細は独立ページで確認できます。
+            </p>
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {navItems.map(([label, href]) => (
+                <Link className="card block p-6 transition hover:-translate-y-0.5 hover:border-accent" key={href} href={`/${lang}${href}`}>
+                  <h3 className="text-xl font-extrabold text-navy">{label}</h3>
+                  <p className="mt-3 text-sm font-semibold text-slate-500">詳しく見る / View details</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section bg-navy text-white">
+          <div className="container text-center">
+            <p className="eyebrow">Next step</p>
+            <h2 className="mx-auto mt-2 max-w-3xl text-3xl font-extrabold leading-tight md:text-4xl">まずは支援内容をご相談ください</h2>
+            <Link className="btn mt-8 bg-white text-navy" href={`/${lang}/contact`}>お問い合わせ / Contact</Link>
+          </div>
+        </section>
+      </main>
+    </Layout>
+  );
 }
