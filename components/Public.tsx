@@ -16,18 +16,18 @@ export function Header({ lang }: { lang: Lang }) {
 
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-white/95 backdrop-blur">
-      <div className="container flex min-h-16 items-center justify-between gap-3 py-3 lg:min-h-[72px]">
-        <Link href={`/${lang}`} className="flex min-w-0 items-center gap-2.5 font-extrabold text-navy" aria-label="Creotech International Support home">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-line bg-white text-sm text-deep-red shadow-sm sm:h-9 sm:w-9">C</span>
+      <div className="container flex min-h-16 items-center justify-between gap-4 py-3 lg:min-h-[72px]">
+        <Link href={`/${lang}`} className="flex min-w-0 items-center gap-3.5 font-extrabold text-navy" aria-label="Creotech International Support home">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl border border-line bg-gradient-to-br from-white to-light-gold text-sm text-deep-red shadow-sm sm:h-9 sm:w-9">C</span>
           <span className="min-w-0 leading-tight">
-            <span className="block max-w-[44vw] truncate text-sm sm:max-w-none sm:text-base">International Support</span>
-            <span className="hidden text-xs font-semibold text-slate-500 md:block">
+            <span className="hidden text-sm tracking-[-.01em] sm:block lg:text-base">International Support</span>
+            <span className="hidden text-xs font-semibold text-slate-500 lg:block">
               Faculty & Researcher Hosting
             </span>
           </span>
         </Link>
 
-        <nav aria-label="Primary navigation" className="hidden items-center gap-1 xl:flex">
+        <nav aria-label="Primary navigation" className="hidden items-center gap-1.5 xl:flex">
           {homeNav.map(([label, href]) => (
             <a className="nav-link" key={href} href={`/${lang}${href}`}>
               {label}
