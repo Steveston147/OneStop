@@ -48,7 +48,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
 
               <aside className="home-guidance-card card p-5 md:p-6" aria-label="Creotechの役割">
                 <div className="home-visual-placeholder mb-5" role="img" aria-label="キャンパス写真を後日配置するためのビジュアルエリア">
-                  <span>Future campus image area</span>
+                  <span className="visual-chip">International hosting support</span>
                 </div>
                 <p className="inline-flex rounded-full bg-light-gold px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-deep-red">
                   Coordination window

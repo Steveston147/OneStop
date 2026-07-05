@@ -310,3 +310,81 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   .ja-home-hero::before { inset: auto -30% -28% 18%; }
   .home-visual-placeholder { min-height: 132px; border-radius: 18px; }
 }
+
+/* Phase 3C visual polish */
+.container { max-width: 1240px; }
+
+.nav-link { padding-inline: 12px; }
+
+.visual-chip {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: calc(100% - 32px);
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 999px;
+  background: rgba(255,255,255,.68);
+  padding: 7px 12px;
+  color: rgba(11,35,65,.68);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 26px rgba(11,35,65,.06);
+  backdrop-filter: blur(6px);
+}
+
+.service-card-visual::before,
+.visitors-hero-visual::before,
+.page-intro-visual::before,
+.home-visual-placeholder::before,
+.hotel-image-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 16% 10% auto auto;
+  width: 38%;
+  height: 48%;
+  border-radius: 999px;
+  background: rgba(255,255,255,.34);
+  transform: rotate(-12deg);
+}
+
+.service-card-visual::after,
+.visitors-hero-visual::after,
+.page-intro-visual::after,
+.home-visual-placeholder::after,
+.hotel-image-placeholder::after {
+  content: '';
+  position: absolute;
+  inset: auto auto 16% 10%;
+  width: 46%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(138,21,56,.18), rgba(176,138,60,.18), transparent);
+}
+
+.hotel-image-placeholder {
+  position: relative;
+  overflow: hidden;
+}
+
+.page-intro-visual {
+  min-height: 170px;
+}
+
+.ja-home-hero {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(176, 138, 60, .18), transparent 30%),
+    radial-gradient(circle at 12% 12%, rgba(138, 21, 56, .075), transparent 25%),
+    linear-gradient(112deg, rgba(255,255,255,.99) 0%, rgba(249,251,253,.96) 47%, rgba(232,240,249,.92) 100%);
+}
+
+.home-guidance-card {
+  border-color: rgba(216,225,238,.9);
+}
+
+@media (max-width: 640px) {
+  .container { padding-inline: 18px; }
+  .visual-chip { font-size: 10px; padding: 6px 10px; }
+}
