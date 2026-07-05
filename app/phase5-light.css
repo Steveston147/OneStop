@@ -1,0 +1,315 @@
+/* ChatGPT Phase 5: lighter, pastel, shared header refinement */
+:root {
+  --soft-rose: #fff0f4;
+  --soft-sky: #eef8ff;
+  --soft-sage: #eff9f3;
+  --soft-lemon: #fff8df;
+  --soft-lilac: #f4f0ff;
+  --soft-panel: rgba(255, 255, 255, .78);
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 4%, rgba(255, 240, 244, .56), transparent 24%),
+    radial-gradient(circle at 92% 8%, rgba(238, 248, 255, .62), transparent 26%),
+    var(--off-white);
+}
+
+.container {
+  max-width: 1380px;
+}
+
+header .container {
+  max-width: 1360px;
+}
+
+.brand-lockup {
+  gap: .7rem;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fff, var(--soft-rose) 46%, var(--soft-sky));
+}
+
+.nav-link {
+  font-size: 11px;
+  padding: 8px 9px;
+}
+
+.btn {
+  box-shadow: 0 8px 20px rgba(11, 35, 65, .045);
+}
+
+.btn-cta {
+  background: linear-gradient(135deg, var(--rits-red), #a8204b);
+  box-shadow: 0 12px 26px rgba(138, 21, 56, .18);
+}
+
+/* Shared page hero: make the top area lighter and less text-heavy */
+.page-hero {
+  border-bottom: 1px solid rgba(216, 225, 238, .7);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 240, 244, .74), transparent 26%),
+    radial-gradient(circle at 88% 18%, rgba(238, 248, 255, .78), transparent 26%),
+    linear-gradient(120deg, #fff 0%, #f8fbff 54%, #fffaf0 100%);
+}
+
+.page-hero-timeline,
+.page-hero-visitors {
+  background: linear-gradient(120deg, #fff 0%, var(--soft-sky) 52%, var(--soft-lemon) 100%);
+}
+
+.page-hero-accommodation,
+.page-hero-contact {
+  background: linear-gradient(120deg, #fff 0%, var(--soft-sage) 52%, var(--soft-sky) 100%);
+}
+
+.page-hero-fees,
+.page-hero-faq {
+  background: linear-gradient(120deg, #fff 0%, var(--soft-rose) 52%, #f7fbff 100%);
+}
+
+.page-hero .container {
+  max-width: 1380px;
+  padding-top: clamp(22px, 3.4vw, 42px) !important;
+  padding-bottom: clamp(22px, 3.4vw, 42px) !important;
+}
+
+.page-hero-panel {
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 240px);
+  gap: clamp(16px, 3vw, 28px);
+  border-color: rgba(216, 225, 238, .66);
+  border-radius: 24px;
+  background: var(--soft-panel);
+  padding: clamp(18px, 3vw, 28px);
+  box-shadow: 0 14px 36px rgba(11, 35, 65, .045);
+}
+
+.page-hero-copy .eyebrow,
+.section .container > .eyebrow:first-child {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid rgba(138, 21, 56, .1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .68);
+  padding: 6px 10px;
+  color: var(--deep-red);
+  font-size: 10px;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(11, 35, 65, .035);
+}
+
+.page-hero-copy h1 {
+  margin-top: .65rem;
+  max-width: 720px;
+  font-size: clamp(1.55rem, 2.45vw, 2.25rem);
+  line-height: 1.2;
+  letter-spacing: -.018em;
+}
+
+.page-hero-copy p {
+  margin-top: .45rem;
+  max-width: 680px;
+  color: rgba(23, 32, 51, .72);
+  font-size: clamp(.9rem, 1.05vw, .98rem);
+  font-weight: 650;
+  line-height: 1.62;
+}
+
+.page-hero-chips {
+  margin-top: .9rem;
+  gap: 7px;
+}
+
+.page-hero-chips span {
+  border-color: rgba(216, 225, 238, .82);
+  background: rgba(255, 255, 255, .78);
+  padding: 6px 11px;
+  color: rgba(11, 35, 65, .86);
+  font-size: .76rem;
+  box-shadow: none;
+}
+
+.page-hero-aside {
+  display: grid;
+  align-content: center;
+  min-height: 104px;
+  border-color: rgba(255, 255, 255, .92);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 82% 24%, rgba(255,255,255,.9), transparent 30%),
+    linear-gradient(135deg, rgba(255,240,244,.92), rgba(238,248,255,.92) 54%, rgba(255,248,223,.92));
+  padding: 16px;
+}
+
+.page-hero-aside strong {
+  margin-top: .75rem;
+  font-size: .98rem;
+  line-height: 1.35;
+}
+
+.page-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.page-hero-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(138, 21, 56, .18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .82);
+  padding: 8px 13px;
+  color: var(--deep-red);
+  font-size: .82rem;
+  font-weight: 900;
+  box-shadow: 0 8px 18px rgba(11, 35, 65, .04);
+}
+
+.page-hero-action:hover {
+  background: var(--soft-rose);
+}
+
+/* Softer, lighter content sections */
+.section {
+  padding: clamp(42px, 5.3vw, 66px) 0;
+}
+
+.section-title {
+  max-width: 760px;
+  font-size: clamp(1.45rem, 2.35vw, 2.15rem);
+  line-height: 1.22;
+  letter-spacing: -.018em;
+}
+
+.section-lead {
+  max-width: 680px;
+  margin-top: .6rem;
+  margin-bottom: 1.55rem;
+  color: rgba(23, 32, 51, .68);
+  font-size: clamp(.9rem, 1.1vw, .98rem);
+  font-weight: 620;
+  line-height: 1.65;
+}
+
+.card {
+  border-color: rgba(216, 225, 238, .78);
+  box-shadow: 0 12px 32px rgba(11, 35, 65, .045);
+}
+
+.card h3 {
+  line-height: 1.28;
+}
+
+.mini-label {
+  background: rgba(255, 240, 244, .88);
+  color: var(--deep-red);
+  font-size: 10px;
+  letter-spacing: .085em;
+}
+
+.visual-chip {
+  border-color: rgba(255, 255, 255, .82);
+  background: rgba(255, 255, 255, .74);
+  color: rgba(11, 35, 65, .62);
+  font-size: 10px;
+}
+
+.page-intro-visual,
+.home-visual-placeholder,
+.hotel-image-placeholder,
+.service-card-visual,
+.visitors-hero-visual {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255,255,255,.9), transparent 26%),
+    radial-gradient(circle at 82% 22%, rgba(255,240,244,.72), transparent 28%),
+    linear-gradient(135deg, #ffffff 0%, var(--soft-sky) 52%, var(--soft-lemon) 100%);
+}
+
+.page-intro-visual {
+  min-height: 138px;
+}
+
+.vertical-visual {
+  aspect-ratio: 5 / 4;
+}
+
+.timeline-step {
+  background: rgba(245, 248, 251, .92);
+  font-size: .88rem;
+}
+
+.note-banner {
+  border-color: rgba(138, 21, 56, .12);
+  background: linear-gradient(135deg, rgba(255, 248, 223, .95), rgba(255, 240, 244, .82));
+  font-size: .88rem;
+}
+
+/* Home stays premium, but less oversized */
+.ja-home-hero h1 {
+  max-width: 820px;
+  font-size: clamp(2.15rem, 4.2vw, 4rem) !important;
+  line-height: 1.12;
+}
+
+.ja-home-hero .container {
+  padding-top: clamp(48px, 7vw, 84px) !important;
+  padding-bottom: clamp(48px, 7vw, 84px) !important;
+}
+
+.home-guidance-card h2 {
+  font-size: clamp(1.25rem, 2vw, 1.75rem) !important;
+}
+
+@media (max-width: 1024px) {
+  .page-hero-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero-aside {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-hero .container {
+    padding-top: 20px !important;
+    padding-bottom: 22px !important;
+  }
+
+  .page-hero-panel {
+    border-radius: 20px;
+    padding: 18px;
+  }
+
+  .page-hero-copy h1 {
+    font-size: 1.62rem;
+  }
+
+  .page-hero-copy p {
+    font-size: .9rem;
+  }
+
+  .page-hero-aside {
+    display: none;
+  }
+
+  .section {
+    padding: 40px 0;
+  }
+
+  .section-title {
+    font-size: 1.42rem;
+  }
+
+  .btn {
+    width: auto;
+  }
+}
