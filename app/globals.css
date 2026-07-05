@@ -388,3 +388,120 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
   .container { padding-inline: 18px; }
   .visual-chip { font-size: 10px; padding: 6px 10px; }
 }
+
+/* Phase 4: professional Japanese UI refinement */
+body { font-size: 15.5px; line-height: 1.72; }
+.container { max-width: 1320px; }
+.section { padding: clamp(54px, 7vw, 88px) 0; }
+.section-title {
+  margin-top: .5rem;
+  max-width: 780px;
+  color: var(--navy);
+  font-size: clamp(1.7rem, 3.1vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.18;
+  letter-spacing: -.02em;
+}
+.section-lead {
+  margin-top: .75rem;
+  margin-bottom: 2rem;
+  max-width: 720px;
+  color: var(--muted);
+  font-size: clamp(.95rem, 1.25vw, 1.05rem);
+  font-weight: 650;
+  line-height: 1.75;
+}
+.brand-lockup { padding-right: .25rem; }
+.brand-mark { box-shadow: 0 10px 24px rgba(11,35,65,.08); }
+.nav-link { font-size: 11.5px; padding: 9px 10px; }
+.card { border-radius: 24px; box-shadow: 0 16px 42px rgba(11, 35, 65, .06); }
+.lift-card { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.lift-card:hover { transform: translateY(-2px); border-color: rgba(138,21,56,.35); box-shadow: 0 20px 52px rgba(11, 35, 65, .09); }
+.mini-label {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  background: rgba(138,21,56,.08);
+  padding: 6px 10px;
+  color: var(--deep-red);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.icon-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--navy), #173a66);
+  color: white;
+  font-size: 14px;
+  font-weight: 900;
+  box-shadow: 0 12px 24px rgba(11,35,65,.16);
+}
+.note-banner {
+  border: 1px solid rgba(176,138,60,.28);
+  border-radius: 22px;
+  background: var(--light-gold);
+  padding: 1rem 1.15rem;
+  color: var(--navy);
+  font-size: .94rem;
+  font-weight: 800;
+  line-height: 1.7;
+}
+.timeline-step {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: center;
+  gap: 12px;
+  border-radius: 18px;
+  background: rgba(238,242,246,.82);
+  padding: 12px;
+  color: var(--navy);
+  font-size: .92rem;
+  font-weight: 800;
+}
+.timeline-step span {
+  display: grid;
+  height: 32px;
+  place-items: center;
+  border-radius: 999px;
+  background: white;
+  color: var(--deep-red);
+  font-size: 12px;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.faq-card { position: relative; }
+.faq-card::before {
+  content: 'Q';
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  color: rgba(138,21,56,.12);
+  font-size: 2rem;
+  font-weight: 900;
+}
+.home-visual-vertical { min-height: 360px; }
+.vertical-visual { min-height: 100%; aspect-ratio: 4 / 5; }
+.service-card-visual { min-height: 132px; aspect-ratio: 16 / 6; }
+.hotel-image-placeholder { min-height: 240px; }
+.ja-home-hero { border-bottom: 1px solid var(--line); }
+.ja-home-hero .container { max-width: 1360px; }
+.input:focus { border-color: var(--rits-red); box-shadow: 0 0 0 3px rgba(138,21,56,.1); }
+
+@media (max-width: 1024px) {
+  .vertical-visual { min-height: 220px; aspect-ratio: 16 / 7; }
+  .home-visual-vertical { min-height: 260px; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  .section-title { font-size: 1.65rem; }
+  .section-lead { margin-bottom: 1.5rem; }
+  .home-visual-vertical { min-height: 180px; }
+  .vertical-visual { min-height: 160px; aspect-ratio: 16 / 8; }
+  .service-card-visual { min-height: 110px; }
+}
