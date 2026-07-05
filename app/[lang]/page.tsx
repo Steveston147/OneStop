@@ -27,7 +27,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
                   Creotech supports Ritsumeikan staff and faculty by coordinating COE and visa support, accommodation, flight and airport arrival support, housing, banking, and settling-in assistance through internal coordination and external partners.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
-                  <Link className="btn btn-primary" href={`/${lang}/contact`}>
+                  <Link className="btn btn-cta" href={`/${lang}/contact`}>
                     相談する <span className="ml-2 text-sm opacity-80">Contact us</span>
                   </Link>
                   <Link className="btn btn-secondary" href={`/${lang}/timeline`}>
@@ -36,7 +36,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
                 </div>
               </div>
               <div className="card p-6 md:p-7">
-                <div className="rounded-3xl bg-navy p-6 text-white md:p-7">
+                <div className="rounded-3xl bg-deep-navy p-6 text-white md:p-7">
                   <p className="text-sm font-bold uppercase tracking-widest text-white/65">Creotech role</p>
                   <h2 className="mt-3 text-3xl font-extrabold">学内調整窓口として連携します</h2>
                   <p className="mt-4 text-white/80">
@@ -51,7 +51,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
         <section className="border-y border-line bg-white">
           <div className="container flex flex-wrap gap-3 py-4">
             {navItems.map(([label, href]) => (
-              <Link key={href} className="rounded-full border border-line px-4 py-2 text-sm font-bold text-navy hover:border-accent" href={`/${lang}${href}`}>
+              <Link key={href} className="rounded-full border border-line px-4 py-2 text-sm font-bold text-navy hover:border-accent hover:text-deep-red" href={`/${lang}${href}`}>
                 {label}
               </Link>
             ))}
@@ -80,7 +80,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
             </p>
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {navItems.map(([label, href]) => (
-                <Link className="card block p-6 transition hover:-translate-y-0.5 hover:border-accent" key={href} href={`/${lang}${href}`}>
+                <Link className="card block p-6 transition hover:-translate-y-0.5 hover:border-accent hover:text-deep-red" key={href} href={`/${lang}${href}`}>
                   <h3 className="text-xl font-extrabold text-navy">{label}</h3>
                   <p className="mt-3 text-sm font-semibold text-slate-500">詳しく見る / View details</p>
                 </Link>
@@ -89,11 +89,11 @@ export default function Home({ params }: { params: { lang: Lang } }) {
           </div>
         </section>
 
-        <section className="section bg-navy text-white">
+        <section className="section bg-deep-navy text-white">
           <div className="container text-center">
             <p className="eyebrow">Next step</p>
             <h2 className="mx-auto mt-2 max-w-3xl text-3xl font-extrabold leading-tight md:text-4xl">まずは支援内容をご相談ください</h2>
-            <Link className="btn mt-8 bg-white text-navy" href={`/${lang}/contact`}>お問い合わせ / Contact</Link>
+            <Link className="btn mt-8 border border-white/20 bg-white text-navy hover:bg-light-gold" href={`/${lang}/contact`}>お問い合わせ / Contact</Link>
           </div>
         </section>
       </main>
