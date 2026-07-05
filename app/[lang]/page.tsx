@@ -9,7 +9,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
   return (
     <Layout lang={lang}>
       <main>
-        <section className="bg-gradient-to-br from-white via-mist to-sky">
+        <section className="ja-hero-bg bg-gradient-to-br from-white via-mist to-sky">
           <div className="container py-16 lg:py-24">
             <div className="grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
               <div>
