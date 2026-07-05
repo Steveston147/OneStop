@@ -18,7 +18,7 @@ export function Header({ lang }: { lang: Lang }) {
     <header className="sticky top-0 z-20 border-b border-line bg-white/95 backdrop-blur">
       <div className="container flex min-h-16 items-center justify-between gap-3 py-3 lg:min-h-[72px]">
         <Link href={`/${lang}`} className="flex min-w-0 items-center gap-3 font-extrabold text-navy">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-navy text-white">C</span>
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-deep-navy text-white">C</span>
           <span className="min-w-0 leading-tight">
             <span className="block truncate">Creotech</span>
             <span className="block max-w-[42vw] truncate text-xs font-semibold text-slate-600 sm:max-w-none sm:text-sm">
@@ -39,7 +39,7 @@ export function Header({ lang }: { lang: Lang }) {
           <Link className="btn btn-secondary btn-sm" href={`/${other}`}>
             {labels[lang].lang}
           </Link>
-          <a className="btn btn-primary btn-sm" href={`/${lang}/contact`}>
+          <a className="btn btn-cta btn-sm" href={`/${lang}/contact`}>
             {lang === 'ja' ? '相談する' : 'Contact'}
           </a>
         </div>
@@ -58,7 +58,7 @@ export function Header({ lang }: { lang: Lang }) {
               <Link className="btn btn-secondary btn-sm" href={`/${other}`}>
                 {labels[lang].lang}
               </Link>
-              <a className="btn btn-primary btn-sm" href={`/${lang}/contact`}>
+              <a className="btn btn-cta btn-sm" href={`/${lang}/contact`}>
                 {lang === 'ja' ? '相談する' : 'Contact'}
               </a>
             </div>
@@ -71,7 +71,7 @@ export function Header({ lang }: { lang: Lang }) {
 
 export function Footer({ lang }: { lang: Lang }) {
   return (
-    <footer className="bg-navy text-white">
+    <footer className="bg-deep-navy text-white">
       <div className="container grid gap-8 py-10 md:grid-cols-[1.25fr_1fr_.9fr]">
         <div>
           <b className="text-lg">Creotech International Support</b>
@@ -106,13 +106,13 @@ export function Layout({ lang, children }: { lang: Lang; children: React.ReactNo
 
 export function CTA({ lang }: { lang: Lang }) {
   return (
-    <section className="section bg-navy text-white">
+    <section className="section bg-deep-navy text-white">
       <div className="container text-center">
         <p className="eyebrow">Next step</p>
         <h2 className="mx-auto mt-2 max-w-3xl text-3xl font-extrabold leading-tight md:text-4xl">
           {lang === 'ja' ? 'まずは支援内容をご相談ください' : 'Start with a clear support request'}
         </h2>
-        <Link className="btn mt-8 bg-white text-navy" href={`/${lang}/contact`}>
+        <Link className="btn mt-8 border border-white/20 bg-white text-navy hover:bg-light-gold" href={`/${lang}/contact`}>
           {labels[lang].request}
         </Link>
       </div>
