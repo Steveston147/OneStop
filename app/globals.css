@@ -175,3 +175,64 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
     aspect-ratio: 16 / 7;
   }
 }
+
+.page-intro-visual {
+  position: relative;
+  display: grid;
+  min-height: 150px;
+  aspect-ratio: 16 / 4;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-align: center;
+  box-shadow: 0 14px 36px rgba(11, 34, 66, .045);
+}
+
+.page-intro-visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-intro-visual-timeline {
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .6) 44%, rgba(231, 238, 247, .28) 100%),
+    radial-gradient(circle at 82% 28%, rgba(181, 139, 43, .12), transparent 26%),
+    linear-gradient(135deg, #f8fafc 0%, #eef4fa 52%, #e5edf6 100%);
+}
+
+.page-intro-visual-fees {
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, .92) 0%, rgba(255, 255, 255, .62) 48%, rgba(229, 237, 246, .35) 100%),
+    radial-gradient(circle at 18% 26%, rgba(11, 34, 66, .08), transparent 28%),
+    linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e8eef6 100%);
+}
+
+.page-intro-visual-faq {
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .64) 46%, rgba(232, 240, 249, .34) 100%),
+    radial-gradient(circle at 80% 24%, rgba(181, 139, 43, .1), transparent 24%),
+    linear-gradient(135deg, #f7f9fc 0%, #eef4fa 54%, #e6eef8 100%);
+}
+
+.page-intro-visual-contact {
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, .92) 0%, rgba(255, 255, 255, .64) 45%, rgba(231, 238, 247, .3) 100%),
+    radial-gradient(circle at 20% 76%, rgba(181, 139, 43, .11), transparent 24%),
+    linear-gradient(135deg, #f8fafc 0%, #eef4fa 52%, #e5edf6 100%);
+}
+
+@media (max-width: 640px) {
+  .page-intro-visual {
+    min-height: 112px;
+    aspect-ratio: 16 / 7;
+    border-radius: 18px;
+  }
+}
