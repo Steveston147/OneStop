@@ -63,10 +63,7 @@ export const siteImages = {
   },
 } satisfies Record<string, SiteImage>;
 
-export function MockImageBadge({ lang }: { lang: 'ja' | 'en' }) {
-  return (
-    <span className="mock-image-badge">
-      {lang === 'ja' ? 'UI確認用サンプル画像' : 'Design sample image'}
-    </span>
-  );
-}
+export const mockImageLabel = {
+  ja: 'UI確認用サンプル画像',
+  en: 'Design sample image',
+} as const;
