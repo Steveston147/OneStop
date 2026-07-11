@@ -43,20 +43,29 @@ export function Header({ lang }: { lang: Lang }) {
   const other = lang === 'ja' ? 'en' : 'ja';
 
   return (
-    <header className="site-header">
-      <div className="container header-inner">
-        <Link href={`/${lang}`} className="brand-lockup" aria-label="Creotech International Support home">
-          <span className="brand-enji-bar" aria-hidden="true" />
-          <span>
+    <header className="site-header premium-site-header">
+      <div className="container header-inner premium-header-inner">
+        <Link href={`/${lang}`} className="brand-lockup premium-brand-lockup" aria-label="Ritsumeikan University international faculty and researcher support home">
+          <span className="ritsumeikan-monogram" aria-hidden="true">
+            <span className="ritsumeikan-r">R</span>
+            <small>RITSUMEIKAN</small>
+          </span>
+          <span className="brand-divider" aria-hidden="true" />
+          <span className="brand-copy">
             <strong>CREOTECH</strong>
-            <small>International Faculty &amp; Researcher Support</small>
+            <span className="brand-service-line">One-Stop Support for International Faculty &amp; Researchers</span>
+            <span className="brand-context-line">
+              <em>for Ritsumeikan University</em>
+              <i aria-hidden="true">|</i>
+              <span>Powered by Creotech</span>
+            </span>
           </span>
         </Link>
 
-        <nav aria-label="Primary navigation" className="desktop-nav">
+        <nav aria-label="Primary navigation" className="desktop-nav premium-desktop-nav">
           {navigation[lang].map(([label, href], index) => (
             <Link
-              className={index === navigation[lang].length - 1 ? 'btn btn-cta btn-sm' : 'nav-link'}
+              className={index === navigation[lang].length - 1 ? 'btn btn-cta btn-sm premium-contact-button' : 'nav-link'}
               key={href}
               href={`/${lang}${href}`}
             >
@@ -66,7 +75,7 @@ export function Header({ lang }: { lang: Lang }) {
         </nav>
 
         <div className="header-actions">
-          <Link className="btn btn-secondary btn-sm" href={`/${other}`}>
+          <Link className="btn btn-secondary btn-sm premium-language-button" href={`/${other}`}>
             {labels[lang].lang}
           </Link>
         </div>
@@ -97,7 +106,7 @@ export function Footer({ lang }: { lang: Lang }) {
       <div className="container footer-grid">
         <div>
           <p className="footer-brand">CREOTECH</p>
-          <p className="footer-service-name">International Faculty &amp; Researcher Support</p>
+          <p className="footer-service-name">One-Stop Support for International Faculty &amp; Researchers</p>
           <p className="footer-copy">
             {lang === 'ja'
               ? '立命館大学における海外教員・研究者等の受入準備を、学内外の関係先と連携しながら支援します。'
