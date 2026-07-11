@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Layout } from '@/components/Public';
 import type { Lang } from '@/content/site';
@@ -21,41 +22,54 @@ export function generateStaticParams() {
 }
 
 export default function ContentPage({ params }: { params: { lang: Lang; slug: string } }) {
-  if (!routeSlugs.includes(params.slug as OneStopSlug)) {
-    notFound();
-  }
+  if (!routeSlugs.includes(params.slug as OneStopSlug)) notFound();
 
+  const lang = params.lang;
   const slug = params.slug as OneStopSlug;
-  const [title, summary] = pageMeta[slug];
-  const hero = pageHeroDetails[slug];
+  const [title, summary] = pageMeta[lang][slug];
+  const hero = pageHeroDetails[lang][slug];
+  const isContact = slug === 'contact';
 
   return (
-    <Layout lang={params.lang}>
-      <section className={`page-hero page-hero-${slug}`}>
-        <div className="container py-9 md:py-12">
-          <div className="page-hero-panel">
-            <div className="page-hero-copy">
-              <p className="eyebrow">{hero.label}</p>
-              <h1>{title}</h1>
-              <p>{summary}</p>
-              <div className="page-hero-chips" aria-label="ページ概要">
-                {hero.chips.map((chip) => <span key={chip}>{chip}</span>)}
+    <Layout lang={lang}>
+      <main>
+        <section className="page-hero">
+          <div className="container">
+            <nav className="breadcrumb" aria-label="Breadcrumb">
+              <Link href={`/${lang}`}>{lang === 'ja' ? 'ホーム' : 'Home'}</Link>
+              <span aria-hidden="true">/</span>
+              <span>{title}</span>
+            </nav>
+            <div className="page-hero-panel">
+              <div className="page-hero-copy">
+                <p className="eyebrow">{hero.label}</p>
+                <h1>{title}</h1>
+                <p>{summary}</p>
+                <div className="page-hero-chips" aria-label={lang === 'ja' ? 'ページ概要' : 'Page summary'}>
+                  {hero.chips.map((chip) => <span key={chip}>{chip}</span>)}
+                </div>
+              </div>
+              <div className="page-hero-aside">
+                <span className="mini-label">International Support</span>
+                <strong>{hero.cta}</strong>
+                {!isContact ? (
+                  <Link className="text-action" href={`/${lang}/contact`}>
+                    {lang === 'ja' ? '相談フォームへ' : 'Open the enquiry form'} →
+                  </Link>
+                ) : null}
               </div>
             </div>
-            <div className="page-hero-aside" aria-hidden="true">
-              <span className="mini-label">International Support</span>
-              <strong>{hero.cta}</strong>
-            </div>
           </div>
-        </div>
-      </section>
-      {slug === 'services' ? <ServicesPage /> : null}
-      {slug === 'timeline' ? <TimelinePage /> : null}
-      {slug === 'accommodation' ? <AccommodationPage lang={params.lang} /> : null}
-      {slug === 'fees' ? <FeesPage /> : null}
-      {slug === 'faq' ? <FaqPage /> : null}
-      {slug === 'visitors' ? <VisitorsPage /> : null}
-      {slug === 'contact' ? <ContactPage /> : null}
+        </section>
+
+        {slug === 'services' ? <ServicesPage lang={lang} /> : null}
+        {slug === 'timeline' ? <TimelinePage lang={lang} /> : null}
+        {slug === 'accommodation' ? <AccommodationPage lang={lang} /> : null}
+        {slug === 'fees' ? <FeesPage lang={lang} /> : null}
+        {slug === 'faq' ? <FaqPage lang={lang} /> : null}
+        {slug === 'visitors' ? <VisitorsPage lang={lang} /> : null}
+        {slug === 'contact' ? <ContactPage lang={lang} /> : null}
+      </main>
     </Layout>
   );
 }
