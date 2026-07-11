@@ -5,14 +5,15 @@ import { mockImageLabel, siteImages } from '@/lib/siteImages';
 
 const copy = {
   ja: {
-    eyebrow: '海外教員・研究者受入ワンストップサポート',
-    title: '海外教員・研究者の受入準備を、ひとつの窓口で。',
-    lead: 'COE・ビザ、宿泊、航空券、到着、生活立ち上げについて、クレオテックが情報を整理し、学内外の関係先と連携します。',
+    eyebrow: '立命館大学用',
+    titleLine1: '海外教員・研究者受入',
+    titleLine2: 'ワンストップサポート',
+    lead: 'COE・ビザ、宿泊、航空券、到着、生活立ち上げまで、受入に必要な支援を整理し、関係先と連携します。',
     hostTitle: '学内の受入担当者です',
-    hostText: '受入時期、手続き、費用負担、外部連携を時系列で整理します。',
+    hostText: '受入準備の手順や必要な手続き、費用の目安、関係窓口との連携方法を確認できます。',
     hostCta: '受入準備を確認する',
     visitorTitle: '海外から来日する予定です',
-    visitorText: '来日前の準備、宿泊、到着、日本での生活について確認できます。',
+    visitorText: '来日前に必要な準備や手続き、宿泊・生活に関する情報を確認できます。',
     visitorCta: '来日前ガイドを見る',
     decided: '相談内容が決まっている方はこちら',
     supportEyebrow: 'Support menu',
@@ -23,15 +24,16 @@ const copy = {
     processLead: 'まず受入概要を確認し、必要な支援と担当範囲を整理します。',
   },
   en: {
-    eyebrow: 'International Faculty & Researcher Hosting Support',
-    title: 'One clear starting point for hosting and arrival preparation.',
-    lead: 'Creotech coordinates information and next steps for COE and visa guidance, accommodation, flights, arrival, and settling into life in Japan.',
+    eyebrow: 'For Ritsumeikan University',
+    titleLine1: 'One-Stop Support for',
+    titleLine2: 'International Faculty & Researchers',
+    lead: 'We organise the support needed for COE and visa guidance, accommodation, flights, arrival, and settling into life in Japan, and coordinate with the appropriate university and external partners.',
     hostTitle: 'I am from a Ritsumeikan host office',
-    hostText: 'Check preparation timing, responsibilities, costs, and coordination with external partners.',
+    hostText: 'Review hosting procedures, expected costs, responsibilities, and coordination with the relevant university and external contacts.',
     hostCta: 'View the host-office guide',
     visitorTitle: 'I am coming to Japan',
-    visitorText: 'Review essential preparation for accommodation, arrival, and your first days in Japan.',
-    visitorCta: 'View the visitor guide',
+    visitorText: 'Review the essential preparation, procedures, accommodation, and daily-life information needed before arrival.',
+    visitorCta: 'View the pre-arrival guide',
     decided: 'Already know what support you need?',
     supportEyebrow: 'Support menu',
     supportTitle: 'Find the right support without searching across multiple offices.',
@@ -74,6 +76,22 @@ const process = {
   ],
 } as const;
 
+function HostOfficeIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+      <path d="M4 10h16M5.5 10v8.5M9.8 10v8.5M14.2 10v8.5M18.5 10v8.5M3.5 19h17M12 4l8 4.5H4L12 4Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function VisitorIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+      <path d="m3.5 14.5 7-3.2 3.3-6.5c.5-.9 1.5-1.4 2.5-1l.4.2c.9.4 1.3 1.4.9 2.3l-2 5.2 4.7 2.4c.9.5 1.3 1.6.8 2.5l-.2.3c-.4.8-1.4 1.2-2.3.8l-5-2.2-3.2 4.4-1.9-.9 1.7-4.7-4.8 1.8-1.9-1.4Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function Home({ params }: { params: { lang: Lang } }) {
   const lang = params.lang;
   const t = copy[lang];
@@ -81,34 +99,50 @@ export default function Home({ params }: { params: { lang: Lang } }) {
   return (
     <Layout lang={lang}>
       <main>
-        <section className="home-hero">
-          <div className="container home-hero-grid">
-            <div className="home-hero-copy">
-              <p className="eyebrow">{t.eyebrow}</p>
-              <h1>{t.title}</h1>
-              <p className="hero-lead">{t.lead}</p>
+        <section className="home-hero premium-home-hero">
+          <div className="container home-hero-grid premium-home-hero-grid">
+            <div className="home-hero-copy premium-home-hero-copy">
+              <div className="hero-context-label">
+                <p className="eyebrow">{t.eyebrow}</p>
+                <span aria-hidden="true" />
+              </div>
+              <h1>
+                <span className="hero-title-line">{t.titleLine1}</span>
+                <span className="hero-title-line">{t.titleLine2}</span>
+              </h1>
+              <p className="hero-lead premium-hero-lead">{t.lead}</p>
 
-              <div className="audience-entry-grid">
-                <Link className="audience-entry audience-entry-enji" href={`/${lang}/timeline`}>
-                  <span className="entry-kicker">Host office</span>
-                  <strong>{t.hostTitle}</strong>
+              <div className="audience-entry-grid premium-audience-entry-grid">
+                <Link className="audience-entry audience-entry-enji premium-audience-entry" href={`/${lang}/timeline`}>
+                  <div className="entry-heading-row">
+                    <span className="entry-icon entry-icon-enji"><HostOfficeIcon /></span>
+                    <div>
+                      <span className="entry-kicker">Host office</span>
+                      <strong>{t.hostTitle}</strong>
+                    </div>
+                  </div>
                   <p>{t.hostText}</p>
                   <span className="entry-link">{t.hostCta} →</span>
                 </Link>
-                <Link className="audience-entry audience-entry-navy" href={`/${lang}/visitors`}>
-                  <span className="entry-kicker">International visitor</span>
-                  <strong>{t.visitorTitle}</strong>
+                <Link className="audience-entry audience-entry-navy premium-audience-entry" href={`/${lang}/visitors`}>
+                  <div className="entry-heading-row">
+                    <span className="entry-icon entry-icon-navy"><VisitorIcon /></span>
+                    <div>
+                      <span className="entry-kicker">International visitor</span>
+                      <strong>{t.visitorTitle}</strong>
+                    </div>
+                  </div>
                   <p>{t.visitorText}</p>
                   <span className="entry-link">{t.visitorCta} →</span>
                 </Link>
               </div>
 
-              <Link className="text-action" href={`/${lang}/contact`}>
+              <Link className="text-action premium-text-action" href={`/${lang}/contact`}>
                 {t.decided} <span>→</span>
               </Link>
             </div>
 
-            <figure className="hero-photo">
+            <figure className="hero-photo premium-hero-photo">
               <img src={siteImages.home.src} alt={siteImages.home.alt[lang]} />
               {siteImages.home.isMock ? <span className="mock-image-badge">{mockImageLabel[lang]}</span> : null}
               <figcaption>International Faculty &amp; Researcher Support</figcaption>
