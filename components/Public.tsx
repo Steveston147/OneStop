@@ -45,7 +45,7 @@ export function Header({ lang }: { lang: Lang }) {
   return (
     <header className="site-header premium-site-header">
       <div className="container header-inner premium-header-inner">
-        <Link href={`/${lang}`} className="brand-lockup premium-brand-lockup" aria-label="Ritsumeikan University international faculty and researcher support home">
+        <Link href={`/${lang}`} className="brand-lockup premium-brand-lockup" aria-label="Ritsumeikan Academy international faculty and researcher support home">
           <span className="ritsumeikan-monogram" aria-hidden="true">
             <span className="ritsumeikan-r">R</span>
             <small>RITSUMEIKAN</small>
@@ -55,7 +55,7 @@ export function Header({ lang }: { lang: Lang }) {
             <strong>CREOTECH</strong>
             <span className="brand-service-line">One-Stop Support for International Faculty &amp; Researchers</span>
             <span className="brand-context-line">
-              <em>for Ritsumeikan University</em>
+              <em>for the Ritsumeikan Academy</em>
               <i aria-hidden="true">|</i>
               <span>Powered by Creotech</span>
             </span>
@@ -109,8 +109,8 @@ export function Footer({ lang }: { lang: Lang }) {
           <p className="footer-service-name">One-Stop Support for International Faculty &amp; Researchers</p>
           <p className="footer-copy">
             {lang === 'ja'
-              ? '立命館大学における海外教員・研究者等の受入準備を、学内外の関係先と連携しながら支援します。'
-              : 'We coordinate practical support for international faculty, researchers, guests, accompanying families, and their host offices at Ritsumeikan University.'}
+              ? '立命館大学、APU、附属校における海外教員・研究者等の受入準備を、学内外の関係先と連携しながら支援します。'
+              : 'We coordinate practical support for international faculty, researchers, guests, accompanying families, and host offices across Ritsumeikan University, APU, and affiliated schools.'}
           </p>
         </div>
         <nav className="footer-nav" aria-label="Footer navigation">
