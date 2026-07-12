@@ -7,6 +7,7 @@ import { login, logout } from '@/lib/admin';
 export type ActionState = { error?: string };
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
+const REQUEST_ID_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
 function text(formData: FormData, name: string) {
   return String(formData.get(name) || '').trim();
@@ -14,7 +15,10 @@ function text(formData: FormData, name: string) {
 
 function createRequestId() {
   const date = new Date().toISOString().slice(0, 10).replaceAll('-', '');
-  const random = Math.random().toString(36).slice(2, 7).toUpperCase();
+  const random = Array.from(
+    { length: 5 },
+    () => REQUEST_ID_ALPHABET[Math.floor(Math.random() * REQUEST_ID_ALPHABET.length)],
+  ).join('');
   return `OS-${date}-${random}`;
 }
 
