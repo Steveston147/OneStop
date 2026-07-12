@@ -1,0 +1,150 @@
+/* Final brand and hero-title refinement. */
+
+.ritsumeikan-monogram {
+  display: block !important;
+  width: 34px;
+  height: 56px;
+  flex: 0 0 34px;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2079%20131%22%20role%3D%22img%22%20aria-labelledby%3D%22title%22%3E%3Ctitle%20id%3D%22title%22%3ERitsumeikan%3C%2Ftitle%3E%3Cpath%20fill%3D%22%23B5121B%22%20fill-rule%3D%22evenodd%22%20d%3D%22M%205%200%20L%205%20112%20L%2018%20112%20L%2018%2058%20L%2019%2057%20L%2027%2069%20L%2030%2072%20L%2036%2082%20L%2039%2085%20L%2043%2092%20L%2046%2095%20L%2052%20105%20L%2055%20108%20L%2057%20112%20L%2074%20112%20L%2036%2057%20L%2037%2056%20L%2051%2056%20L%2052%2055%20L%2058%2054%20L%2063%2051%20L%2069%2045%20L%2073%2038%20L%2073%2035%20L%2074%2034%20L%2074%2022%20L%2071%2014%20L%2064%206%20L%2054%201%20L%2050%201%20L%2049%200%20Z%20M%2018%2015%20L%2019%2014%20L%2050%2014%20L%2054%2016%20L%2059%2021%20L%2060%2026%20L%2061%2027%20L%2060%2033%20L%2053%2041%20L%2051%2041%20L%2050%2042%20L%2019%2042%20L%2018%2041%20Z%22%2F%3E%3Ctext%20x%3D%2239.5%22%20y%3D%22129%22%20text-anchor%3D%22middle%22%20fill%3D%22%23B5121B%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%227.2%22%20font-weight%3D%22700%22%20letter-spacing%3D%22.35%22%3ERITSUMEIKAN%3C%2Ftext%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.ritsumeikan-r,
+.ritsumeikan-monogram small {
+  display: none !important;
+}
+
+.premium-brand-lockup {
+  gap: 14px;
+}
+
+.brand-divider {
+  height: 58px;
+}
+
+.premium-home-hero-copy h1 {
+  max-width: none;
+  margin-top: 24px;
+  font-size: inherit;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.hero-title-line {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  font-weight: 850;
+}
+
+html[lang='ja'] .hero-title-line:first-child {
+  font-size: clamp(2.5rem, 3.35vw, 3.85rem);
+  letter-spacing: -.045em;
+  line-height: 1.12;
+  white-space: nowrap;
+}
+
+html[lang='ja'] .hero-title-line:last-child {
+  margin-top: .13em;
+  font-size: clamp(2.9rem, 4vw, 4.55rem);
+  letter-spacing: -.055em;
+  line-height: 1.08;
+  white-space: nowrap;
+}
+
+html[lang='en'] .hero-title-line:first-child {
+  font-size: clamp(2.35rem, 2.9vw, 3.25rem);
+  letter-spacing: -.04em;
+  line-height: 1.08;
+  white-space: nowrap;
+}
+
+html[lang='en'] .hero-title-line:last-child {
+  margin-top: .16em;
+  font-size: clamp(2.15rem, 2.45vw, 2.65rem);
+  letter-spacing: -.045em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+@media (max-width: 1120px) {
+  .ritsumeikan-monogram {
+    width: 30px;
+    height: 49px;
+    flex-basis: 30px;
+  }
+
+  .brand-divider {
+    height: 50px;
+  }
+
+  html[lang='ja'] .hero-title-line:first-child {
+    font-size: clamp(2.35rem, 4.2vw, 3.15rem);
+  }
+
+  html[lang='ja'] .hero-title-line:last-child {
+    font-size: clamp(2.7rem, 4.9vw, 3.65rem);
+  }
+
+  html[lang='en'] .hero-title-line:first-child {
+    font-size: clamp(2.15rem, 3.9vw, 2.8rem);
+  }
+
+  html[lang='en'] .hero-title-line:last-child {
+    font-size: clamp(1.85rem, 3.4vw, 2.3rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .ritsumeikan-monogram {
+    display: block !important;
+    width: 27px;
+    height: 44px;
+    flex-basis: 27px;
+  }
+
+  .brand-divider {
+    height: 44px;
+  }
+
+  .hero-title-line {
+    width: auto;
+    max-width: 100%;
+    white-space: normal !important;
+    text-wrap: balance;
+  }
+}
+
+@media (max-width: 640px) {
+  .ritsumeikan-monogram {
+    width: 24px;
+    height: 39px;
+    flex-basis: 24px;
+  }
+
+  .premium-brand-lockup {
+    gap: 10px;
+  }
+
+  .brand-divider {
+    height: 38px;
+  }
+
+  html[lang='ja'] .hero-title-line:first-child {
+    font-size: clamp(2rem, 9.5vw, 2.6rem);
+  }
+
+  html[lang='ja'] .hero-title-line:last-child {
+    font-size: clamp(2.35rem, 11vw, 3rem);
+  }
+
+  html[lang='en'] .hero-title-line:first-child {
+    font-size: clamp(1.9rem, 8.8vw, 2.35rem);
+  }
+
+  html[lang='en'] .hero-title-line:last-child {
+    font-size: clamp(1.65rem, 7.6vw, 2.05rem);
+  }
+}

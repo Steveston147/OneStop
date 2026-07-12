@@ -1,65 +1,98 @@
 import Link from 'next/link';
 import { labels, type Lang } from '@/content/site';
+import DocumentLanguage from '@/components/DocumentLanguage';
+import MobileContactCta from '@/components/MobileContactCta';
 
-const homeNav = [
-  ['サービス概要 / Services', '/services'],
-  ['着任時期から確認 / Timeline', '/timeline'],
-  ['宿泊候補 / Accommodation', '/accommodation'],
-  ['費用 / Fees', '/fees'],
-  ['FAQ', '/faq'],
-  ['Visitors', '/visitors'],
-  ['お問い合わせ / Contact', '/contact'],
-] as const;
+const navigation = {
+  ja: [
+    ['サポート内容', '/services'],
+    ['準備スケジュール', '/timeline'],
+    ['宿泊・生活', '/accommodation'],
+    ['費用・FAQ', '/fees'],
+    ['相談する', '/contact'],
+  ],
+  en: [
+    ['Support', '/services'],
+    ['Timeline', '/timeline'],
+    ['Accommodation', '/accommodation'],
+    ['Fees & FAQ', '/fees'],
+    ['Contact', '/contact'],
+  ],
+} as const;
+
+const footerNavigation = {
+  ja: [
+    ['サポート内容', '/services'],
+    ['準備スケジュール', '/timeline'],
+    ['宿泊候補', '/accommodation'],
+    ['費用', '/fees'],
+    ['よくある質問', '/faq'],
+    ['お問い合わせ', '/contact'],
+  ],
+  en: [
+    ['Support services', '/services'],
+    ['Preparation timeline', '/timeline'],
+    ['Accommodation', '/accommodation'],
+    ['Fees', '/fees'],
+    ['FAQ', '/faq'],
+    ['Contact', '/contact'],
+  ],
+} as const;
 
 export function Header({ lang }: { lang: Lang }) {
   const other = lang === 'ja' ? 'en' : 'ja';
 
   return (
-    <header className="sticky top-0 z-20 border-b border-line bg-white/95 backdrop-blur">
-      <div className="container flex min-h-16 items-center justify-between gap-5 py-3 lg:min-h-[72px]">
-        <Link href={`/${lang}`} className="brand-lockup flex min-w-0 items-center gap-3 font-extrabold text-navy" aria-label="Creotech International Support home">
-          <span className="brand-mark grid h-9 w-9 shrink-0 place-items-center rounded-2xl border border-line bg-gradient-to-br from-white to-light-gold text-sm text-deep-red shadow-sm">C</span>
-          <span className="min-w-0 leading-tight">
-            <span className="hidden text-[13px] tracking-[-.01em] sm:block lg:text-sm">Creotech International Support</span>
-            <span className="hidden text-[11px] font-semibold tracking-wide text-slate-500 lg:block">Faculty & Researcher Hosting</span>
+    <header className="site-header premium-site-header">
+      <div className="container header-inner premium-header-inner">
+        <Link href={`/${lang}`} className="brand-lockup premium-brand-lockup" aria-label="Ritsumeikan Academy international faculty and researcher support home">
+          <span className="ritsumeikan-monogram" aria-hidden="true">
+            <span className="ritsumeikan-r">R</span>
+            <small>RITSUMEIKAN</small>
+          </span>
+          <span className="brand-divider" aria-hidden="true" />
+          <span className="brand-copy">
+            <strong>CREOTECH</strong>
+            <span className="brand-service-line">One-Stop Support for International Faculty &amp; Researchers</span>
+            <span className="brand-context-line">
+              <em>for the Ritsumeikan Academy</em>
+              <i aria-hidden="true">|</i>
+              <span>Powered by Creotech</span>
+            </span>
           </span>
         </Link>
 
-        <nav aria-label="Primary navigation" className="hidden items-center gap-1.5 xl:flex">
-          {homeNav.map(([label, href]) => (
-            <a className="nav-link" key={href} href={`/${lang}${href}`}>
+        <nav aria-label="Primary navigation" className="desktop-nav premium-desktop-nav">
+          {navigation[lang].map(([label, href], index) => (
+            <Link
+              className={index === navigation[lang].length - 1 ? 'btn btn-cta btn-sm premium-contact-button' : 'nav-link'}
+              key={href}
+              href={`/${lang}${href}`}
+            >
               {label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <div className="hidden shrink-0 items-center gap-2 sm:flex">
-          <Link className="btn btn-secondary btn-sm" href={`/${other}`}>
+        <div className="header-actions">
+          <Link className="btn btn-secondary btn-sm premium-language-button" href={`/${other}`}>
             {labels[lang].lang}
           </Link>
-          <a className="btn btn-cta btn-sm" href={`/${lang}/contact`}>
-            {lang === 'ja' ? '相談する' : 'Contact'}
-          </a>
         </div>
 
-        <details className="mobile-menu relative xl:hidden">
-          <summary className="btn btn-secondary btn-sm cursor-pointer list-none select-none">Menu</summary>
-          <div className="absolute right-0 top-full mt-3 w-[min(88vw,360px)] rounded-2xl border border-line bg-white p-3 shadow-soft">
-            <nav aria-label="Mobile navigation" className="grid gap-1">
-              {homeNav.map(([label, href]) => (
-                <a className="nav-link block" key={href} href={`/${lang}${href}`}>
+        <details className="mobile-menu">
+          <summary className="btn btn-secondary btn-sm">Menu</summary>
+          <div className="mobile-menu-panel">
+            <nav aria-label="Mobile navigation">
+              {navigation[lang].map(([label, href]) => (
+                <Link className="mobile-nav-link" key={href} href={`/${lang}${href}`}>
                   {label}
-                </a>
+                </Link>
               ))}
             </nav>
-            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-line pt-3">
-              <Link className="btn btn-secondary btn-sm" href={`/${other}`}>
-                {labels[lang].lang}
-              </Link>
-              <a className="btn btn-cta btn-sm" href={`/${lang}/contact`}>
-                {lang === 'ja' ? '相談する' : 'Contact'}
-              </a>
-            </div>
+            <Link className="btn btn-secondary btn-sm" href={`/${other}`}>
+              {labels[lang].lang}
+            </Link>
           </div>
         </details>
       </div>
@@ -69,23 +102,27 @@ export function Header({ lang }: { lang: Lang }) {
 
 export function Footer({ lang }: { lang: Lang }) {
   return (
-    <footer className="bg-deep-navy text-white">
-      <div className="container grid gap-8 py-10 md:grid-cols-[1.25fr_1fr_.9fr]">
+    <footer className="site-footer">
+      <div className="container footer-grid">
         <div>
-          <b className="text-lg">Creotech International Support</b>
-          <p className="mt-3 max-w-prose text-sm text-white/75">
-            立命館大学の学内関係者向けサービスです。Creotech is the internal coordination window and works with external partners.
+          <p className="footer-brand">CREOTECH</p>
+          <p className="footer-service-name">One-Stop Support for International Faculty &amp; Researchers</p>
+          <p className="footer-copy">
+            {lang === 'ja'
+              ? '立命館大学、APU、附属校における海外教員・研究者等の受入準備を、学内外の関係先と連携しながら支援します。'
+              : 'We coordinate practical support for international faculty, researchers, guests, accompanying families, and host offices across Ritsumeikan University, APU, and affiliated schools.'}
           </p>
         </div>
-        <nav className="grid gap-2 text-sm text-white/85 md:grid-cols-2" aria-label="Footer navigation">
-          {homeNav.map(([label, href]) => (
-            <a className="hover:text-white" key={href} href={`/${lang}${href}`}>
+        <nav className="footer-nav" aria-label="Footer navigation">
+          {footerNavigation[lang].map(([label, href]) => (
+            <Link key={href} href={`/${lang}${href}`}>
               {label}
-            </a>
+            </Link>
           ))}
         </nav>
-        <div>
-          <p className="text-sm text-white/65">Phase 1 MVP. No Ritsumeikan University official logo is used.</p>
+        <div className="footer-notes">
+          <p>{lang === 'ja' ? '運営・調整窓口：クレオテック' : 'Coordination window: Creotech'}</p>
+          <p>{lang === 'ja' ? 'COE・査証の取得、予約、契約等を保証するものではありません。' : 'COE or visa approval, bookings, and contracts are not guaranteed.'}</p>
         </div>
       </div>
     </footer>
@@ -95,23 +132,28 @@ export function Footer({ lang }: { lang: Lang }) {
 export function Layout({ lang, children }: { lang: Lang; children: React.ReactNode }) {
   return (
     <>
+      <DocumentLanguage lang={lang} />
       <Header lang={lang} />
       {children}
       <Footer lang={lang} />
+      <MobileContactCta lang={lang} />
     </>
   );
 }
 
 export function CTA({ lang }: { lang: Lang }) {
   return (
-    <section className="section bg-deep-navy text-white">
-      <div className="container text-center">
+    <section className="final-cta">
+      <div className="container final-cta-inner">
         <p className="eyebrow">Next step</p>
-        <h2 className="mx-auto mt-2 max-w-3xl text-3xl font-extrabold leading-tight md:text-4xl">
-          {lang === 'ja' ? 'まずは支援内容をご相談ください' : 'Start with a clear support request'}
-        </h2>
-        <Link className="btn mt-8 border border-white/20 bg-white text-navy hover:bg-light-gold" href={`/${lang}/contact`}>
-          {labels[lang].request}
+        <h2>{lang === 'ja' ? '分かる範囲からご相談ください。' : 'Start with the information you already have.'}</h2>
+        <p>
+          {lang === 'ja'
+            ? '受入時期や必要な支援が確定していなくても、初期相談から整理できます。'
+            : 'You can make an initial enquiry even when dates or support details are not final.'}
+        </p>
+        <Link className="btn btn-light" href={`/${lang}/contact`}>
+          {lang === 'ja' ? '相談フォームへ' : 'Open the enquiry form'}
         </Link>
       </div>
     </section>
@@ -120,11 +162,11 @@ export function CTA({ lang }: { lang: Lang }) {
 
 export function PageHero({ title, summary }: { title: string; summary: string }) {
   return (
-    <section className="bg-mist">
-      <div className="container py-14 md:py-20">
+    <section className="simple-page-hero">
+      <div className="container">
         <p className="eyebrow">International Support</p>
-        <h1 className="mt-3 max-w-4xl text-4xl font-extrabold leading-tight text-navy md:text-5xl">{title}</h1>
-        <p className="mt-5 max-w-3xl text-lg text-ink md:text-xl">{summary}</p>
+        <h1>{title}</h1>
+        <p>{summary}</p>
       </div>
     </section>
   );
@@ -133,11 +175,9 @@ export function PageHero({ title, summary }: { title: string; summary: string })
 export function ServiceBody({ lang, title }: { lang: Lang; title: string }) {
   return (
     <div className="container section">
-      <div className="card p-6 md:p-8">
-        <h2 className="text-2xl font-extrabold text-navy">{title}</h2>
-        <p className="mt-3">
-          {lang === 'ja' ? 'Phase 1ではトップページのMVPセクションをご確認ください。' : 'For Phase 1, please use the MVP sections on the home page.'}
-        </p>
+      <div className="card content-card">
+        <h2>{title}</h2>
+        <p>{lang === 'ja' ? '詳しい内容はサポート一覧からご確認ください。' : 'Please review the detailed support overview.'}</p>
       </div>
     </div>
   );
