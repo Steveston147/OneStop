@@ -45,7 +45,7 @@ export function Header({ lang }: { lang: Lang }) {
   return (
     <header className="site-header premium-site-header">
       <div className="container header-inner premium-header-inner">
-        <Link href={`/${lang}`} className="brand-lockup premium-brand-lockup" aria-label="OneStop International Support home">
+        <Link href={`/${lang}`} className="brand-lockup premium-brand-lockup" aria-label="Creotech Global Welcome home">
           <span className="ritsumeikan-monogram" aria-hidden="true">
             <span className="ritsumeikan-r">R</span>
             <small>RITSUMEIKAN</small>
@@ -54,8 +54,10 @@ export function Header({ lang }: { lang: Lang }) {
           <span className="brand-copy">
             <span className="creotech-header-logo" role="img" aria-label="Creotech">CREOTECH</span>
             <span className="brand-message">
-              <strong>ONE STOP</strong>
-              <span className="brand-service-line">International Support</span>
+              <strong>GLOBAL WELCOME</strong>
+              <span className="brand-service-line">
+                {lang === 'ja' ? '海外教員・研究者受入支援' : 'International Faculty & Researcher Support'}
+              </span>
               <span className="brand-context-line">Ritsumeikan × Creotech</span>
             </span>
           </span>
@@ -104,12 +106,14 @@ export function Footer({ lang }: { lang: Lang }) {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div>
-          <p className="footer-brand">CREOTECH</p>
-          <p className="footer-service-name">One-Stop Support for International Faculty &amp; Researchers</p>
+          <p className="footer-brand">CREOTECH GLOBAL WELCOME</p>
+          <p className="footer-service-name">
+            {lang === 'ja' ? '海外教員・研究者受入支援サービス' : 'International Faculty & Researcher Support'}
+          </p>
           <p className="footer-copy">
             {lang === 'ja'
-              ? '立命館大学、APU、附属校における海外教員・研究者等の受入準備を、学内外の関係先と連携しながら支援します。'
-              : 'We coordinate practical support for international faculty, researchers, guests, accompanying families, and host offices across Ritsumeikan University, APU, and affiliated schools.'}
+              ? '招へい準備から来日後の生活立ち上げまで、立命館大学、APU、附属校における海外教員・研究者等の受入を、ひとつの窓口で支援します。'
+              : 'From invitation and pre-arrival preparation to arrival and settling in, we coordinate support for international faculty, researchers, guests, accompanying families, and host offices across Ritsumeikan University, APU, and affiliated schools.'}
           </p>
         </div>
         <nav className="footer-nav" aria-label="Footer navigation">
@@ -148,12 +152,12 @@ export function CTA({ lang }: { lang: Lang }) {
   return (
     <section className="final-cta">
       <div className="container final-cta-inner">
-        <p className="eyebrow">Next step</p>
-        <h2>{lang === 'ja' ? '分かる範囲からご相談ください。' : 'Start with the information you already have.'}</h2>
+        <p className="eyebrow">Creotech Global Welcome</p>
+        <h2>{lang === 'ja' ? '招へい準備から、ひとつの窓口で。' : 'One coordinated service, from invitation to arrival.'}</h2>
         <p>
           {lang === 'ja'
-            ? '受入時期や必要な支援が確定していなくても、初期相談から整理できます。'
-            : 'You can make an initial enquiry even when dates or support details are not final.'}
+            ? '受入時期や必要な支援が確定していなくても、来日前準備から生活立ち上げまで一緒に整理できます。'
+            : 'Even when dates or support details are not final, we can organise the next steps from pre-arrival preparation through settling in.'}
         </p>
         <Link className="btn btn-light" href={`/${lang}/contact`}>
           {lang === 'ja' ? '相談フォームへ' : 'Open the enquiry form'}
@@ -167,7 +171,7 @@ export function PageHero({ title, summary }: { title: string; summary: string })
   return (
     <section className="simple-page-hero">
       <div className="container">
-        <p className="eyebrow">International Support</p>
+        <p className="eyebrow">Creotech Global Welcome</p>
         <h1>{title}</h1>
         <p>{summary}</p>
       </div>
