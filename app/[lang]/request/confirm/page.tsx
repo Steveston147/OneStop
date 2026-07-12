@@ -17,14 +17,14 @@ export default function Confirm({
       <main className="section section-soft">
         <div className="container">
           <div className="card p-6 text-center md:p-10">
-            <p className="eyebrow">Request received</p>
+            <p className="eyebrow">Creotech Global Welcome</p>
             <h1 className="mt-3 text-4xl font-extrabold text-navy">
               {isJa ? 'お問い合わせを受け付けました' : 'Your enquiry has been received'}
             </h1>
             <p className="mt-5 text-lg text-slate-700">
               {isJa
-                ? '入力内容をOneStop担当者へメールで送信しました。'
-                : 'Your information has been emailed to the OneStop coordinator.'}
+                ? '入力内容をCreotech Global Welcome担当者へメールで送信しました。'
+                : 'Your information has been emailed to the Creotech Global Welcome coordinator.'}
             </p>
             <div className="mx-auto mt-6 max-w-xl rounded-2xl border border-line bg-white p-5">
               <span className="mini-label">Request ID</span>
