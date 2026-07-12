@@ -1,195 +1,140 @@
-/* Concept C: segmented capsule banner for the header brand lockup. */
+/* Concept D: refined ribbon-tab treatment for the header brand lockup. */
 
 .premium-brand-lockup {
-  min-width: 565px;
+  min-width: 600px;
 }
 
 .premium-brand-lockup .brand-copy {
-  gap: 12px;
+  gap: 14px;
 }
 
-.global-welcome-header-banner {
+.global-welcome-header-ribbon {
   position: relative;
-  display: flex;
-  width: 356px;
-  min-width: 356px;
-  height: 58px;
-  overflow: hidden;
-  border: 1px solid rgba(11, 35, 65, .12);
-  border-radius: 999px;
-  background: transparent;
-  padding: 0;
-  box-shadow:
-    0 12px 28px rgba(19, 40, 63, .13),
-    inset 0 1px 0 rgba(255, 255, 255, .25);
+  display: grid;
+  min-width: 300px;
+  padding: 10px 24px 10px 34px;
+  background: rgba(255, 255, 255, .82);
   isolation: isolate;
 }
 
-.global-welcome-header-banner::before {
-  display: none;
-}
-
-.global-welcome-header-banner::after {
+.global-welcome-header-ribbon::before {
   content: '';
   position: absolute;
-  z-index: 2;
-  top: -16px;
-  right: 8px;
-  width: 118px;
-  height: 92px;
-  border-radius: 50%;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, .16) 1px, transparent 1.35px);
-  background-size: 8px 8px;
-  opacity: .52;
-  pointer-events: none;
+  top: -12px;
+  bottom: -12px;
+  left: 4px;
+  width: 7px;
+  background: linear-gradient(180deg, #b5161f 0%, #8e0007 100%);
+  transform: skewX(-14deg);
+  box-shadow: 7px 0 20px rgba(161, 0, 0, .08);
 }
 
-.capsule-support-segment,
-.capsule-brand-segment {
+.global-welcome-header-ribbon::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  width: min(560px, 48vw);
+  height: 1px;
+  background: linear-gradient(90deg, #b5161f 0%, rgba(181, 22, 31, .72) 62%, rgba(181, 22, 31, 0) 100%);
+}
+
+.ribbon-kicker {
   position: relative;
-  z-index: 1;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  color: var(--enji);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .035em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.ribbon-kicker::after {
+  content: '';
+  display: block;
+  width: 34px;
+  height: 3px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: var(--enji);
+}
+
+.ribbon-title {
+  display: block;
+  margin-top: 7px;
+  color: var(--navy);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: .055em;
+  line-height: .98;
+  white-space: nowrap;
+}
+
+.ribbon-context {
   display: flex;
   align-items: center;
-  min-width: 0;
+  gap: 6px;
+  margin-top: 7px;
+  color: var(--navy);
+  font-size: 10.5px;
+  font-weight: 750;
+  line-height: 1;
+  white-space: nowrap;
 }
 
-.capsule-support-segment {
-  width: 122px;
-  flex: 0 0 122px;
-  gap: 9px;
-  padding: 0 13px 0 16px;
-  color: #fff;
-  background:
-    radial-gradient(circle at 15% 25%, rgba(255, 255, 255, .18), transparent 27%),
-    linear-gradient(135deg, #be111a 0%, #9c0008 100%);
-}
-
-.capsule-support-segment::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -13px;
-  width: 26px;
-  height: 100%;
-  background: #0b2a4a;
-  clip-path: polygon(50% 0, 100% 0, 50% 100%, 0 100%);
-  opacity: .95;
-}
-
-.capsule-globe {
-  display: grid;
-  width: 25px;
-  height: 25px;
-  flex: 0 0 25px;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, .55);
-  border-radius: 50%;
-  color: #fff;
-  background: rgba(255, 255, 255, .08);
-}
-
-.capsule-globe svg {
-  width: 18px;
-  height: 18px;
-}
-
-.capsule-support-copy {
-  display: grid;
-  gap: 2px;
-  font-size: 10px;
+.ribbon-context span:first-child {
+  color: var(--enji);
   font-weight: 850;
-  letter-spacing: .015em;
-  line-height: 1.08;
-  white-space: nowrap;
 }
 
-.capsule-support-copy > span {
-  display: block;
-}
-
-.capsule-brand-segment {
-  flex: 1;
-  align-content: center;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 0 23px 0 25px;
-  color: #fff;
-  background:
-    radial-gradient(circle at 88% 22%, rgba(81, 139, 190, .24), transparent 30%),
-    linear-gradient(118deg, #0d365f 0%, #071f3a 100%);
-}
-
-.capsule-brand-segment strong {
-  position: relative;
-  z-index: 3;
-  display: block;
-  color: #fff;
-  font-size: 17.5px;
-  font-weight: 900;
-  letter-spacing: .055em;
-  line-height: 1;
-  white-space: nowrap;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, .16);
-}
-
-.capsule-brand-segment > span {
-  position: relative;
-  z-index: 3;
-  display: block;
-  margin-top: 5px;
-  color: rgba(255, 255, 255, .84);
-  font-size: 9.5px;
-  font-weight: 720;
-  letter-spacing: .012em;
-  line-height: 1;
-  white-space: nowrap;
+.ribbon-context i {
+  color: #7a8491;
+  font-style: normal;
+  font-weight: 700;
 }
 
 @media (max-width: 1320px) {
   .premium-brand-lockup {
-    min-width: 455px;
+    min-width: 485px;
   }
 
-  .global-welcome-header-banner {
-    width: 302px;
-    min-width: 302px;
-    height: 52px;
+  .global-welcome-header-ribbon {
+    min-width: 246px;
+    padding: 8px 18px 8px 28px;
   }
 
-  .capsule-support-segment {
-    width: 101px;
-    flex-basis: 101px;
-    gap: 7px;
-    padding: 0 9px 0 12px;
+  .global-welcome-header-ribbon::before {
+    top: -10px;
+    bottom: -10px;
   }
 
-  .capsule-globe {
-    width: 22px;
-    height: 22px;
-    flex-basis: 22px;
+  .global-welcome-header-ribbon::after {
+    top: -10px;
+    width: min(470px, 44vw);
   }
 
-  .capsule-globe svg {
-    width: 16px;
-    height: 16px;
+  .ribbon-kicker {
+    font-size: 8.7px;
   }
 
-  .capsule-support-copy {
+  .ribbon-kicker::after {
+    width: 28px;
+    height: 2px;
+    margin-top: 5px;
+  }
+
+  .ribbon-title {
+    margin-top: 6px;
+    font-size: 22px;
+  }
+
+  .ribbon-context {
+    margin-top: 6px;
     font-size: 8.5px;
-  }
-
-  .capsule-brand-segment {
-    padding: 0 17px 0 20px;
-  }
-
-  .capsule-brand-segment strong {
-    font-size: 14.5px;
-  }
-
-  .capsule-brand-segment > span {
-    margin-top: 4px;
-    font-size: 8px;
   }
 }
 
@@ -198,119 +143,73 @@
     min-width: 0;
   }
 
-  .global-welcome-header-banner {
-    width: 246px;
-    min-width: 246px;
-    height: 45px;
+  .premium-brand-lockup .brand-copy {
+    gap: 10px;
   }
 
-  .capsule-support-segment {
-    width: 78px;
-    flex-basis: 78px;
-    gap: 5px;
-    padding: 0 7px 0 9px;
+  .global-welcome-header-ribbon {
+    min-width: 188px;
+    padding: 6px 12px 6px 22px;
   }
 
-  .capsule-globe {
-    width: 19px;
-    height: 19px;
-    flex-basis: 19px;
+  .global-welcome-header-ribbon::before {
+    top: -7px;
+    bottom: -7px;
+    width: 5px;
   }
 
-  .capsule-globe svg {
-    width: 14px;
-    height: 14px;
+  .global-welcome-header-ribbon::after {
+    top: -7px;
+    width: 260px;
   }
 
-  .capsule-support-copy {
-    font-size: 7px;
+  .ribbon-kicker,
+  .ribbon-context {
+    display: none;
   }
 
-  .capsule-brand-segment {
-    padding: 0 13px 0 16px;
-  }
-
-  .capsule-brand-segment strong {
-    font-size: 12px;
-    letter-spacing: .04em;
-  }
-
-  .capsule-brand-segment > span {
-    font-size: 6.8px;
+  .ribbon-title {
+    margin-top: 0;
+    font-size: 17px;
+    letter-spacing: .045em;
   }
 }
 
 @media (max-width: 900px) {
-  .premium-brand-lockup .brand-copy {
-    gap: 9px;
+  .global-welcome-header-ribbon {
+    min-width: 205px;
   }
 
-  .global-welcome-header-banner {
-    width: 258px;
-    min-width: 258px;
-    height: 46px;
-  }
-
-  .capsule-brand-segment strong {
-    font-size: 12.6px;
+  .ribbon-title {
+    font-size: 18px;
   }
 }
 
 @media (max-width: 640px) {
   .premium-brand-lockup .brand-copy {
-    gap: 6px;
+    gap: 7px;
   }
 
-  .global-welcome-header-banner {
-    width: 174px;
-    min-width: 174px;
-    height: 38px;
+  .global-welcome-header-ribbon {
+    min-width: 148px;
+    padding: 5px 7px 5px 17px;
   }
 
-  .global-welcome-header-banner::after {
-    right: -6px;
-    width: 70px;
-    height: 62px;
-    background-size: 7px 7px;
+  .global-welcome-header-ribbon::before {
+    top: -5px;
+    bottom: -5px;
+    left: 2px;
+    width: 4px;
   }
 
-  .capsule-support-segment {
-    width: 38px;
-    flex-basis: 38px;
-    justify-content: center;
-    padding: 0;
+  .global-welcome-header-ribbon::after {
+    top: -5px;
+    left: 8px;
+    width: 175px;
   }
 
-  .capsule-support-segment::after {
-    right: -9px;
-    width: 18px;
-  }
-
-  .capsule-support-copy {
-    display: none;
-  }
-
-  .capsule-globe {
-    width: 21px;
-    height: 21px;
-    flex-basis: 21px;
-  }
-
-  .capsule-globe svg {
-    width: 15px;
-    height: 15px;
-  }
-
-  .capsule-brand-segment {
-    padding: 0 9px 0 12px;
-  }
-
-  .capsule-brand-segment strong {
-    font-size: 10.7px;
+  .ribbon-title {
+    font-size: 13px;
     letter-spacing: .025em;
-  }
-
-  .capsule-brand-segment > span {
-    display: none;
   }
 }
