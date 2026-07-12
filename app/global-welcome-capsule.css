@@ -1,53 +1,91 @@
-/* Concept D: refined ribbon-tab treatment for the header brand lockup. */
+/* Concept D: full-height professional ribbon-tab treatment for the header brand lockup. */
+
+.premium-site-header {
+  overflow: hidden;
+  background: rgba(255, 255, 255, .985);
+  box-shadow: 0 10px 28px rgba(19, 40, 63, .035);
+}
+
+.premium-header-inner {
+  position: relative;
+  min-height: 132px;
+  align-items: center;
+}
 
 .premium-brand-lockup {
-  min-width: 600px;
+  min-width: 690px;
+  min-height: 132px;
+  align-self: stretch;
+  gap: 16px;
 }
 
 .premium-brand-lockup .brand-copy {
-  gap: 14px;
+  align-self: stretch;
+  gap: 16px;
+}
+
+.ritsumeikan-monogram,
+.creotech-header-logo,
+.brand-divider {
+  align-self: center;
 }
 
 .global-welcome-header-ribbon {
   position: relative;
   display: grid;
-  min-width: 300px;
-  padding: 10px 24px 10px 34px;
-  background: rgba(255, 255, 255, .82);
+  align-content: center;
+  min-width: 390px;
+  min-height: 132px;
+  align-self: stretch;
+  padding: 22px 32px 18px 48px;
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, .99) 0%, rgba(255, 255, 255, .985) 72%, rgba(248, 249, 251, .9) 100%);
   isolation: isolate;
 }
 
 .global-welcome-header-ribbon::before {
   content: '';
   position: absolute;
-  top: -12px;
-  bottom: -12px;
-  left: 4px;
-  width: 7px;
-  background: linear-gradient(180deg, #b5161f 0%, #8e0007 100%);
+  z-index: 2;
+  top: -8px;
+  bottom: -8px;
+  left: 10px;
+  width: 8px;
+  background: linear-gradient(180deg, #bf1d27 0%, #8c0008 100%);
   transform: skewX(-14deg);
-  box-shadow: 7px 0 20px rgba(161, 0, 0, .08);
+  transform-origin: center;
+  box-shadow: 8px 0 22px rgba(161, 0, 0, .11);
 }
 
 .global-welcome-header-ribbon::after {
   content: '';
   position: absolute;
-  top: -12px;
-  left: 12px;
-  width: min(560px, 48vw);
-  height: 1px;
-  background: linear-gradient(90deg, #b5161f 0%, rgba(181, 22, 31, .72) 62%, rgba(181, 22, 31, 0) 100%);
+  z-index: 0;
+  top: 13px;
+  left: 18px;
+  width: min(920px, 61vw);
+  height: 2px;
+  background: linear-gradient(90deg, #b5161f 0%, rgba(181, 22, 31, .85) 64%, rgba(181, 22, 31, .18) 92%, rgba(181, 22, 31, 0) 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+  pointer-events: none;
+}
+
+.ribbon-kicker,
+.ribbon-title,
+.ribbon-context {
+  position: relative;
+  z-index: 3;
 }
 
 .ribbon-kicker {
-  position: relative;
   display: block;
   width: max-content;
   max-width: 100%;
+  margin-top: 6px;
   color: var(--enji);
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: .035em;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .04em;
   line-height: 1.2;
   white-space: nowrap;
 }
@@ -55,40 +93,41 @@
 .ribbon-kicker::after {
   content: '';
   display: block;
-  width: 34px;
+  width: 36px;
   height: 3px;
-  margin-top: 6px;
+  margin-top: 8px;
   border-radius: 999px;
-  background: var(--enji);
+  background: linear-gradient(90deg, var(--enji), #d43d46);
 }
 
 .ribbon-title {
   display: block;
-  margin-top: 7px;
+  margin-top: 10px;
   color: var(--navy);
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 27px;
+  font-size: 31px;
   font-weight: 700;
   letter-spacing: .055em;
-  line-height: .98;
+  line-height: .96;
   white-space: nowrap;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
 }
 
 .ribbon-context {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 7px;
+  gap: 7px;
+  margin-top: 11px;
   color: var(--navy);
-  font-size: 10.5px;
-  font-weight: 750;
+  font-size: 11px;
+  font-weight: 780;
   line-height: 1;
   white-space: nowrap;
 }
 
 .ribbon-context span:first-child {
   color: var(--enji);
-  font-weight: 850;
+  font-weight: 900;
 }
 
 .ribbon-context i {
@@ -97,70 +136,133 @@
   font-weight: 700;
 }
 
-@media (max-width: 1320px) {
+.premium-desktop-nav,
+.header-actions {
+  position: relative;
+  z-index: 4;
+}
+
+@media (max-width: 1450px) {
+  .premium-header-inner,
+  .premium-brand-lockup,
+  .global-welcome-header-ribbon {
+    min-height: 118px;
+  }
+
   .premium-brand-lockup {
-    min-width: 485px;
+    min-width: 610px;
   }
 
   .global-welcome-header-ribbon {
-    min-width: 246px;
-    padding: 8px 18px 8px 28px;
-  }
-
-  .global-welcome-header-ribbon::before {
-    top: -10px;
-    bottom: -10px;
+    min-width: 330px;
+    padding: 19px 24px 15px 42px;
   }
 
   .global-welcome-header-ribbon::after {
-    top: -10px;
-    width: min(470px, 44vw);
+    top: 11px;
+    width: min(760px, 57vw);
   }
 
   .ribbon-kicker {
-    font-size: 8.7px;
+    font-size: 9.8px;
   }
 
   .ribbon-kicker::after {
-    width: 28px;
+    width: 31px;
     height: 2px;
-    margin-top: 5px;
+    margin-top: 6px;
   }
 
   .ribbon-title {
-    margin-top: 6px;
+    margin-top: 8px;
+    font-size: 26px;
+  }
+
+  .ribbon-context {
+    margin-top: 9px;
+    font-size: 9.5px;
+  }
+}
+
+@media (max-width: 1320px) {
+  .premium-header-inner,
+  .premium-brand-lockup,
+  .global-welcome-header-ribbon {
+    min-height: 108px;
+  }
+
+  .premium-brand-lockup {
+    min-width: 505px;
+  }
+
+  .premium-brand-lockup .brand-copy {
+    gap: 11px;
+  }
+
+  .global-welcome-header-ribbon {
+    min-width: 260px;
+    padding: 16px 18px 13px 35px;
+  }
+
+  .global-welcome-header-ribbon::before {
+    left: 8px;
+    width: 7px;
+  }
+
+  .global-welcome-header-ribbon::after {
+    top: 10px;
+    left: 15px;
+    width: min(620px, 51vw);
+  }
+
+  .ribbon-kicker {
+    margin-top: 4px;
+    font-size: 8.5px;
+  }
+
+  .ribbon-title {
+    margin-top: 7px;
     font-size: 22px;
   }
 
   .ribbon-context {
-    margin-top: 6px;
-    font-size: 8.5px;
+    margin-top: 7px;
+    font-size: 8.2px;
   }
 }
 
 @media (max-width: 1120px) {
+  .premium-header-inner,
+  .premium-brand-lockup,
+  .global-welcome-header-ribbon {
+    min-height: 88px;
+  }
+
   .premium-brand-lockup {
     min-width: 0;
   }
 
   .premium-brand-lockup .brand-copy {
-    gap: 10px;
+    gap: 9px;
   }
 
   .global-welcome-header-ribbon {
-    min-width: 188px;
-    padding: 6px 12px 6px 22px;
+    min-width: 198px;
+    padding: 10px 12px 9px 27px;
   }
 
   .global-welcome-header-ribbon::before {
-    top: -7px;
-    bottom: -7px;
+    top: -5px;
+    bottom: -5px;
+    left: 6px;
     width: 5px;
   }
 
   .global-welcome-header-ribbon::after {
-    top: -7px;
-    width: 260px;
+    top: 8px;
+    left: 11px;
+    width: 330px;
+    height: 1px;
   }
 
   .ribbon-kicker,
@@ -170,14 +272,24 @@
 
   .ribbon-title {
     margin-top: 0;
-    font-size: 17px;
+    font-size: 18px;
     letter-spacing: .045em;
   }
 }
 
 @media (max-width: 900px) {
+  .premium-header-inner,
+  .premium-brand-lockup,
   .global-welcome-header-ribbon {
-    min-width: 205px;
+    min-height: 76px;
+  }
+
+  .global-welcome-header-ribbon {
+    min-width: 206px;
+  }
+
+  .global-welcome-header-ribbon::after {
+    width: 250px;
   }
 
   .ribbon-title {
@@ -186,26 +298,32 @@
 }
 
 @media (max-width: 640px) {
+  .premium-header-inner,
+  .premium-brand-lockup,
+  .global-welcome-header-ribbon {
+    min-height: 68px;
+  }
+
   .premium-brand-lockup .brand-copy {
-    gap: 7px;
+    gap: 6px;
   }
 
   .global-welcome-header-ribbon {
-    min-width: 148px;
-    padding: 5px 7px 5px 17px;
+    min-width: 150px;
+    padding: 7px 5px 7px 19px;
   }
 
   .global-welcome-header-ribbon::before {
-    top: -5px;
-    bottom: -5px;
-    left: 2px;
+    top: -4px;
+    bottom: -4px;
+    left: 3px;
     width: 4px;
   }
 
   .global-welcome-header-ribbon::after {
-    top: -5px;
-    left: 8px;
-    width: 175px;
+    top: 6px;
+    left: 7px;
+    width: 165px;
   }
 
   .ribbon-title {
