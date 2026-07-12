@@ -45,19 +45,18 @@ export function Header({ lang }: { lang: Lang }) {
   return (
     <header className="site-header premium-site-header">
       <div className="container header-inner premium-header-inner">
-        <Link href={`/${lang}`} className="brand-lockup premium-brand-lockup" aria-label="Ritsumeikan Academy international faculty and researcher support home">
+        <Link href={`/${lang}`} className="brand-lockup premium-brand-lockup" aria-label="OneStop International Support home">
           <span className="ritsumeikan-monogram" aria-hidden="true">
             <span className="ritsumeikan-r">R</span>
             <small>RITSUMEIKAN</small>
           </span>
           <span className="brand-divider" aria-hidden="true" />
           <span className="brand-copy">
-            <strong>CREOTECH</strong>
-            <span className="brand-service-line">One-Stop Support for International Faculty &amp; Researchers</span>
-            <span className="brand-context-line">
-              <em>for the Ritsumeikan Academy</em>
-              <i aria-hidden="true">|</i>
-              <span>Powered by Creotech</span>
+            <span className="creotech-header-logo" role="img" aria-label="Creotech">CREOTECH</span>
+            <span className="brand-message">
+              <strong>ONE STOP</strong>
+              <span className="brand-service-line">International Support</span>
+              <span className="brand-context-line">Ritsumeikan × Creotech</span>
             </span>
           </span>
         </Link>
