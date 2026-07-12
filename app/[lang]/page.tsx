@@ -1,16 +1,17 @@
 import Link from 'next/link';
 import { CTA, Layout } from '@/components/Public';
+import CoordinationMap from '@/components/CoordinationMap';
 import type { Lang } from '@/content/site';
 import { mockImageLabel, siteImages } from '@/lib/siteImages';
 
 const copy = {
   ja: {
-    eyebrow: '立命館大学用',
+    eyebrow: '立命館学園の受入支援',
     titleLine1: '海外教員・研究者受入',
     titleLine2: 'ワンストップサポート',
-    lead: 'COE・ビザ、宿泊、航空券、到着、生活立ち上げまで、受入に必要な支援を整理し、関係先と連携します。',
-    hostTitle: '学内の受入担当者です',
-    hostText: '受入準備の手順や必要な手続き、費用の目安、関係窓口との連携方法を確認できます。',
+    lead: '立命館大学、APU、附属校を対象に、COE・ビザ、宿泊、航空券、到着、生活立ち上げまで、受入に必要な支援を整理し、関係先と連携します。',
+    hostTitle: '立命館の受入担当者です',
+    hostText: '受入準備の手順、必要な手続き、費用の目安、関係窓口との連携方法を確認できます。',
     hostCta: '受入準備を確認する',
     visitorTitle: '海外から来日する予定です',
     visitorText: '来日前に必要な準備や手続き、宿泊・生活に関する情報を確認できます。',
@@ -24,12 +25,12 @@ const copy = {
     processLead: 'まず受入概要を確認し、必要な支援と担当範囲を整理します。',
   },
   en: {
-    eyebrow: 'For Ritsumeikan University',
+    eyebrow: 'For the Ritsumeikan Academy',
     titleLine1: 'One-Stop Support for',
     titleLine2: 'International Faculty & Researchers',
-    lead: 'We organise the support needed for COE and visa guidance, accommodation, flights, arrival, and settling into life in Japan, and coordinate with the appropriate university and external partners.',
+    lead: 'Across Ritsumeikan University, APU, and affiliated schools, we organise support for COE and visa guidance, accommodation, flights, arrival, and settling into life in Japan, and coordinate with the appropriate university and external partners.',
     hostTitle: 'I am from a Ritsumeikan host office',
-    hostText: 'Review hosting procedures, expected costs, responsibilities, and coordination with the relevant university and external contacts.',
+    hostText: 'Review hosting procedures, expected costs, responsibilities, and coordination with the relevant university, school, and external contacts.',
     hostCta: 'View the host-office guide',
     visitorTitle: 'I am coming to Japan',
     visitorText: 'Review the essential preparation, procedures, accommodation, and daily-life information needed before arrival.',
@@ -64,13 +65,13 @@ const services = {
 const process = {
   ja: [
     ['1', '初期相談', '分かる範囲で受入予定と希望支援を共有します。'],
-    ['2', '支援範囲の整理', '大学、クレオテック、外部先、本人の担当範囲を確認します。'],
+    ['2', '支援範囲の整理', '大学・附属校、クレオテック、外部先、本人の担当範囲を確認します。'],
     ['3', '費用・日程確認', '必要に応じて見積、予約方法、支払い方法を確認します。'],
     ['4', '支援開始', '合意した内容に沿って連絡調整と実務支援を進めます。'],
   ],
   en: [
     ['1', 'Initial enquiry', 'Share the expected visit and possible support needs with the information currently available.'],
-    ['2', 'Scope review', 'Clarify the roles of the university, Creotech, external providers, and the visitor.'],
+    ['2', 'Scope review', 'Clarify the roles of the university or school, Creotech, external providers, and the visitor.'],
     ['3', 'Timing and costs', 'Confirm quotations, booking methods, payment responsibility, and key deadlines.'],
     ['4', 'Support begins', 'Coordination and practical support proceed according to the agreed scope.'],
   ],
@@ -149,6 +150,8 @@ export default function Home({ params }: { params: { lang: Lang } }) {
             </figure>
           </div>
         </section>
+
+        <CoordinationMap lang={lang} />
 
         <section className="section section-white">
           <div className="container">
