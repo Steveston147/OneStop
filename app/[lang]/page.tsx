@@ -7,6 +7,8 @@ import { mockImageLabel, siteImages } from '@/lib/siteImages';
 const copy = {
   ja: {
     eyebrow: 'Ritsumeikan Academy × Creotech',
+    titleLine1: 'CREOTECH',
+    titleLine2: 'GLOBAL WELCOME',
     descriptor: '海外教員・研究者受入支援サービス',
     lead: '招へい準備から来日後の生活立ち上げまで、ひとつの窓口で。立命館大学、APU、附属校を対象に、COE・ビザ、宿泊、航空券、到着、生活支援を整理し、関係先と連携します。',
     hostTitle: '立命館の受入担当者です',
@@ -25,6 +27,8 @@ const copy = {
   },
   en: {
     eyebrow: 'Ritsumeikan Academy × Creotech',
+    titleLine1: 'CREOTECH',
+    titleLine2: 'GLOBAL WELCOME',
     descriptor: 'International Faculty & Researcher Support',
     lead: 'From invitation and pre-arrival preparation to arrival and settling in, one coordinated service. Across Ritsumeikan University, APU, and affiliated schools, we organise COE and visa guidance, accommodation, flights, arrival, and daily-life support with the appropriate university and external partners.',
     hostTitle: 'I am from a Ritsumeikan host office',
@@ -105,13 +109,9 @@ export default function Home({ params }: { params: { lang: Lang } }) {
                 <p className="eyebrow">{t.eyebrow}</p>
                 <span aria-hidden="true" />
               </div>
-              <h1 className="global-welcome-heading" aria-label="Creotech Global Welcome">
-                <span className="hero-title-brand-row" aria-hidden="true">
-                  <span className="hero-title-brand">CREOTECH</span>
-                  <span className="hero-title-brand-rule" />
-                </span>
-                <span className="hero-title-global" aria-hidden="true">GLOBAL</span>
-                <span className="hero-title-welcome" aria-hidden="true">WELCOME</span>
+              <h1>
+                <span className="hero-title-line">{t.titleLine1}</span>
+                <span className="hero-title-line">{t.titleLine2}</span>
               </h1>
               <p className="hero-brand-descriptor">{t.descriptor}</p>
               <p className="hero-lead premium-hero-lead">{t.lead}</p>
