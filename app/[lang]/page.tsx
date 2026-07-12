@@ -6,10 +6,11 @@ import { mockImageLabel, siteImages } from '@/lib/siteImages';
 
 const copy = {
   ja: {
-    eyebrow: 'Ritsumeikan × Creotech',
-    titleLine1: '海外教員・研究者',
-    titleLine2: 'ワンストップ支援',
-    lead: '立命館大学、APU、附属校を対象に、COE・ビザ、宿泊、航空券、到着、生活立ち上げまで、受入に必要な支援を整理し、関係先と連携します。',
+    eyebrow: 'Ritsumeikan Academy × Creotech',
+    titleLine1: 'CREOTECH',
+    titleLine2: 'GLOBAL WELCOME',
+    descriptor: '海外教員・研究者受入支援サービス',
+    lead: '招へい準備から来日後の生活立ち上げまで、ひとつの窓口で。立命館大学、APU、附属校を対象に、COE・ビザ、宿泊、航空券、到着、生活支援を整理し、関係先と連携します。',
     hostTitle: '立命館の受入担当者です',
     hostText: '受入準備の手順、必要な手続き、費用の目安、関係窓口との連携方法を確認できます。',
     hostCta: '受入準備を確認する',
@@ -25,10 +26,11 @@ const copy = {
     processLead: 'まず受入概要を確認し、必要な支援と担当範囲を整理します。',
   },
   en: {
-    eyebrow: 'Ritsumeikan × Creotech',
-    titleLine1: 'ONE STOP',
-    titleLine2: 'for International Faculty & Researchers',
-    lead: 'Across Ritsumeikan University, APU, and affiliated schools, we organise support for COE and visa guidance, accommodation, flights, arrival, and settling into life in Japan, and coordinate with the appropriate university and external partners.',
+    eyebrow: 'Ritsumeikan Academy × Creotech',
+    titleLine1: 'CREOTECH',
+    titleLine2: 'GLOBAL WELCOME',
+    descriptor: 'International Faculty & Researcher Support',
+    lead: 'From invitation and pre-arrival preparation to arrival and settling in, one coordinated service. Across Ritsumeikan University, APU, and affiliated schools, we organise COE and visa guidance, accommodation, flights, arrival, and daily-life support with the appropriate university and external partners.',
     hostTitle: 'I am from a Ritsumeikan host office',
     hostText: 'Review hosting procedures, expected costs, responsibilities, and coordination with the relevant university, school, and external contacts.',
     hostCta: 'View the host-office guide',
@@ -100,7 +102,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
   return (
     <Layout lang={lang}>
       <main>
-        <section className="home-hero premium-home-hero compact-brand-hero">
+        <section className="home-hero premium-home-hero compact-brand-hero global-welcome-hero">
           <div className="container home-hero-grid premium-home-hero-grid">
             <div className="home-hero-copy premium-home-hero-copy">
               <div className="hero-context-label">
@@ -111,6 +113,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
                 <span className="hero-title-line">{t.titleLine1}</span>
                 <span className="hero-title-line">{t.titleLine2}</span>
               </h1>
+              <p className="hero-brand-descriptor">{t.descriptor}</p>
               <p className="hero-lead premium-hero-lead">{t.lead}</p>
 
               <div className="audience-entry-grid premium-audience-entry-grid">
@@ -146,7 +149,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
             <figure className="hero-photo premium-hero-photo">
               <img src={siteImages.home.src} alt={siteImages.home.alt[lang]} />
               {siteImages.home.isMock ? <span className="mock-image-badge">{mockImageLabel[lang]}</span> : null}
-              <figcaption>International Faculty &amp; Researcher Support</figcaption>
+              <figcaption>Creotech Global Welcome</figcaption>
             </figure>
           </div>
         </section>
