@@ -6,7 +6,6 @@ import { login, logout } from '@/lib/admin';
 
 export type ActionState = { error?: string };
 
-const ENQUIRY_TO = 'eltontanaka@gmail.com';
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 
 function text(formData: FormData, name: string) {
@@ -52,7 +51,8 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
+  const recipient = process.env.ENQUIRY_TO_EMAIL;
+  if (!apiKey || !recipient) {
     return {
       error: lang === 'ja'
         ? '現在、メール送信設定を準備中です。しばらくしてから再度お試しください。'
@@ -119,7 +119,7 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
       },
       body: JSON.stringify({
         from: process.env.ENQUIRY_FROM_EMAIL || 'OneStop <onboarding@resend.dev>',
-        to: [ENQUIRY_TO],
+        to: [recipient],
         reply_to: email,
         subject,
         text: plainText,
