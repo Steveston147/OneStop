@@ -3,6 +3,7 @@ import './home-hero-polish.css';
 import './service-design-2026.css';
 import './brand-title-refinement.css';
 import './creotech-logo-branding.css';
+import './compact-brand-banner.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
