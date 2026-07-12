@@ -2,12 +2,12 @@ import type { Lang } from '@/content/site';
 
 const copy = {
   ja: {
-    eyebrow: 'OneStop at a glance',
+    eyebrow: 'Creotech Global Welcome at a glance',
     title: '問い合わせ先を探す前に、まずここで整理します。',
-    lead: '受入部署から届いた相談を、クレオテックが内容ごとに整理し、学内手続き・外部専門先・宿泊や移動・生活支援へつなぎます。',
+    lead: '受入部署から届いた相談を、Creotech Global Welcomeが内容ごとに整理し、学内手続き・外部専門先・宿泊や移動・生活支援へつなぎます。',
     host: '受入部署・附属校',
     hostSub: '受入目的・日程・予算を共有',
-    hub: 'OneStop / Creotech',
+    hub: 'Creotech Global Welcome',
     hubSub: '案件を整理し、担当と次の行動を見える化',
     partners: [
       ['学内手続き', 'COE・受入・学内調整'],
@@ -18,15 +18,15 @@ const copy = {
     visitor: '来日予定者・同行家族',
     visitorSub: '必要な案内と支援を受け取る',
     wink: '相談内容が一行でも大丈夫です。書類は増えがちですが、迷子は減らします。',
-    label: '受入相談がOneStopを通じて関係先と来日予定者へつながる流れ',
+    label: '受入相談がCreotech Global Welcomeを通じて関係先と来日予定者へつながる流れ',
   },
   en: {
-    eyebrow: 'OneStop at a glance',
+    eyebrow: 'Creotech Global Welcome at a glance',
     title: 'Start here before searching for the right office.',
-    lead: 'Creotech organises each enquiry from a host office or affiliated school, then connects it to the relevant university process, specialist provider, accommodation and travel support, or settling-in assistance.',
+    lead: 'Creotech Global Welcome organises each enquiry from a host office or affiliated school, then connects it to the relevant university process, specialist provider, accommodation and travel support, or settling-in assistance.',
     host: 'Host office or school',
     hostSub: 'Shares the purpose, timing, and budget',
-    hub: 'OneStop / Creotech',
+    hub: 'Creotech Global Welcome',
     hubSub: 'Clarifies responsibilities and the next action',
     partners: [
       ['University process', 'COE, hosting, and internal coordination'],
@@ -37,7 +37,7 @@ const copy = {
     visitor: 'Visitor and family',
     visitorSub: 'Receives the relevant guidance and support',
     wink: 'A one-line enquiry is enough to start. Paperwork tends to multiply; confusion does not have to.',
-    label: 'Flow from a host enquiry through OneStop to relevant providers and the incoming visitor',
+    label: 'Flow from a host enquiry through Creotech Global Welcome to relevant providers and the incoming visitor',
   },
 } as const;
 
