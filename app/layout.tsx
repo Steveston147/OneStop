@@ -8,10 +8,10 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: {
-    default: 'One-Stop Support for International Faculty & Researchers | Creotech',
-    template: '%s | Creotech International Support',
+    default: 'Creotech Global Welcome | International Faculty & Researcher Support',
+    template: '%s | Creotech Global Welcome',
   },
-  description: 'One-stop coordination for international faculty, researchers, guests, accompanying families, and host offices across Ritsumeikan University, APU, and affiliated schools.',
+  description: 'Creotech Global Welcome coordinates international faculty and researcher support from invitation and pre-arrival preparation through arrival and settling in across Ritsumeikan University, APU, and affiliated schools.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
