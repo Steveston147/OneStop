@@ -113,7 +113,7 @@ function createRequestId() {
     { length: 5 },
     () => REQUEST_ID_ALPHABET[Math.floor(Math.random() * REQUEST_ID_ALPHABET.length)],
   ).join('');
-  return `OS-${date}-${random}`;
+  return `CGW-${date}-${random}`;
 }
 
 function escapeHtml(value: string) {
@@ -203,8 +203,8 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
   );
 
   const subject = lang === 'ja'
-    ? `[OneStop新規相談] ${requestId}｜${institution}｜${fullName}`
-    : `[New OneStop Enquiry] ${requestId} | ${institution} | ${fullName}`;
+    ? `[Creotech Global Welcome 新規相談] ${requestId}｜${institution}｜${fullName}`
+    : `[New Creotech Global Welcome Enquiry] ${requestId} | ${institution} | ${fullName}`;
 
   const rows: Array<[string, string]> = lang === 'ja'
     ? [
@@ -242,7 +242,7 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
 
   const plainText = lang === 'ja'
     ? [
-        'OneStopサイトから新しい相談が届きました。',
+        'Creotech Global Welcomeサイトから新しい相談が届きました。',
         '',
         ...rows.map(([label, value]) => `${label}: ${display(value, lang)}`),
         '',
@@ -250,7 +250,7 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
         'パスポートやCOE等の機微書類は、このメールへの通常返信で送付するよう案内しないでください。',
       ].join('\n')
     : [
-        'A new enquiry was submitted through the OneStop website.',
+        'A new enquiry was submitted through the Creotech Global Welcome website.',
         '',
         ...rows.map(([label, value]) => `${label}: ${display(value, lang)}`),
         '',
@@ -266,7 +266,7 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
     ? `
       <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;color:#172033;line-height:1.65;max-width:760px;margin:0 auto;">
         <div style="border-top:6px solid #a10000;padding:22px 0 10px;">
-          <p style="margin:0;color:#a10000;font-weight:800;letter-spacing:.08em;font-size:12px;">ONESTOP ENQUIRY</p>
+          <p style="margin:0;color:#a10000;font-weight:800;letter-spacing:.08em;font-size:12px;">CREOTECH GLOBAL WELCOME</p>
           <h1 style="margin:8px 0 6px;font-size:24px;color:#0b2341;">新しい相談が届きました</h1>
           <p style="margin:0;color:#5f6b7a;">受付番号：<strong>${escapeHtml(requestId)}</strong></p>
         </div>
@@ -278,7 +278,7 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
     : `
       <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#172033;line-height:1.65;max-width:760px;margin:0 auto;">
         <div style="border-top:6px solid #a10000;padding:22px 0 10px;">
-          <p style="margin:0;color:#a10000;font-weight:800;letter-spacing:.08em;font-size:12px;">ONESTOP ENQUIRY</p>
+          <p style="margin:0;color:#a10000;font-weight:800;letter-spacing:.08em;font-size:12px;">CREOTECH GLOBAL WELCOME</p>
           <h1 style="margin:8px 0 6px;font-size:24px;color:#0b2341;">A new enquiry has been received</h1>
           <p style="margin:0;color:#5f6b7a;">Request ID: <strong>${escapeHtml(requestId)}</strong></p>
         </div>
@@ -296,7 +296,7 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: process.env.ENQUIRY_FROM_EMAIL || 'OneStop <onboarding@resend.dev>',
+        from: process.env.ENQUIRY_FROM_EMAIL || 'Creotech Global Welcome <onboarding@resend.dev>',
         to: [recipient],
         reply_to: email,
         subject,
