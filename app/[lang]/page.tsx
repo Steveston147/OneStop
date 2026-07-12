@@ -6,9 +6,9 @@ import { mockImageLabel, siteImages } from '@/lib/siteImages';
 
 const copy = {
   ja: {
-    eyebrow: '立命館学園の受入支援',
-    titleLine1: '海外教員・研究者受入',
-    titleLine2: 'ワンストップサポート',
+    eyebrow: 'Ritsumeikan × Creotech',
+    titleLine1: '海外教員・研究者',
+    titleLine2: 'ワンストップ支援',
     lead: '立命館大学、APU、附属校を対象に、COE・ビザ、宿泊、航空券、到着、生活立ち上げまで、受入に必要な支援を整理し、関係先と連携します。',
     hostTitle: '立命館の受入担当者です',
     hostText: '受入準備の手順、必要な手続き、費用の目安、関係窓口との連携方法を確認できます。',
@@ -25,9 +25,9 @@ const copy = {
     processLead: 'まず受入概要を確認し、必要な支援と担当範囲を整理します。',
   },
   en: {
-    eyebrow: 'For the Ritsumeikan Academy',
-    titleLine1: 'One-Stop Support for',
-    titleLine2: 'International Faculty & Researchers',
+    eyebrow: 'Ritsumeikan × Creotech',
+    titleLine1: 'ONE STOP',
+    titleLine2: 'for International Faculty & Researchers',
     lead: 'Across Ritsumeikan University, APU, and affiliated schools, we organise support for COE and visa guidance, accommodation, flights, arrival, and settling into life in Japan, and coordinate with the appropriate university and external partners.',
     hostTitle: 'I am from a Ritsumeikan host office',
     hostText: 'Review hosting procedures, expected costs, responsibilities, and coordination with the relevant university, school, and external contacts.',
@@ -100,7 +100,7 @@ export default function Home({ params }: { params: { lang: Lang } }) {
   return (
     <Layout lang={lang}>
       <main>
-        <section className="home-hero premium-home-hero">
+        <section className="home-hero premium-home-hero compact-brand-hero">
           <div className="container home-hero-grid premium-home-hero-grid">
             <div className="home-hero-copy premium-home-hero-copy">
               <div className="hero-context-label">
