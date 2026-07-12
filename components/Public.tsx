@@ -121,7 +121,11 @@ export function Footer({ lang }: { lang: Lang }) {
           ))}
         </nav>
         <div className="footer-notes">
-          <p>{lang === 'ja' ? '運営・調整窓口：クレオテック' : 'Coordination window: Creotech'}</p>
+          <p>
+            {lang === 'ja'
+              ? '運営・調整窓口：クレオテック・国際業務課（留学サポートデスク・衣笠）'
+              : 'Operations and coordination: Creotech International Affairs Department (Ritsumeikan Study Abroad Center, Kinugasa)'}
+          </p>
           <p>{lang === 'ja' ? 'COE・査証の取得、予約、契約等を保証するものではありません。' : 'COE or visa approval, bookings, and contracts are not guaranteed.'}</p>
         </div>
       </div>
