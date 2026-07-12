@@ -53,12 +53,15 @@ export function Header({ lang }: { lang: Lang }) {
           <span className="brand-divider" aria-hidden="true" />
           <span className="brand-copy">
             <span className="creotech-header-logo" role="img" aria-label="Creotech">CREOTECH</span>
-            <span className="brand-message">
-              <strong>GLOBAL WELCOME</strong>
-              <span className="brand-service-line">
-                {lang === 'ja' ? '海外教員・研究者受入支援' : 'International Faculty & Researcher Support'}
+            <span className="brand-message global-welcome-header-banner">
+              <span className="header-banner-kicker">
+                {lang === 'ja' ? '海外教員・研究者受入支援' : 'International Support'}
               </span>
-              <span className="brand-context-line">Ritsumeikan × Creotech</span>
+              <strong className="header-banner-title">
+                <span className="header-banner-global">GLOBAL</span>
+                <span className="header-banner-welcome">WELCOME</span>
+              </strong>
+              <span className="brand-context-line">Ritsumeikan Academy × Creotech</span>
             </span>
           </span>
         </Link>
