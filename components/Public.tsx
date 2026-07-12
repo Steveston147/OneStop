@@ -39,6 +39,15 @@ const footerNavigation = {
   ],
 } as const;
 
+function HeaderGlobeIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3.8 12h16.4M12 3.5c2.2 2.4 3.3 5.2 3.3 8.5S14.2 18.1 12 20.5M12 3.5C9.8 5.9 8.7 8.7 8.7 12s1.1 6.1 3.3 8.5" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function Header({ lang }: { lang: Lang }) {
   const other = lang === 'ja' ? 'en' : 'ja';
 
@@ -54,14 +63,26 @@ export function Header({ lang }: { lang: Lang }) {
           <span className="brand-copy">
             <span className="creotech-header-logo" role="img" aria-label="Creotech">CREOTECH</span>
             <span className="brand-message global-welcome-header-banner">
-              <span className="header-banner-kicker">
-                {lang === 'ja' ? '海外教員・研究者受入支援' : 'International Support'}
+              <span className="capsule-support-segment">
+                <span className="capsule-globe"><HeaderGlobeIcon /></span>
+                <span className="capsule-support-copy">
+                  {lang === 'ja' ? (
+                    <>
+                      <span>海外教員・</span>
+                      <span>研究者受入支援</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>International</span>
+                      <span>Support</span>
+                    </>
+                  )}
+                </span>
               </span>
-              <strong className="header-banner-title">
-                <span className="header-banner-global">GLOBAL</span>
-                <span className="header-banner-welcome">WELCOME</span>
-              </strong>
-              <span className="brand-context-line">Ritsumeikan Academy × Creotech</span>
+              <span className="capsule-brand-segment">
+                <strong>GLOBAL WELCOME</strong>
+                <span>Ritsumeikan Academy × Creotech</span>
+              </span>
             </span>
           </span>
         </Link>
