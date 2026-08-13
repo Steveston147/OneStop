@@ -24,14 +24,14 @@ test('Japanese enquiry reaches review screen and preserves entered data', async 
   await completeToReview(page, 'ja');
   await expect(page.getByText('E2E Test User')).toBeVisible();
   await expect(page.getByText('e2e@example.com')).toBeVisible();
-  await expect(page.getByText('COE・ビザ関連支援')).toBeVisible();
+  await expect(page.locator('.review-services').getByText('COE・ビザ関連支援')).toBeVisible();
 });
 
 test('English enquiry reaches review screen and preserves entered data', async ({ page }) => {
   await completeToReview(page, 'en');
   await expect(page.getByText('E2E Test User')).toBeVisible();
   await expect(page.getByText('e2e@example.com')).toBeVisible();
-  await expect(page.getByText('COE and visa guidance')).toBeVisible();
+  await expect(page.locator('.review-services').getByText('COE and visa guidance')).toBeVisible();
 });
 
 test('browser validation prevents advancing without required fields', async ({ page }) => {
@@ -55,9 +55,13 @@ test('Other institution requires an institution name', async ({ page }) => {
   await expect(otherInstitution).toBeFocused();
 });
 
-test('honeypot exists in the submitted form but is not visible to people', async ({ page }) => {
+test('honeypot is excluded from normal interaction and kept off-screen', async ({ page }) => {
   await page.goto('/en/contact');
   const honeypot = page.locator('input[name="company_website"]');
   await expect(honeypot).toHaveCount(1);
-  await expect(honeypot).toBeHidden();
+  await expect(honeypot).toHaveAttribute('tabindex', '-1');
+  await expect(honeypot.locator('xpath=..')).toHaveAttribute('aria-hidden', 'true');
+  const box = await honeypot.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.x).toBeLessThan(-1000);
 });
