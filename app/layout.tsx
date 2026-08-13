@@ -6,6 +6,7 @@ import './creotech-logo-branding.css';
 import './compact-brand-banner.css';
 import './global-welcome-capsule.css';
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 
 export const metadata: Metadata = {
   title: {
@@ -15,9 +16,12 @@ export const metadata: Metadata = {
   description: 'Creotech Global Welcome coordinates international faculty and researcher support from invitation and pre-arrival preparation through arrival and settling in across Ritsumeikan University, APU, and affiliated schools.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const requestHeaders = await headers();
+  const lang = requestHeaders.get('x-one-stop-lang') === 'en' ? 'en' : 'ja';
+
   return (
-    <html lang="ja">
+    <html lang={lang}>
       <body>{children}</body>
     </html>
   );
