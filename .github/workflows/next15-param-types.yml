@@ -1,0 +1,56 @@
+name: Next 15 param type migration
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Align generated route param types
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          home = Path('app/[lang]/page.tsx')
+          text = home.read_text()
+          text = text.replace(
+              "export default async function Home({ params }: { params: Promise<{ lang: Lang }> }) {\n  const { lang } = await params;\n  const t = copy[lang];",
+              "export default async function Home({ params }: { params: Promise<{ lang: string }> }) {\n  const resolved = await params;\n  if (resolved.lang !== 'ja' && resolved.lang !== 'en') return null;\n  const lang: Lang = resolved.lang;\n  const t = copy[lang];",
+          )
+          home.write_text(text)
+
+          request = Path('app/[lang]/request/page.tsx')
+          text = request.read_text()
+          text = text.replace(
+              "export default async function Request({ params }: { params: Promise<{ lang: Lang }> }) {\n  const { lang } = await params;\n  redirect(`/\${lang}/contact`);".replace('\\${', '${'),
+              "export default async function Request({ params }: { params: Promise<{ lang: string }> }) {\n  const { lang } = await params;\n  if (lang !== 'ja' && lang !== 'en') redirect('/en');\n  redirect(`/\${lang}/contact`);".replace('\\${', '${'),
+          )
+          request.write_text(text)
+
+          confirm = Path('app/[lang]/request/confirm/page.tsx')
+          text = confirm.read_text()
+          text = text.replace("params: Promise<{ lang: Lang }>;", "params: Promise<{ lang: string }>;")
+          text = text.replace(
+              "  const [{ lang }, resolvedSearchParams] = await Promise.all([params, searchParams]);\n  const isJa = lang === 'ja';",
+              "  const [{ lang: rawLang }, resolvedSearchParams] = await Promise.all([params, searchParams]);\n  const lang: Lang = rawLang === 'ja' ? 'ja' : 'en';\n  const isJa = lang === 'ja';",
+          )
+          confirm.write_text(text)
+          PY
+      - name: Commit migration
+        run: |
+          if git diff --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/[lang]/page.tsx app/[lang]/request/page.tsx app/[lang]/request/confirm/page.tsx
+          git commit -m "Align Next.js 15 generated route param types"
+          git push
