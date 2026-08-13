@@ -21,11 +21,12 @@ export function generateStaticParams() {
   return ['ja', 'en'].flatMap((lang) => routeSlugs.map((slug) => ({ lang, slug })));
 }
 
-export default function ContentPage({ params }: { params: { lang: Lang; slug: string } }) {
-  if (!routeSlugs.includes(params.slug as OneStopSlug)) notFound();
+export default async function ContentPage({ params }: { params: Promise<{ lang: Lang; slug: string }> }) {
+  const resolvedParams = await params;
+  if (!routeSlugs.includes(resolvedParams.slug as OneStopSlug)) notFound();
 
-  const lang = params.lang;
-  const slug = params.slug as OneStopSlug;
+  const lang = resolvedParams.lang;
+  const slug = resolvedParams.slug as OneStopSlug;
   const [title, summary] = pageMeta[lang][slug];
   const hero = pageHeroDetails[lang][slug];
   const isContact = slug === 'contact';
