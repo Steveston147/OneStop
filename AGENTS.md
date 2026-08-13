@@ -5,231 +5,110 @@
 
 This file is the primary specification for all future human and AI-assisted development in this repository. If implementation, PR text, old branches, comments, or older documentation conflicts with this file, **this file takes precedence unless an explicit approved decision in `DECISIONS.md` supersedes it**.
 
----
-
 ## 1. Purpose
 
-OneStop is a bilingual public information and enquiry-intake service for Creotech / Ritsumeikan-related international support.
+OneStop is a bilingual public information and enquiry-intake service for Creotech / Ritsumeikan-related international support. Primary audiences include international faculty/researchers/guests, accompanying family members, host offices, Ritsumeikan University, APU, and affiliated schools.
 
-Primary audiences:
+Priorities: correctness, privacy, human control, bilingual parity, maintainability, and evidence-based release decisions.
 
-- international faculty and researchers,
-- invited guests,
-- accompanying family members,
-- host offices and faculty,
-- Ritsumeikan University,
-- Ritsumeikan Asia Pacific University (APU),
-- affiliated schools.
+## 2. Approved V1 architecture
 
-The product must prioritize:
-
-1. Correctness over feature count.
-2. Privacy and operational safety over convenience.
-3. Human decision-making over hidden automation.
-4. Bilingual parity.
-5. Maintainability and reversibility.
-6. Clear evidence before merge or release.
-
----
-
-## 2. Current Approved Production Model
-
-The approved V1/MVP architecture is deliberately simple:
-
-- Next.js App Router
-- TypeScript
-- React
-- Tailwind CSS
-- Vercel
-- Resend for server-side enquiry email delivery
+- Next.js App Router / TypeScript / React / Tailwind CSS
+- Vercel deployment
+- Resend server-side enquiry email delivery
 - Japanese and English public pages
 - email-based enquiry intake
 - **no production enquiry database**
 - **no admin dashboard**
-- **no user account / SSO**
-- **no passport, COE, visa, residence-card, bank, medical, or other sensitive-document upload**
+- **no user accounts / SSO**
+- **no sensitive-document upload**
 
-Public enquiry flow:
+The earlier Postgres/Neon admin prototype has been physically removed. `/admin`, `lib/db.ts`, `db/schema.sql`, `DATABASE_URL`, `ADMIN_PASSWORD`, database persistence, CSV admin export, and shared-password admin authentication must not be silently reintroduced.
 
-1. User opens `/ja` or `/en`.
-2. User reviews service information.
-3. User completes the four-step bilingual enquiry form.
-4. Server independently validates the submission.
-5. Server sends the enquiry to a private operational mailbox through Resend.
-6. A cryptographically generated reference ID is shown only after the provider accepts the request.
-7. Staff handle the case outside OneStop unless a future ADR explicitly approves case-management functionality.
+A future admin/case-management design requires a new ADR covering authentication, authorization, audit, privacy, retention, ownership, and rollback.
 
-### Database / admin status
+## 3. Current audit verdict
 
-The earlier Postgres/Neon admin prototype has been **removed from the active codebase**.
+**Engineering baseline: PASS for a controlled V1 release candidate, but V1 is not yet institutionally complete.**
 
-The following are not part of V1 and must not be silently reintroduced:
+Major P0 findings from the original 56/100 audit have been remediated: governance, legacy architecture, form hardening, locked dependencies, test baseline, CI, browser E2E, supported Next.js, and CI warning cleanup.
 
-- `/admin`
-- `lib/db.ts`
-- `db/schema.sql`
-- `DATABASE_URL`
-- `ADMIN_PASSWORD`
-- database-backed enquiry persistence
-- CSV admin export
-- shared-password admin authentication
+Remaining release items:
 
-Any future admin/case-management design requires a new ADR covering authentication, authorization, audit logging, privacy, retention, operational ownership, and rollback.
+- English document-language declaration is incorrect (`/en` visible content is English but root HTML is currently `lang="ja"`) — **technical follow-up required**.
+- approved institutional imagery — **pending approved assets**.
+- business wording / service / fee / contact owner approval — **pending owner sign-off**.
+- product and mailbox ownership, retention, deletion, and incident handling — **pending owner decisions**.
+- approved Resend organisational sender identity — **pending decision/configuration**.
+- final human owner UAT — **pending**.
 
----
+Current best-effort IP rate limiting is not globally distributed across all Vercel instances; do not represent it as such.
 
-## 3. Current Audit Verdict — 2026-08-13
+## 4. Non-negotiable product rules
 
-### Engineering baseline: **PASS for controlled V1 release candidate**
+Do not add without explicit approval and an ADR:
 
-The original 2026-08-12 audit scored 56/100 and identified governance, legacy architecture, form security, testing, CI, and dependency risk. Those major P0 engineering findings have now been remediated.
-
-Current status:
-
-| Area | Current status |
-|---|---|
-| Governance / canonical docs | PASS |
-| Legacy Admin / DB removal | PASS |
-| Public form server validation | PASS |
-| Secure request ID | PASS |
-| Input limits / allowlists / date validation | PASS |
-| Honeypot / basic burst protection | PASS WITH LIMITATION |
-| Resend timeout / error hygiene | PASS |
-| Locked dependencies / `npm ci` | PASS |
-| TypeScript gate | PASS |
-| ESLint zero-warning gate | PASS |
-| Unit tests | PASS |
-| Browser E2E | PASS |
-| GitHub Actions CI | PASS |
-| Vercel Preview gate | PASS |
-| Supported Next.js security line | PASS |
-| Institutional privacy/retention ownership | PENDING BUSINESS SIGN-OFF |
-| Approved production imagery / brand assets | PENDING BUSINESS ASSET APPROVAL |
-| Formal V1 owner acceptance | PENDING |
-
-### Important limitation
-
-The current in-memory/IP rate limiter is best-effort and is **not a distributed global rate limit across every Vercel instance**. If abuse risk increases, a Vercel-native or approved distributed control should be introduced in a dedicated security decision.
-
----
-
-## 4. Non-Negotiable Product Rules
-
-Do not add the following without explicit product approval and a documented ADR:
-
-- user accounts,
-- SSO,
+- accounts or SSO,
 - database persistence,
 - admin dashboards,
-- file uploads,
-- sensitive-document storage,
+- file uploads or sensitive-document storage,
 - payment handling,
 - automated immigration decisions,
 - CRM synchronization,
-- AI-generated legal/immigration conclusions,
-- analytics containing personal data.
+- AI legal/immigration conclusions,
+- personal-data analytics.
 
-OneStop may organize information and route cases. It must not claim to provide legal or immigration determinations.
+OneStop may organize and route support. It must not claim legal/immigration determinations.
 
----
+## 5. Public form security/privacy baseline
 
-## 5. Privacy & Security Rules
-
-### Public form
-
-The server is authoritative. Client validation is convenience only.
-
-Required controls, all currently part of the V1 baseline:
+The server is authoritative. Required/current V1 controls include:
 
 - required-field validation,
-- controlled-field allowlists,
+- allowlists for controlled fields,
 - strict email validation,
-- explicit text-length limits on client and server,
-- valid calendar-date checking,
-- arrival/departure relationship checking,
+- client/server text-length limits,
+- calendar-date and arrival/departure checks,
 - family-count range validation,
 - duplicate/invalid service rejection,
 - consent validation,
-- bot-trap field,
-- best-effort burst/rate limiting,
+- honeypot,
+- best-effort rate limiting,
 - cryptographically secure request ID,
 - Resend timeout,
-- user-safe error messages,
-- no provider response-body dumps,
-- no full enquiry-body logging.
+- user-safe errors,
+- no provider-response or full enquiry-body dumps.
 
-### Sensitive information
+The form must never request uploads of passports, COEs, residence cards, visa scans, banking or medical documents. Operational handling for unexpected sensitive information and unresolved retention decisions is recorded in `V1_READINESS.md`.
 
-The public form must never ask for or accept file uploads of passports, COEs, residence cards, visa scans, bank statements, medical records, or equivalent sensitive documents.
+Never commit API keys, private mailbox addresses, passwords, tokens, Vercel secrets, or private document URLs.
 
-If users send sensitive information in free text or later by email, staff must follow the operational handling rules in `OPERATIONS.md`.
+## 6. Bilingual and content rules
 
-### Secrets
+Japanese and English are equal production languages. Every user-visible change must be checked for meaning, navigation, fee/service claims, disclaimers, and form parity.
 
-Never commit API keys, mailbox addresses intended to remain private, tokens, passwords, Vercel secrets, or private document URLs. Use environment variables / approved secret storage.
+Do not invent or alter service eligibility, fees, payment responsibility, response guarantees, immigration claims, official names, sender/contact identity, or brand usage without owner confirmation.
 
----
+The document/content language must correctly identify the active language for accessibility. The current `/en` root-language mismatch is an open V1 issue and requires regression coverage when fixed.
 
-## 6. Bilingual & Content Rules
-
-Japanese and English are equal production languages.
-
-Every user-visible change must be checked for:
-
-- meaning parity,
-- correct audience,
-- navigation parity,
-- fee/service claim parity,
-- disclaimers,
-- form labels and validation copy.
-
-Do not invent or change:
-
-- service eligibility,
-- fees,
-- payment responsibility,
-- response guarantees,
-- immigration claims,
-- official organization names,
-- approved sender/contact identity,
-- brand usage,
-
-without owner confirmation.
-
-Content that is intentionally provisional must be clearly identified in documentation and must not be represented as institutionally approved.
-
----
-
-## 7. Architecture & Dependency Rules
-
-Current approved baseline:
+## 7. Architecture/toolchain baseline
 
 - Next.js 15.5 maintenance/security line
 - React 19
 - Node.js 22 in CI
-- `package-lock.json` committed
-- `npm ci` for reproducible CI installs
-- Vitest for unit validation tests
-- Playwright / Chromium for critical bilingual E2E
+- committed `package-lock.json`
+- `npm ci`
+- Vitest
+- Playwright / Chromium
 - ESLint 9 CLI with `--max-warnings=0`
 
-Framework major upgrades require a dedicated PR and regression review.
+Major framework upgrades require dedicated tested PRs. New dependencies must be justified.
 
-New dependencies must be justified and must not be added merely for convenience.
+Temporary Pexels images are design-review placeholders, not approved institutional assets. Do not silently substitute arbitrary web images as official material.
 
-### Styling
+## 8. Test / CI merge gate
 
-Reduce styling entropy. Do not create chains of `*-fix.css`, `*-final.css`, `*-polish2.css`, etc. Prefer reusable components/tokens and deletion of obsolete rules.
-
-### Images
-
-Temporary design-review images are not approved production institutional assets. They must remain visibly identifiable as temporary until approved replacements are supplied and ownership/usage is confirmed.
-
----
-
-## 8. Testing & CI Merge Gate
-
-Every meaningful PR must pass applicable checks:
+Applicable meaningful PRs must pass:
 
 1. `npm ci`
 2. `npm run typecheck`
@@ -239,148 +118,91 @@ Every meaningful PR must pass applicable checks:
 6. `npm run test:e2e` for critical user-flow changes
 7. Vercel Preview for meaningful UI/routing/form/deployment changes
 
-Current CI also restores the Next.js build cache and disables framework telemetry in CI.
+A successful build or Vercel deployment alone is not approval. Every reasonable bug fix should add/update a regression test.
 
-### Merge decisions
+Merge decisions: **APPROVE**, **APPROVE WITH FOLLOW-UP**, **REQUEST CHANGES**, or **DO NOT MERGE**.
 
-Use one of:
+## 9. V1 UAT baseline
 
-- **APPROVE** — safe to merge.
-- **APPROVE WITH FOLLOW-UP** — no material release risk; tracked debt remains.
-- **REQUEST CHANGES** — material defect/risk must be fixed first.
-- **DO NOT MERGE** — architecture/security/spec conflict.
+Before V1 completion verify:
 
-A successful build or Vercel deployment alone is never sufficient for approval.
+- `/ja` and `/en`,
+- navigation/language switching,
+- bilingual four-step contact form,
+- review and required-field behavior,
+- sensitive-document warning,
+- invalid route behavior,
+- mobile usability,
+- `/admin` unavailable,
+- Vercel READY,
+- no current release-blocking runtime error,
+- correct document/content language.
 
-### Regression rule
+Real email delivery should only be tested intentionally when mailbox and sender configuration are approved.
 
-Every technically reasonable bug fix must add or update a regression test.
+UAT evidence and business/operational blockers are recorded in `V1_READINESS.md`.
 
----
+## 10. Operational readiness
 
-## 9. V1 UAT Requirements
-
-Before declaring V1 complete, verify the production domain and/or release-candidate Preview for:
-
-- `/ja` loads correctly,
-- `/en` loads correctly,
-- all public navigation routes return the expected page,
-- language switching works,
-- contact form shows four steps in both languages,
-- required fields block progress/acceptance correctly,
-- host-institution options are correct,
-- review-before-submit works,
-- sensitive-document warning is visible,
-- invalid route returns a usable not-found page,
-- mobile layout remains usable,
-- no `/admin` route exists,
-- Vercel deployment is READY,
-- no production runtime error cluster indicates a release blocker.
-
-Real email delivery should be tested intentionally only when the operational mailbox and sender domain are confirmed.
-
-Record UAT evidence in `V1_READINESS.md`.
-
----
-
-## 10. Operational Readiness
-
-Before institutional/public V1 sign-off, `OPERATIONS.md` must identify or explicitly mark pending:
+Before institutional V1 sign-off, `V1_READINESS.md` must record or mark pending:
 
 - product/service owner,
-- operational mailbox owner,
-- who may access enquiry mail,
-- retention period,
-- label/archive workflow,
-- deletion process,
-- misdirected enquiry handling,
-- sensitive-information handling,
+- mailbox owner and access,
+- retention/archive/deletion rules,
+- sensitive/misdirected enquiry handling,
 - incident escalation contact,
-- approved Resend sender domain/address,
-- production smoke-test procedure,
-- rollback procedure.
+- approved Resend sender identity,
+- business-content approval,
+- image/brand approval,
+- smoke-test/rollback principles.
 
-Unknown organizational policy must be marked **PENDING OWNER DECISION** rather than guessed.
+Unknown organisational policy must be marked **PENDING OWNER DECISION**, never guessed.
 
----
+## 11. AI rules
 
-## 11. AI Agent Rules
+AI agents MUST read `AGENTS.md` and `DECISIONS.md`, inspect the actual implementation, preserve approved behavior, avoid inventing policy, prefer reversible changes, add tests for behavior changes, preserve bilingual parity, keep secrets out of the repo, and never silently reactivate DB/Admin behavior.
 
-AI agents MUST:
-
-1. Read `AGENTS.md` and `DECISIONS.md` first.
-2. Inspect the actual implementation before changing architecture.
-3. Preserve approved business behavior unless explicitly instructed otherwise.
-4. Never invent university, privacy, legal, fee, retention, or brand policy.
-5. Prefer small reversible changes.
-6. Add/update tests for behavior changes.
-7. Preserve Japanese/English parity.
-8. Never expose secrets.
-9. Never silently reactivate DB/Admin behavior.
-10. Report unresolved business decisions as explicit blockers or follow-ups.
-
-AI agents MUST NOT weaken validation or CI merely to make a build pass.
-
----
+AI agents must not weaken validation or CI merely to pass checks.
 
 ## 12. Definition of Done
 
-A feature is done only when:
+A feature is done only when behavior matches specification, bilingual/security/privacy impact is reviewed, tests cover key behavior, CI is Green, Vercel evidence exists where applicable, errors/mobile states are usable, docs are updated, and rollback is understood.
 
-- behavior matches approved specification,
-- bilingual impact is reviewed,
-- security/privacy impact is understood,
-- validation exists where applicable,
-- tests cover key behavior,
-- CI is Green,
-- Vercel evidence exists where applicable,
-- no secrets/sensitive data leak,
-- error and mobile states are usable,
-- documentation is updated,
-- rollback is understood.
-
----
-
-## 13. Roadmap Status
+## 13. Roadmap status
 
 ### Completed engineering baseline
 
-- [x] Canonical `AGENTS.md`
-- [x] `DECISIONS.md`
+- [x] Canonical governance and decision log
 - [x] Close superseded PRs #2, #6, #15
-- [x] Remove legacy Admin/Postgres/Neon architecture
+- [x] Remove Admin/Postgres/Neon
 - [x] Harden public enquiry form
-- [x] Secure request IDs
-- [x] Add bot trap and best-effort rate limiting
-- [x] Add provider timeout and privacy-safe errors/logging
-- [x] Add Vitest baseline
-- [x] Add explicit typecheck
-- [x] Add GitHub Actions quality gate
-- [x] Commit dependency lockfile and use `npm ci`
-- [x] Add Playwright E2E
-- [x] Upgrade to supported Next.js 15.5 security line
-- [x] Modernize ESLint/Node/Actions and reduce CI warnings
-- [x] Add Next.js build caching in CI
+- [x] Secure request IDs / bot trap / best-effort rate limit / provider timeout
+- [x] Vitest / typecheck / GitHub Actions
+- [x] lockfile + `npm ci`
+- [x] Playwright E2E
+- [x] Next.js 15.5 security upgrade
+- [x] ESLint/Node/Actions warning cleanup
+- [x] Next.js CI build caching
+- [x] Synchronize AGENTS/README/DECISIONS with the current baseline
+- [x] Run production UAT and record findings
+- [x] Record business-copy and operating-decision checklist
 
-### V1 release-readiness work
+### V1 completion blockers
 
-- [x] Synchronize canonical documentation with current code baseline
-- [x] Perform production-route UAT / release audit and record findings
-- [x] Perform business-copy risk review and record owner-sign-off items
-- [ ] Replace temporary imagery with approved institutional assets — **PENDING APPROVED ASSETS**
-- [x] Document privacy/retention/operational checklist with unknown policy marked pending
-- [ ] Obtain owner sign-off on business content, sender identity, retention, and imagery
-- [ ] Issue final V1 COMPLETE decision after the owner-sign-off blockers are cleared
+- [ ] Fix English document-language declaration and add regression test
+- [ ] Obtain business owner sign-off for wording/services/fees/contact identity
+- [ ] Confirm product/mailbox ownership and retention/incident handling
+- [ ] Confirm approved organisational sender identity
+- [ ] Replace sample imagery with approved institutional assets
+- [ ] Final human owner UAT / acceptance
+- [ ] Issue **V1 COMPLETE** decision
 
----
+## 14. Canonical order
 
-## 14. Canonical Document Order
+1. `AGENTS.md`
+2. `DECISIONS.md`
+3. `V1_READINESS.md`
+4. `README.md`
+5. current implementation on `main`
 
-1. `AGENTS.md` — governing specification
-2. `DECISIONS.md` — approved architecture/product decisions
-3. `OPERATIONS.md` — production operations/privacy checklist
-4. `V1_READINESS.md` — UAT/release evidence and remaining blockers
-5. `README.md` — practical project overview
-6. current implementation on `main`
-
-Historical PRs, obsolete branches, and old comments are context only and do not override this baseline.
+Historical PRs, obsolete branches, and old comments are context only.
