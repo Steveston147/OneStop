@@ -7,15 +7,15 @@ async function completeToReview(page: Page, lang: 'ja' | 'en') {
   await page.getByLabel(lang === 'ja' ? '受入機関・所属' : 'Host institution').selectOption('Ritsumeikan University');
   await page.getByLabel(lang === 'ja' ? '氏名' : 'Full name').fill('E2E Test User');
   await page.getByLabel(lang === 'ja' ? 'メールアドレス' : 'Email address').fill('e2e@example.com');
-  await page.getByRole('button', { name: lang === 'ja' ? '次へ' : 'Next' }).click();
+  await page.getByRole('button', { name: lang === 'ja' ? '次へ' : 'Next', exact: true }).click();
 
   await expect(page.getByRole('heading', { name: lang === 'ja' ? '来日・受入予定' : 'Visit and hosting details' })).toBeVisible();
   await page.getByLabel(lang === 'ja' ? '同行家族人数' : 'Number of accompanying family members').fill('2');
-  await page.getByRole('button', { name: lang === 'ja' ? '次へ' : 'Next' }).click();
+  await page.getByRole('button', { name: lang === 'ja' ? '次へ' : 'Next', exact: true }).click();
 
   const serviceName = lang === 'ja' ? 'COE・ビザ関連支援' : 'COE and visa guidance';
   await page.getByLabel(serviceName).check();
-  await page.getByRole('button', { name: lang === 'ja' ? '次へ' : 'Next' }).click();
+  await page.getByRole('button', { name: lang === 'ja' ? '次へ' : 'Next', exact: true }).click();
 
   await expect(page.getByRole('heading', { name: lang === 'ja' ? '確認・送信' : 'Review and submit' })).toBeVisible();
 }
@@ -36,7 +36,7 @@ test('English enquiry reaches review screen and preserves entered data', async (
 
 test('browser validation prevents advancing without required fields', async ({ page }) => {
   await page.goto('/en/contact');
-  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'About you' })).toBeVisible();
   await expect(page.getByLabel('Your role')).toBeFocused();
 });
@@ -47,11 +47,11 @@ test('Other institution requires an institution name', async ({ page }) => {
   await page.getByLabel('Host institution').selectOption('Other');
   await page.getByLabel('Full name').fill('E2E Test User');
   await page.getByLabel('Email address').fill('e2e@example.com');
-  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Next', exact: true }).click();
 
   const otherInstitution = page.getByLabel('Other institution and host department');
   await expect(otherInstitution).toBeVisible();
-  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(otherInstitution).toBeFocused();
 });
 
