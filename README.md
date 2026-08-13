@@ -9,9 +9,9 @@ A bilingual public website and enquiry flow for international faculty, researche
 - Tailwind CSS
 - Vercel deployment
 - Public enquiries delivered by email through the Resend API
-- No database is required for the public enquiry form
+- No database or web admin dashboard
 
-The repository still contains the earlier database-backed admin prototype. That admin area is optional and is not required for the current email-only MVP enquiry flow.
+The canonical production model is deliberately email-only. The earlier Postgres/Neon admin prototype has been removed from the active codebase. Reintroducing database persistence, an admin dashboard, authentication, or case management requires an explicit architecture decision under `AGENTS.md` and `DECISIONS.md`.
 
 ## Included in the MVP
 
@@ -21,7 +21,7 @@ The repository still contains the earlier database-backed admin prototype. That 
 - Ritsumeikan University, APU, and affiliated-school selection
 - Review-before-submit screen
 - Server-side email delivery to a private recipient configured in Vercel
-- Generated reference number such as `OS-20260712-ABC12`
+- Generated reference number such as `CGW-20260813-ABC12`
 - Applicant email set as Reply-To so the coordinator can reply directly
 - No passport, COE, or sensitive-document upload
 
@@ -32,14 +32,14 @@ Create `.env.local` for local development, and add the same variables in Vercel 
 ```bash
 RESEND_API_KEY="re_xxxxxxxxxxxxxxxxx"
 ENQUIRY_TO_EMAIL="recipient@example.com"
-ENQUIRY_FROM_EMAIL="OneStop <onboarding@resend.dev>"
+ENQUIRY_FROM_EMAIL="Creotech Global Welcome <onboarding@resend.dev>"
 ```
 
 - `RESEND_API_KEY` is required.
 - `ENQUIRY_TO_EMAIL` is required and stores the private recipient address outside the public repository.
-- `ENQUIRY_FROM_EMAIL` is optional. The code uses `OneStop <onboarding@resend.dev>` when it is omitted.
+- `ENQUIRY_FROM_EMAIL` is optional. The code uses the Resend onboarding sender when it is omitted.
 
-For an initial Resend test, create the Resend account using the recipient address and use the Resend onboarding sender. For public operation, use a verified organisation domain and replace `ENQUIRY_FROM_EMAIL` with the approved sender address.
+For public operation, use a verified organisation domain and replace `ENQUIRY_FROM_EMAIL` with the approved sender address.
 
 The recipient is read only on the server. It is not supplied by the browser and cannot be changed through the enquiry form.
 
@@ -51,18 +51,7 @@ The recipient is read only on the server. It is not supplied by the browser and 
 4. The enquiry is sent to the private recipient by the Resend API.
 5. The user sees the reference number on the confirmation page.
 
-If `RESEND_API_KEY` or `ENQUIRY_TO_EMAIL` is missing, the public form displays a user-friendly email-configuration message. It no longer displays a `DATABASE_URL` error.
-
-## Optional legacy admin prototype
-
-The existing `/admin` prototype still uses Postgres and the following optional variables:
-
-```bash
-DATABASE_URL="postgresql://USER:PASSWORD@HOST/db?sslmode=require"
-ADMIN_PASSWORD="change-this-admin-password"
-```
-
-Do not configure these variables unless the database-backed admin workflow is intentionally reactivated. The email-only public form works without them.
+If `RESEND_API_KEY` or `ENQUIRY_TO_EMAIL` is missing, the public form displays a user-friendly email-configuration message.
 
 ## Run locally
 
@@ -74,17 +63,22 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-## Vercel review checklist
+## Vercel Preview review checklist
+
+Use Vercel Preview for every meaningful UI, routing, form, or deployment change.
 
 - `npm run build` completes successfully.
 - `/ja`, `/en`, and all public routes render correctly.
 - `/ja/contact` and `/en/contact` show all four steps.
+- `/admin` is not an application route and returns not found.
+- No `DATABASE_URL` or `ADMIN_PASSWORD` is required.
 - The host-institution list includes Ritsumeikan University, APU, the four affiliated schools, and Other.
-- A test submission arrives at the configured recipient address.
+- A test submission arrives at the configured recipient address when Preview email delivery is intentionally enabled.
 - Replying to the message addresses the applicant email.
 - The confirmation screen displays the same request ID as the received email.
-- No `DATABASE_URL` error appears on the public form.
 - Mobile layout and the review-before-submit screen are checked.
+
+A successful Vercel deployment is evidence, not by itself a merge approval. Applicable type-check, lint, test, build, security/privacy, bilingual, and regression checks remain required by `AGENTS.md`.
 
 ## Before public launch
 
