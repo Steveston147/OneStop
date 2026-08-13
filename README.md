@@ -4,59 +4,45 @@ A bilingual public information and enquiry-intake service for international facu
 
 ## Current release status
 
-**Engineering baseline: V1 release candidate**
+**Engineering baseline: V1 release candidate. Institutional V1: not yet complete.**
 
-The core technical remediation is complete:
+Completed technical baseline:
 
 - legacy Postgres/Neon admin architecture removed,
 - public form hardened server-side,
-- dependency lockfile committed,
-- `npm ci` used in CI,
-- TypeScript, ESLint, Vitest, production build, and Playwright E2E are automated,
-- Vercel Preview is part of the merge gate,
-- Next.js is on the supported 15.5 security line,
-- CI warning/tooling cleanup is complete.
+- committed dependency lockfile and `npm ci`,
+- TypeScript / ESLint zero-warning / Vitest / production build / Playwright E2E,
+- GitHub Actions and Vercel Preview merge gates,
+- Next.js 15.5 security line / React 19,
+- Node.js 22 CI and Next.js build cache.
 
-V1 is **not yet declared institutionally complete** because a small number of business-owner sign-offs remain: approved production imagery, sender identity/domain, mailbox retention/ownership, and final business-copy approval. See `V1_READINESS.md` and `OPERATIONS.md`.
+Current final blockers are recorded in `V1_READINESS.md`, including the English document-language declaration, approved production imagery, business wording/owner approval, mailbox/retention ownership, sender identity, and final human UAT.
 
-## Production / canonical Vercel domain
-
-Current production alias used for UAT:
+## Production Vercel domain
 
 - `https://one-stop-rho.vercel.app`
-
-Vercel project:
-
-- project: `one-stop`
-- deployment platform: Vercel
+- Vercel project: `one-stop`
 
 ## Canonical documents
 
-Read in this order:
-
 1. `AGENTS.md` — governing specification
 2. `DECISIONS.md` — architecture/product decision log
-3. `OPERATIONS.md` — operational/privacy/retention checklist
-4. `V1_READINESS.md` — UAT and release-readiness evidence
-5. `README.md` — practical project overview
+3. `V1_READINESS.md` — UAT, business/operational checklist, release blockers
+4. `README.md` — practical overview
 
-Historical PRs/branches do not override these documents.
+Historical PRs and branches do not override these documents.
 
 ## Current architecture
 
-- Next.js App Router
-- TypeScript
-- React 19
-- Tailwind CSS
-- Node.js 22 in GitHub Actions
-- Vercel deployment
+- Next.js App Router / TypeScript / React 19 / Tailwind CSS
+- Vercel
 - Resend for server-side enquiry email delivery
 - no enquiry database
 - no web admin dashboard
 - no user accounts / SSO
 - no sensitive-document uploads
 
-The production model is deliberately email-only. Reintroducing database persistence, an admin dashboard, authentication, or case management requires an explicit architecture decision under `AGENTS.md` and `DECISIONS.md`.
+Reintroducing persistence, admin, authentication, or case management requires an explicit ADR.
 
 ## Included in V1
 
@@ -65,34 +51,28 @@ The production model is deliberately email-only. Reintroducing database persiste
 - four-step bilingual enquiry form
 - Ritsumeikan University, APU, and affiliated-school selection
 - review-before-submit screen
-- server-side email delivery to a private recipient configured in Vercel
-- generated reference number such as `CGW-20260813-ABC12`
-- applicant email set as Reply-To
+- private server-controlled email recipient
+- generated reference number
+- applicant email as Reply-To
 - explicit warning not to send passport/COE/sensitive immigration documents
 
 ## Enquiry security baseline
 
-The server, not the browser, is authoritative for enquiry acceptance. Current controls include:
-
-- cryptographically secure request-ID randomness
-- allowlists for language, role, host institution, and requested services
-- required-field and email validation
-- free-text length limits on client and server
-- semantic date validation and arrival/departure ordering
-- family-member integer/range validation
+- secure request-ID randomness
+- server-side allowlists and required-field/email validation
+- client/server free-text limits
+- semantic date / arrival-departure validation
+- family-member range validation
 - consent validation
 - duplicate/invalid service rejection
-- hidden bot-trap field
-- best-effort per-IP burst/rate limiting within the active server runtime
-- 10-second Resend timeout
-- privacy-safe delivery-error logging
-- no full enquiry-body or provider-response-body dumping
+- honeypot
+- best-effort per-IP burst/rate limiting
+- Resend timeout
+- privacy-safe error logging
 
-The in-process rate limiter is not a globally distributed rate limiter across all Vercel instances. If abuse risk increases, introduce an approved distributed/Vercel-native control in a separate security decision.
+The current in-process limiter is not globally distributed across all Vercel instances.
 
-## Email environment variables
-
-Create `.env.local` for local development and configure equivalent values in Vercel Project Settings → Environment Variables.
+## Environment variables
 
 ```bash
 RESEND_API_KEY="re_xxxxxxxxxxxxxxxxx"
@@ -100,37 +80,9 @@ ENQUIRY_TO_EMAIL="recipient@example.com"
 ENQUIRY_FROM_EMAIL="Creotech Global Welcome <onboarding@resend.dev>"
 ```
 
-- `RESEND_API_KEY` is required.
-- `ENQUIRY_TO_EMAIL` is required and stays outside the repository.
-- `ENQUIRY_FROM_EMAIL` is optional in code, but an **approved organisational sender domain/address is required before institutional V1 sign-off**.
+`RESEND_API_KEY` and `ENQUIRY_TO_EMAIL` are required. An approved organisational `ENQUIRY_FROM_EMAIL` is required before institutional V1 sign-off.
 
-The recipient is server-controlled and cannot be changed from the browser.
-
-## Public enquiry flow
-
-1. User completes the four-step form.
-2. Server independently validates the complete submission.
-3. A reference number is generated without a database.
-4. Enquiry is sent to the private recipient through Resend.
-5. Confirmation is shown only after Resend accepts the request.
-
-## Reproducible installs and automated tests
-
-`package-lock.json` is committed and is the dependency lock. Use `npm ci` for clean reproducible installs.
-
-Quality gate:
-
-- `npm ci`
-- `npm run typecheck`
-- `npm run lint` (zero-warning gate)
-- `npm test` (Vitest)
-- `npm run build`
-- `npm run test:e2e` (Playwright / Chromium)
-- Vercel Preview for meaningful user-visible/deployment changes
-
-GitHub Actions caches Next.js build output and runs on Node.js 22.
-
-## Run locally
+## Quality gate
 
 ```bash
 npm ci
@@ -138,46 +90,36 @@ npm run typecheck
 npm run lint
 npm test
 npm run build
-npm run dev
-```
-
-For browser E2E:
-
-```bash
-npx playwright install chromium
 npm run test:e2e
 ```
 
-Open `http://localhost:3000`.
+GitHub Actions runs the applicable gate and Vercel Preview is required for meaningful user-visible/deployment changes.
 
-## Vercel / UAT checklist
+## Current UAT status
 
-For meaningful releases:
+Verified on production:
 
-- GitHub Actions is Green.
-- Vercel deployment is READY.
-- `/ja` and `/en` render.
-- public routes render and language switching works.
-- `/ja/contact` and `/en/contact` show the four-step flow.
-- invalid inputs are rejected server-side.
-- `/admin` is not an application route.
-- mobile/review states are checked.
-- temporary design images remain clearly marked until approved assets are supplied.
-- production runtime logs contain no release-blocking error cluster.
+- `/ja` — 200
+- `/en` — 200
+- `/ja/fees` — 200
+- `/ja/contact` — 200
+- `/admin` — 404
+- invalid English route — 404
+- recent focused Vercel runtime check — no current error group
 
-Detailed evidence is recorded in `V1_READINESS.md`.
+Open technical finding: English visible pages are currently emitted under root `<html lang="ja">`. This must be corrected with regression coverage before final V1 completion.
 
-## Before final institutional V1 sign-off
+Detailed evidence and all owner decisions are in `V1_READINESS.md`.
 
-The following are **business/operational approval items, not unfinished core engineering**:
+## Before institutional V1 COMPLETE
 
-- approve public-facing service/fee/contact wording,
-- confirm official service/product owner,
-- confirm operational mailbox owner and access group,
-- confirm retention/archive/deletion period,
-- confirm sensitive-information incident/escalation process,
-- configure an approved verified organisational Resend sender domain/address,
-- replace temporary Pexels design-review imagery with approved institutional assets,
-- complete final owner UAT acceptance.
+- fix English document-language declaration,
+- approve service/fee/contact wording,
+- confirm product and mailbox ownership,
+- confirm retention/archive/deletion and incident handling,
+- confirm whether current-country/nationality are needed at initial enquiry,
+- configure approved organisational sender identity,
+- replace sample Pexels imagery with approved institutional assets,
+- complete final human owner UAT.
 
-Do not invent these policies in code. Unknown items are tracked explicitly in `OPERATIONS.md`.
+Unknown policy must be recorded as pending, not invented in code.
