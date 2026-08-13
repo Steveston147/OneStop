@@ -95,8 +95,8 @@ function VisitorIcon() {
   );
 }
 
-export default function Home({ params }: { params: { lang: Lang } }) {
-  const lang = params.lang;
+export default async function Home({ params }: { params: Promise<{ lang: Lang }> }) {
+  const { lang } = await params;
   const t = copy[lang];
 
   return (
