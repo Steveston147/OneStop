@@ -20,6 +20,16 @@ async function completeToReview(page: Page, lang: 'ja' | 'en') {
   await expect(page.getByRole('heading', { name: lang === 'ja' ? '確認・送信' : 'Review and submit' })).toBeVisible();
 }
 
+test('document language follows the Japanese route', async ({ page }) => {
+  await page.goto('/ja');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+});
+
+test('document language follows the English route', async ({ page }) => {
+  await page.goto('/en');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+});
+
 test('Japanese enquiry reaches review screen and preserves entered data', async ({ page }) => {
   await completeToReview(page, 'ja');
   await expect(page.getByText('E2E Test User')).toBeVisible();

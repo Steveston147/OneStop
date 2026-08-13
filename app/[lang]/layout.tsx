@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Lang } from '@/content/site';
+import DocumentLanguage from '@/components/DocumentLanguage';
 
 export function generateStaticParams() {
   return [{ lang: 'ja' }, { lang: 'en' }];
@@ -12,6 +13,11 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   }
 
   const locale: Lang = lang;
-  void locale;
-  return children;
+
+  return (
+    <>
+      <DocumentLanguage lang={locale} />
+      {children}
+    </>
+  );
 }
