@@ -5,11 +5,13 @@ export function generateStaticParams() {
   return [{ lang: 'ja' }, { lang: 'en' }];
 }
 
-export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ lang: Lang }> }) {
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (lang !== 'ja' && lang !== 'en') {
     notFound();
   }
 
+  const locale: Lang = lang;
+  void locale;
   return children;
 }
