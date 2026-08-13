@@ -72,12 +72,33 @@ The recipient is read only on the server. It is not supplied by the browser and 
 
 If `RESEND_API_KEY` or `ENQUIRY_TO_EMAIL` is missing, the public form displays a user-friendly email-configuration message.
 
+## Reproducible installs and automated tests
+
+`package-lock.json` is committed and is the dependency lock. Use `npm ci` for clean installs in CI and when you want the exact dependency set recorded in the repository.
+
+The automated quality gate has two layers:
+
+- Vitest checks the enquiry validation logic without opening a browser.
+- Playwright opens Chromium and operates the Japanese and English enquiry form like a user. It stops at the review screen and does not send a real enquiry email.
+
+GitHub Actions must pass `npm ci`, typecheck, lint, unit tests, build, and Playwright E2E before merge approval.
+
 ## Run locally
 
 ```bash
-npm install
+npm ci
+npm run typecheck
+npm run lint
+npm test
 npm run build
 npm run dev
+```
+
+For browser E2E tests, install Chromium once and run Playwright:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
 ```
 
 Open `http://localhost:3000`.
@@ -86,7 +107,8 @@ Open `http://localhost:3000`.
 
 Use Vercel Preview for every meaningful UI, routing, form, or deployment change.
 
-- `npm run build` completes successfully.
+- GitHub Actions quality and Playwright E2E checks are Green.
+- Vercel Preview deployment succeeds.
 - `/ja`, `/en`, and all public routes render correctly.
 - `/ja/contact` and `/en/contact` show all four steps.
 - `/admin` is not an application route and returns not found.
