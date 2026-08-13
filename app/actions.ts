@@ -27,8 +27,8 @@ function validationError(lang: Lang, ja: string, en: string): ActionState {
   return { error: lang === 'ja' ? ja : en };
 }
 
-function getClientKey() {
-  const requestHeaders = headers();
+async function getClientKey() {
+  const requestHeaders = await headers();
   const forwarded = requestHeaders.get('x-forwarded-for')?.split(',')[0]?.trim();
   return forwarded || requestHeaders.get('x-real-ip') || '';
 }
@@ -53,7 +53,7 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
   const data = validation.data;
   const { lang } = data;
 
-  if (isRateLimited(getClientKey())) {
+  if (isRateLimited(await getClientKey())) {
     return validationError(
       lang,
       '短時間に送信回数が多すぎます。しばらくしてから再度お試しください。',
