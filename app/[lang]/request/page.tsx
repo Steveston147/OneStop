@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import type { Lang } from '@/content/site';
 
-export default function Request({ params }: { params: { lang: Lang } }) {
-  redirect(`/${params.lang}/contact`);
+export default async function Request({ params }: { params: Promise<{ lang: Lang }> }) {
+  const { lang } = await params;
+  redirect(`/${lang}/contact`);
 }
