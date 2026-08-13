@@ -20,6 +20,18 @@ async function completeToReview(page: Page, lang: 'ja' | 'en') {
   await expect(page.getByRole('heading', { name: lang === 'ja' ? '確認・送信' : 'Review and submit' })).toBeVisible();
 }
 
+test('initial Japanese HTML declares ja', async ({ request }) => {
+  const response = await request.get('/ja');
+  expect(response.status()).toBe(200);
+  expect(await response.text()).toMatch(/<html[^>]*lang=["']ja["']/);
+});
+
+test('initial English HTML declares en', async ({ request }) => {
+  const response = await request.get('/en');
+  expect(response.status()).toBe(200);
+  expect(await response.text()).toMatch(/<html[^>]*lang=["']en["']/);
+});
+
 test('document language follows the Japanese route', async ({ page }) => {
   await page.goto('/ja');
   await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
