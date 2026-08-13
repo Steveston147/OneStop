@@ -1,128 +1,30 @@
 'use server';
 
-import { randomInt } from 'crypto';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import {
+  applicantCategoryLabels,
+  createRequestId,
+  display,
+  escapeHtml,
+  formatStayPeriod,
+  hostInstitutionLabels,
+  localize,
+  requestedServiceLabels,
+  validateEnquiry,
+  type Lang,
+} from '@/lib/enquiry';
 
 export type ActionState = { error?: string };
-type Lang = 'ja' | 'en';
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
-const REQUEST_ID_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const RESEND_TIMEOUT_MS = 10_000;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX = 5;
 const rateLimitBuckets = new Map<string, number[]>();
 
-const applicantCategoryLabels: Record<string, Record<Lang, string>> = {
-  'Host Office / Faculty': { ja: '受入部署の担当者・教員', en: 'Host office staff or faculty member' },
-  'Faculty / Researcher / Guest': { ja: '来日予定の教員・研究者・ゲスト', en: 'Incoming faculty, researcher, or guest' },
-  'Family Member': { ja: '同行家族', en: 'Accompanying family member' },
-  Other: { ja: 'その他の関係者', en: 'Other related person' },
-};
-
-const hostInstitutionLabels: Record<string, Record<Lang, string>> = {
-  'Ritsumeikan University': { ja: '立命館大学', en: 'Ritsumeikan University' },
-  'Ritsumeikan Asia Pacific University': { ja: '立命館アジア太平洋大学（APU）', en: 'Ritsumeikan Asia Pacific University (APU)' },
-  'Ritsumeikan Junior & Senior High School (Nagaokakyo)': { ja: '立命館中学校・高等学校（長岡京）', en: 'Ritsumeikan Junior & Senior High School (Nagaokakyo)' },
-  'Ritsumeikan Uji Junior & Senior High School': { ja: '立命館宇治中学校・高等学校', en: 'Ritsumeikan Uji Junior & Senior High School' },
-  'Ritsumeikan Moriyama Junior & Senior High School': { ja: '立命館守山中学校・高等学校', en: 'Ritsumeikan Moriyama Junior & Senior High School' },
-  'Ritsumeikan Primary School': { ja: '立命館小学校', en: 'Ritsumeikan Primary School' },
-  Other: { ja: 'その他', en: 'Other' },
-};
-
-const requestedServiceLabels: Record<string, Record<Lang, string>> = {
-  'COE / Visa guidance': { ja: 'COE・ビザ関連支援', en: 'COE and visa guidance' },
-  'Accommodation support': { ja: '宿泊・住居支援', en: 'Accommodation and housing' },
-  'Flight support': { ja: '航空券に関する支援', en: 'Flight support' },
-  'Airport meet and assist': { ja: '空港到着・待ち合わせ支援', en: 'Airport arrival support' },
-  'City office support': { ja: '市役所手続き支援', en: 'City-office support' },
-  'Bank account support': { ja: '銀行口座支援', en: 'Bank-account support' },
-  'Mobile / SIM / Internet': { ja: '携帯電話・SIM・通信支援', en: 'Mobile, SIM, and internet support' },
-  'Family support': { ja: '同行家族支援', en: 'Accompanying family support' },
-  'Campus orientation': { ja: 'キャンパス・校内案内', en: 'Campus or school orientation' },
-  Other: { ja: 'その他', en: 'Other' },
-};
-
-const applicantCategoryValues = new Set(Object.keys(applicantCategoryLabels));
-const hostInstitutionValues = new Set(Object.keys(hostInstitutionLabels));
-const requestedServiceValues = new Set(Object.keys(requestedServiceLabels));
-
-const fieldLimits: Record<string, number> = {
-  full_name: 120,
-  email: 254,
-  host_department: 200,
-  host_contact: 120,
-  current_country: 120,
-  nationality: 120,
-  message: 4000,
-};
-
-function text(formData: FormData, name: string) {
-  return String(formData.get(name) || '').trim();
-}
-
-function createRequestId() {
-  const date = new Date().toISOString().slice(0, 10).replaceAll('-', '');
-  const random = Array.from({ length: 5 }, () => REQUEST_ID_ALPHABET[randomInt(REQUEST_ID_ALPHABET.length)]).join('');
-  return `CGW-${date}-${random}`;
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
-}
-
-function display(value: string, lang: Lang) {
-  return value || (lang === 'ja' ? '未入力' : 'Not entered');
-}
-
-function localize(labels: Record<string, Record<Lang, string>>, value: string, lang: Lang) {
-  return labels[value]?.[lang] || value;
-}
-
 function validationError(lang: Lang, ja: string, en: string): ActionState {
   return { error: lang === 'ja' ? ja : en };
-}
-
-function isValidEmail(value: string) {
-  return value.length <= 254 && !/[\r\n]/.test(value) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
-function isValidDate(value: string) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
-  const [year, month, day] = value.split('-').map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day));
-  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
-}
-
-function formatDate(value: string, lang: Lang) {
-  if (!isValidDate(value)) return value;
-  const [year, month, day] = value.split('-').map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day));
-  return new Intl.DateTimeFormat(lang === 'ja' ? 'ja-JP' : 'en-CA', {
-    year: 'numeric',
-    month: lang === 'ja' ? 'numeric' : 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
-  }).format(date);
-}
-
-function formatStayPeriod(arrival: string, departure: string, lang: Lang) {
-  const start = formatDate(arrival, lang);
-  const end = formatDate(departure, lang);
-  if (start && end) return `${start} ～ ${end}`;
-  if (start) return lang === 'ja' ? `${start} から` : `From ${start}`;
-  if (end) return lang === 'ja' ? `${end} まで` : `Until ${end}`;
-  return '';
-}
-
-function exceedsLimit(formData: FormData) {
-  return Object.entries(fieldLimits).some(([field, max]) => text(formData, field).length > max);
 }
 
 function getClientKey() {
@@ -145,72 +47,18 @@ function isRateLimited(clientKey: string) {
 }
 
 export async function submitRequest(_previousState: ActionState, formData: FormData): Promise<ActionState> {
-  const preferredLanguage = text(formData, 'preferred_language');
-  const lang: Lang = preferredLanguage === 'Japanese' ? 'ja' : 'en';
+  const validation = validateEnquiry(formData);
+  if (!validation.ok) return { error: validation.error };
 
-  if (text(formData, 'company_website')) {
-    return validationError(lang, '送信内容を確認してください。', 'Please check the submitted information.');
-  }
-
-  if (preferredLanguage !== 'Japanese' && preferredLanguage !== 'English') {
-    return validationError(lang, '送信言語が正しくありません。', 'The submission language is invalid.');
-  }
-
-  const applicantCategory = text(formData, 'applicant_category');
-  const hostInstitution = text(formData, 'host_institution');
-  const fullName = text(formData, 'full_name');
-  const email = text(formData, 'email');
-  const hostDepartment = text(formData, 'host_department');
-  const arrival = text(formData, 'planned_arrival_date');
-  const departure = text(formData, 'planned_departure_date');
-  const familyMembersRaw = text(formData, 'family_members');
-  const services = formData.getAll('requested_services').map(String).map((value) => value.trim()).filter(Boolean);
-
-  if (!applicantCategory || !hostInstitution || !fullName || !email) {
-    return validationError(lang, '必須項目を確認してください。', 'Please check the required fields.');
-  }
-  if (!applicantCategoryValues.has(applicantCategory)) {
-    return validationError(lang, '利用者区分が正しくありません。', 'The selected role is invalid.');
-  }
-  if (!hostInstitutionValues.has(hostInstitution)) {
-    return validationError(lang, '受入機関が正しくありません。', 'The selected host institution is invalid.');
-  }
-  if (hostInstitution === 'Other' && !hostDepartment) {
-    return validationError(lang, 'その他の所属機関名を入力してください。', 'Please enter the other institution name.');
-  }
-  if (!isValidEmail(email)) {
-    return validationError(lang, 'メールアドレスの形式を確認してください。', 'Please check the email address format.');
-  }
-  if (exceedsLimit(formData)) {
-    return validationError(lang, '入力文字数が上限を超えています。', 'One or more fields exceed the allowed length.');
-  }
-  if (services.length === 0 || services.length > requestedServiceValues.size || services.some((service) => !requestedServiceValues.has(service))) {
-    return validationError(lang, '希望する支援を正しく選択してください。', 'Please select valid support areas.');
-  }
-  if (new Set(services).size !== services.length) {
-    return validationError(lang, '希望する支援の選択内容を確認してください。', 'Please check the selected support areas.');
-  }
-  if (arrival && !isValidDate(arrival)) {
-    return validationError(lang, '来日予定日を確認してください。', 'Please check the planned arrival date.');
-  }
-  if (departure && !isValidDate(departure)) {
-    return validationError(lang, '出国予定日を確認してください。', 'Please check the planned departure date.');
-  }
-  if (arrival && departure && arrival > departure) {
-    return validationError(lang, '出国予定日は来日予定日以降にしてください。', 'The departure date must be on or after the arrival date.');
-  }
-  if (familyMembersRaw) {
-    const familyMembers = Number(familyMembersRaw);
-    if (!Number.isInteger(familyMembers) || familyMembers < 0 || familyMembers > 20) {
-      return validationError(lang, '同行家族人数は0〜20の整数で入力してください。', 'Accompanying family members must be a whole number from 0 to 20.');
-    }
-  }
-  if (formData.get('consent') !== 'on' || formData.get('no_sensitive_documents') !== 'on') {
-    return validationError(lang, '確認事項への同意が必要です。', 'The required confirmations must be accepted.');
-  }
+  const data = validation.data;
+  const { lang } = data;
 
   if (isRateLimited(getClientKey())) {
-    return validationError(lang, '短時間に送信回数が多すぎます。しばらくしてから再度お試しください。', 'Too many submissions were made in a short period. Please try again later.');
+    return validationError(
+      lang,
+      '短時間に送信回数が多すぎます。しばらくしてから再度お試しください。',
+      'Too many submissions were made in a short period. Please try again later.',
+    );
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -224,31 +72,29 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
   }
 
   const requestId = createRequestId();
-  const institution = localize(hostInstitutionLabels, hostInstitution, lang);
-  const role = localize(applicantCategoryLabels, applicantCategory, lang);
-  const localizedServices = services.map((service) => localize(requestedServiceLabels, service, lang));
-  const stayPeriod = formatStayPeriod(arrival, departure, lang);
+  const institution = localize(hostInstitutionLabels, data.hostInstitution, lang);
+  const role = localize(applicantCategoryLabels, data.applicantCategory, lang);
+  const localizedServices = data.services.map((service) => localize(requestedServiceLabels, service, lang));
+  const stayPeriod = formatStayPeriod(data.arrival, data.departure, lang);
 
   const subject = lang === 'ja'
-    ? `[Creotech Global Welcome 新規相談] ${requestId}｜${institution}｜${fullName}`
-    : `[New Creotech Global Welcome Enquiry] ${requestId} | ${institution} | ${fullName}`;
+    ? `[Creotech Global Welcome 新規相談] ${requestId}｜${institution}｜${data.fullName}`
+    : `[New Creotech Global Welcome Enquiry] ${requestId} | ${institution} | ${data.fullName}`;
 
   const rows: Array<[string, string]> = lang === 'ja'
     ? [
         ['受付番号', requestId], ['送信言語', '日本語'], ['利用者区分', role], ['受入機関・所属', institution],
-        ['受入部署・所属詳細', hostDepartment], ['学内・校内担当者', text(formData, 'host_contact')],
-        ['氏名', fullName], ['メールアドレス', email], ['現在の居住国', text(formData, 'current_country')],
-        ['国籍', text(formData, 'nationality')], ['受入・滞在予定期間', stayPeriod],
-        ['同行家族人数', familyMembersRaw], ['希望する支援', localizedServices.join('、')],
-        ['その他相談内容', text(formData, 'message')],
+        ['受入部署・所属詳細', data.hostDepartment], ['学内・校内担当者', data.hostContact],
+        ['氏名', data.fullName], ['メールアドレス', data.email], ['現在の居住国', data.currentCountry],
+        ['国籍', data.nationality], ['受入・滞在予定期間', stayPeriod], ['同行家族人数', data.familyMembers],
+        ['希望する支援', localizedServices.join('、')], ['その他相談内容', data.message],
       ]
     : [
         ['Request ID', requestId], ['Submission language', 'English'], ['Role', role], ['Host institution', institution],
-        ['Host department or affiliation', hostDepartment], ['Host contact', text(formData, 'host_contact')],
-        ['Full name', fullName], ['Email address', email], ['Current country of residence', text(formData, 'current_country')],
-        ['Nationality', text(formData, 'nationality')], ['Expected period of stay', stayPeriod],
-        ['Accompanying family members', familyMembersRaw], ['Requested support', localizedServices.join(', ')],
-        ['Additional comments', text(formData, 'message')],
+        ['Host department or affiliation', data.hostDepartment], ['Host contact', data.hostContact],
+        ['Full name', data.fullName], ['Email address', data.email], ['Current country of residence', data.currentCountry],
+        ['Nationality', data.nationality], ['Expected period of stay', stayPeriod], ['Accompanying family members', data.familyMembers],
+        ['Requested support', localizedServices.join(', ')], ['Additional comments', data.message],
       ];
 
   const plainText = [
@@ -286,7 +132,11 @@ export async function submitRequest(_previousState: ActionState, formData: FormD
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: process.env.ENQUIRY_FROM_EMAIL || 'Creotech Global Welcome <onboarding@resend.dev>',
-        to: [recipient], reply_to: email, subject, text: plainText, html,
+        to: [recipient],
+        reply_to: data.email,
+        subject,
+        text: plainText,
+        html,
       }),
       cache: 'no-store',
       signal: controller.signal,
