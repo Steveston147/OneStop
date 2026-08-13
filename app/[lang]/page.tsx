@@ -95,8 +95,10 @@ function VisitorIcon() {
   );
 }
 
-export default async function Home({ params }: { params: Promise<{ lang: Lang }> }) {
-  const { lang } = await params;
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const resolved = await params;
+  if (resolved.lang !== 'ja' && resolved.lang !== 'en') return null;
+  const lang: Lang = resolved.lang;
   const t = copy[lang];
 
   return (

@@ -6,10 +6,11 @@ export default async function Confirm({
   params,
   searchParams,
 }: {
-  params: Promise<{ lang: Lang }>;
+  params: Promise<{ lang: string }>;
   searchParams: Promise<{ id?: string }>;
 }) {
-  const [{ lang }, resolvedSearchParams] = await Promise.all([params, searchParams]);
+  const [{ lang: rawLang }, resolvedSearchParams] = await Promise.all([params, searchParams]);
+  const lang: Lang = rawLang === 'ja' ? 'ja' : 'en';
   const isJa = lang === 'ja';
   const requestId = resolvedSearchParams.id || '—';
 
