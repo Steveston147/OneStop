@@ -25,6 +25,25 @@ The canonical production model is deliberately email-only. The earlier Postgres/
 - Applicant email set as Reply-To so the coordinator can reply directly
 - No passport, COE, or sensitive-document upload
 
+## Enquiry security baseline
+
+The server, not the browser, is authoritative for enquiry acceptance. Current controls include:
+
+- cryptographically secure request-ID randomness
+- allowlists for language, role, host institution, and requested services
+- strict required-field and email checks
+- free-text length limits
+- semantic date validation and arrival/departure ordering
+- family-member integer/range validation
+- consent validation
+- duplicate/invalid service rejection
+- a bot-trap field contract for scripted submissions
+- best-effort per-IP rate limiting within the active server runtime
+- a 10-second Resend timeout
+- privacy-safe delivery-error logging that does not dump enquiry contents or provider response bodies
+
+The in-process rate limiter reduces simple bursts but is not a globally distributed rate limiter across all Vercel instances. If abuse risk increases, introduce an approved distributed rate-limit service or Vercel-native control as a separate architecture/security decision.
+
 ## Email environment variables
 
 Create `.env.local` for local development, and add the same variables in Vercel Project Settings → Environment Variables.
@@ -46,10 +65,10 @@ The recipient is read only on the server. It is not supplied by the browser and 
 ## Public enquiry flow
 
 1. The user completes the four-step form.
-2. The server validates the required fields, consent, and requested support.
+2. The server independently validates the complete submission.
 3. A reference number is generated without a database.
 4. The enquiry is sent to the private recipient by the Resend API.
-5. The user sees the reference number on the confirmation page.
+5. The user sees the reference number on the confirmation page only after Resend accepts the request.
 
 If `RESEND_API_KEY` or `ENQUIRY_TO_EMAIL` is missing, the public form displays a user-friendly email-configuration message.
 
@@ -73,6 +92,7 @@ Use Vercel Preview for every meaningful UI, routing, form, or deployment change.
 - `/admin` is not an application route and returns not found.
 - No `DATABASE_URL` or `ADMIN_PASSWORD` is required.
 - The host-institution list includes Ritsumeikan University, APU, the four affiliated schools, and Other.
+- Invalid enums, malformed email, reversed dates, excessive family count, missing consent, and oversized text are rejected server-side.
 - A test submission arrives at the configured recipient address when Preview email delivery is intentionally enabled.
 - Replying to the message addresses the applicant email.
 - The confirmation screen displays the same request ID as the received email.
