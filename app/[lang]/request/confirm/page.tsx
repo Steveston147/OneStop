@@ -2,18 +2,19 @@ import Link from 'next/link';
 import { Layout } from '@/components/Public';
 import type { Lang } from '@/content/site';
 
-export default function Confirm({
+export default async function Confirm({
   params,
   searchParams,
 }: {
-  params: { lang: Lang };
-  searchParams: { id?: string };
+  params: Promise<{ lang: Lang }>;
+  searchParams: Promise<{ id?: string }>;
 }) {
-  const isJa = params.lang === 'ja';
-  const requestId = searchParams.id || '—';
+  const [{ lang }, resolvedSearchParams] = await Promise.all([params, searchParams]);
+  const isJa = lang === 'ja';
+  const requestId = resolvedSearchParams.id || '—';
 
   return (
-    <Layout lang={params.lang}>
+    <Layout lang={lang}>
       <main className="section section-soft">
         <div className="container">
           <div className="card p-6 text-center md:p-10">
@@ -40,7 +41,7 @@ export default function Confirm({
                 ? '担当者が内容を確認し、必要な手続きや次の行動をご連絡します。パスポートやCOE等の機微書類は、指定された安全な方法以外では送付しないでください。'
                 : 'The coordinator will review the enquiry and contact you about the next action. Do not send passport, COE, or other sensitive documents unless a secure method is specifically provided.'}
             </p>
-            <Link className="btn btn-primary mt-8" href={`/${params.lang}`}>
+            <Link className="btn btn-primary mt-8" href={`/${lang}`}>
               {isJa ? 'ホームへ戻る' : 'Back to home'}
             </Link>
           </div>
