@@ -1,6 +1,6 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
-async function completeToReview(page: Parameters<typeof test>[0]['page'], lang: 'ja' | 'en') {
+async function completeToReview(page: Page, lang: 'ja' | 'en') {
   await page.goto(`/${lang}/contact`);
 
   await page.getByLabel(lang === 'ja' ? '利用者区分' : 'Your role').selectOption('Host Office / Faculty');
