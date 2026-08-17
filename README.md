@@ -1,6 +1,23 @@
-# OneStop International Support MVP
+# Creotech Global Welcome / OneStop International Support MVP
 
 A bilingual public website and enquiry flow for international faculty, researchers, guests, accompanying families, host offices, APU, and Ritsumeikan affiliated schools.
+
+## Project identity
+
+This repository is the **public international faculty/researcher support website and enquiry intake service** currently branded in the application as **Creotech Global Welcome** / **OneStop International Support**.
+
+It is **not** the internal **OneStop AI Platform** that serves as an entry point to separate business applications such as Program Manager, Program Assign, Manual Q&A, RSJP FAQ AI, VISA, and finance/estimate tools. Those systems must remain separate repositories/applications unless an explicit architecture decision says otherwise.
+
+This distinction is canonical. Future AI or developer work must not turn this repository into a general internal app hub or merge unrelated business applications into it.
+
+## V1 status
+
+- **V1 engineering complete** on `main` after PR #24 and PR #25.
+- **Controlled V1 pilot: GO** when operated under `OPERATIONS.md` with an organisation-managed recipient mailbox.
+- **Institutional production: HOLD only on verified organisational sender-domain setup** for `ENQUIRY_FROM_EMAIL`.
+- PR #23 was closed as superseded and must not be merged or used as the current readiness baseline.
+
+See `V1_READINESS.md` and `OPERATIONS.md` for the release and operating gates.
 
 ## Current MVP architecture
 
@@ -58,7 +75,7 @@ ENQUIRY_FROM_EMAIL="Creotech Global Welcome <onboarding@resend.dev>"
 - `ENQUIRY_TO_EMAIL` is required and stores the private recipient address outside the public repository.
 - `ENQUIRY_FROM_EMAIL` is optional. The code uses the Resend onboarding sender when it is omitted.
 
-For public operation, use a verified organisation domain and replace `ENQUIRY_FROM_EMAIL` with the approved sender address.
+For institutional public operation, use a verified organisational domain and replace `ENQUIRY_FROM_EMAIL` with the approved sender address.
 
 The recipient is read only on the server. It is not supplied by the browser and cannot be changed through the enquiry form.
 
@@ -105,10 +122,10 @@ Open `http://localhost:3000`.
 
 ## Vercel Preview review checklist
 
-Use Vercel Preview for every meaningful UI, routing, form, or deployment change.
+Use Vercel Preview for meaningful UI, routing, form, runtime, or deployment changes. Documentation-only changes should be batched into a single PR/commit to avoid unnecessary preview builds and Build CPU usage.
 
 - GitHub Actions quality and Playwright E2E checks are Green.
-- Vercel Preview deployment succeeds.
+- Vercel Preview deployment succeeds when the change affects deployed behaviour.
 - `/ja`, `/en`, and all public routes render correctly.
 - `/ja/contact` and `/en/contact` show all four steps.
 - `/admin` is not an application route and returns not found.
@@ -122,9 +139,9 @@ Use Vercel Preview for every meaningful UI, routing, form, or deployment change.
 
 A successful Vercel deployment is evidence, not by itself a merge approval. Applicable type-check, lint, test, build, security/privacy, bilingual, and regression checks remain required by `AGENTS.md`.
 
-## Before public launch
+## Before institutional public launch
 
-- Replace temporary design-review photos with approved institutional assets.
 - Use a verified organisational sender domain for email delivery.
-- Decide how enquiry emails will be retained, labelled, and deleted.
+- Confirm the production recipient is an organisation-managed business mailbox.
+- Follow the retention, deletion, sensitive-information, incident, smoke-test, and rollback rules in `OPERATIONS.md`.
 - Keep sensitive immigration documents outside this form and ordinary email unless an approved secure process is provided.
